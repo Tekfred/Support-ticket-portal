@@ -12,6 +12,12 @@ defineOptions({
 
 const uiStore = useUiStore()
 const { isSidebarOpen } = storeToRefs(uiStore)
+
+const Navigation = [
+  { text: 'My Tickets', path: '/tickets', icons: 'person' },
+  { text: 'Agent', path: '/agent', icons: 'person' },
+
+]
 </script>
 
 <template>
@@ -38,21 +44,39 @@ const { isSidebarOpen } = storeToRefs(uiStore)
 
     <nav v-if="isSidebarOpen" class="flex flex-col py-10 gap-3" aria-label="Primary">
 
-      <h1 class=" font-bold">views</h1>
+      <h1 class=" font-bold pb-5">views</h1>
       <RouterLink
-        to="/"
-        class="px-1 font-semibold text-slate-900 no-underline transition-colors hover:text-blue-600"
-        active-class="text-blue-600"
+        :to="navValue.path"
+        v-for="navValue in Navigation"
+        :key="navValue.path"
+        v-slot="{ isExactActive }"
+        class="px-1 font-semibold text-slate-900 no-underline transition-colors p-2 hover:text-blue-100"
+        active-class="text-blue-600 bg-blue-200 "
       >
-        My Tickets
+
+      <span
+            class="material-symbols-outlined text-2xl transition-colors"
+            :class="
+              isExactActive
+                ? 'text-[#4B2AAD] dark:text-[#9b8fd9]'
+                : 'text-white/70 group-hover:text-white dark:text-gray-400 dark:group-hover:text-gray-300'
+            "
+          >
+            {{ navValue.icons }}
+          </span>
+        <span
+            class="font-medium text-sm whitespace-nowrap transition-all duration-300 overflow-hidden"
+            :class="[
+              isExactActive ? 'text-[#4B2AAD] font-semibold dark:text-[#9b8fd9]' : '',
+              uiStore.isSidebarOpen
+                ? 'max-w-xs opacity-100 w-auto'
+                : 'max-w-0 opacity-0 w-0',
+            ]"
+          >
+            {{ navValue.text }}
+          </span>
       </RouterLink>
-      <RouterLink
-        to="/about"
-        class="px-1 font-semibold text-slate-900 no-underline transition-colors hover:text-blue-600"
-        active-class="text-blue-600"
-      >
-        Agent
-      </RouterLink>
+
 
       <button class="text-start cursor-pointer rounded-lg border border-slate-300 bg-white absolute bottom-10 px-10 py-2" >
         <h3 class="text-xs text-slate-400">Current View</h3>

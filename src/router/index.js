@@ -1,17 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Tickets from '@/views/Ticketsview.vue'
+import Tickets from '@/views/Tickets/TicketsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      redirect: '/tickets',
+    },
+    {
+      path: '/tickets',
+      name: 'tickets',
       component: Tickets,
     },
     {
-      path: '/about',
-      name: 'Ageent',
+      path: '/agent',
+      name: 'agent',
       component: () => import('@/views/AgentsViews.vue'),
     },
   ],

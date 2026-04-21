@@ -1,12 +1,10 @@
 <script setup>
-import Sidebar from '@/components/Sidebar.vue'
+import { RouterView } from 'vue-router'
+import MainLayout from '@/components/MainLayout.vue'
 </script>
 
 <template>
-  <div class="flex min-h-screen">
-    <Sidebar />
-    <main class="min-w-0 flex-1 p-6">
-      <RouterView />
-    </main>
-  </div>
+  <MainLayout>
+    <RouterView />
+  </MainLayout>
 </template>
