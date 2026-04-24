@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 const allApplications = ref([
   {
@@ -80,18 +80,39 @@ const allApplications = ref([
     hasEmail: true,
     status: "Candidate",
   },
-]);
-
-
-const btnAppLoad = ref([
   {
-    id: 1,
-    name2: "All",
-    name3: "Pending",
-    name4: "On-Hold",
-    name5: "Candidate",
+    id: "#APL-0002",
+    dateApplied: "June 1, 2020, 08:22 AM",
+    company: "Highspeed Studios",
+    department: "Creative Design Agency",
+    companyColor: "#10B981",
+    companyInitial: "H",
+    type: "FULLTIME",
+    position: "Senior UX Designer",
+    hasPhone: true,
+    hasEmail: true,
+    status: "Candidate",
+  },
+  {
+    id: "#APL-0003",
+    dateApplied: "June 1, 2020, 08:22 AM",
+    company: "Highspeed Studios",
+    department: "Creative Design Agency",
+    companyColor: "#10B981",
+    companyInitial: "H",
+    type: "FULLTIME",
+    position: "Senior UX Designer",
+    hasPhone: true,
+    hasEmail: true,
+    status: "Candidate",
   },
 ]);
+
+
+const ticketFilters = ["All", "Pending", "On-Hold", "Candidate"];
+const activeFilter = ref("All");
+const viewMode = ref("list");
+const viewportWidth = ref(typeof window !== "undefined" ? window.innerWidth : 1280);
 
 const currentPage = ref(3);
 const selectedSort = ref("Newest");
@@ -107,6 +128,25 @@ const visiblePages = computed(() => {
   return pages.slice(start - 1, end);
 });
 
+const gridColumnsClass = computed(() => {
+  if (viewportWidth.value >= 1280) return "xl:grid-cols-3 grid-cols-2";
+  if (viewportWidth.value >= 520) return "grid-cols-2";
+  return "grid-cols-1";
+});
+
+function updateViewportWidth() {
+  viewportWidth.value = window.innerWidth;
+}
+
+onMounted(() => {
+  updateViewportWidth();
+  window.addEventListener("resize", updateViewportWidth);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateViewportWidth);
+});
+
 function setPage(page) {
   if (page >= 1 && page <= totalPages) currentPage.value = page;
 }
@@ -118,51 +158,73 @@ function statusClass(status) {
     return "inline-flex items-center justify-center px-3.5 py-1 rounded-full text-[0.7rem] font-semibold whitespace-nowrap border border-amber-400 text-amber-600";
   return "inline-flex items-center justify-center px-3.5 py-1 rounded-full text-[0.7rem] font-semibold whitespace-nowrap border border-gray-300 text-gray-500";
 }
+
+
 </script>
 
 <template>
   <!-- Wrapper -->
 
-  <main class="flex justify-between items-center p-4  transition-colors">
-    <section
-      class="flex flex-nowrap sm:flex-wrap gap-2 space-x-3 mt-4 overflow-x-auto pb-2 scrollbar-hide"
-      v-for="btnAppLoad in btnAppLoad"
-      :key="btnAppLoad"
-    >
-      <div class="text-xs sm:text-sm">
-        <h1 class="font-semibold text-sm sm:text-base text-slate-800 ">
-          Older Tickets
-        </h1>
-        <p class="text-slate-500 text-xs">Based your preference</p>
-      </div>
-
-
-        <button
-        class="text-xs sm:text-sm font-semibold rounded-3xl px-5 py-3 flex gap-2 bg-[#40189d] cursor-pointer text-white whitespace-nowrap shrink-0 hover:bg-[#35157a] transition-colors"
-      >
-        {{ btnAppLoad.name2 }}
-      </button>
+  <main class="flex items-center justify-between gap-4 p-4 transition-colors">
+    <div class="flex flex-1 flex-wrap items-center gap-2">
       <button
-        class="text-xs sm:text-sm text-[#4b24a3] font-semibold rounded-3xl px-5 py-3 flex gap-2 bg-[#e3d7ff] cursor-pointer whitespace-nowrap shrink-0 border border-gray-200 hover:bg-[#dcc5f2] transition-colors"
+        v-for="filter in ticketFilters"
+        :key="filter"
+        class="shrink-0 cursor-pointer rounded-3xl border px-4 py-2.5 text-xs font-semibold whitespace-nowrap transition-colors sm:text-sm"
+        @click="activeFilter = filter"
+        :class="[
+          activeFilter === filter
+            ? 'bg-[#40189d] text-white border-[#40189d] hover:bg-[#35157a]'
+            : 'text-[#4b24a3] bg-[#e3d7ff] border-gray-200 hover:bg-[#dcc5f2]'
+        ]"
       >
-        {{ btnAppLoad.name3 }}
+        {{ filter }}
       </button>
-      <button
-        class="text-xs sm:text-sm text-[#4b24a3] font-semibold rounded-3xl px-5 py-3 flex gap-2 bg-[#e3d7ff] cursor-pointer whitespace-nowrap shrink-0 border border-gray-200 hover:bg-[#dcc5f2] transition-colors"
-      >
-        {{ btnAppLoad.name4 }}
-      </button>
-      <button
-        class="text-xs sm:text-sm text-[#4b24a3] font-semibold rounded-3xl px-5 py-3 flex gap-2 bg-[#e3d7ff] cursor-pointer whitespace-nowrap shrink-0 border border-gray-200 hover:bg-[#dcc5f2] transition-colors"
-      >
-        {{ btnAppLoad.name5 }}
-      </button>
+    </div>
 
-    </section>
 
+     <div class="flex items-center gap-2 relative  ">
+
+  <!-- List icon -->
+  <button
+    type="button"
+    class="flex items-center border-none justify-center cursor-pointer transition-colors"
+    :class="
+      viewMode === 'list'
+        ? ' dark:bg-[#7252D3]'
+        : 'border border-[#7252D3] dark:border-[#9b8fd9] hover:bg-gray-50 dark:hover:bg-gray-800'
+    "
+    @click="viewMode = 'list'"
+  >
+    <span
+      class="material-symbols-outlined text-[20px]"
+      :class="viewMode === 'list' ? 'text-[#bf92e9]' : 'text-[#7252D3] dark:text-[#9b8fd9]'"
+    >format_list_bulleted</span>
+  </button>
+
+  <!-- Grid icon -->
+  <button
+    type="button"
+    class="h-10 w-10 rounded-full flex items-center justify-center cursor-pointer transition-colors"
+    :class="
+      viewMode === 'grid'
+        ? 'text-[#4b24a3] dark:bg-[#7252D3] hover:opacity-90 transition-opacity'
+        : ' border-[#7252D3] dark:border-[#9b8fd9] hover:bg-gray-50 dark:hover:bg-gray-800'
+    "
+    @click="viewMode = 'grid'"
+  >
+    <span
+      class="material-symbols-outlined text-[20px]"
+      :class="viewMode === 'grid' ? 'text-[#bf92e9]' : 'text-[#7252D3] dark:text-[#9b8fd9]'"
+    >grid_view</span>
+  </button>
+
+</div>
     <div
         class="flex items-center gap-1 px-2 sm:px-4 py-1.5 sm:py-2 border border-[#cbd5e1] rounded-full text-xs sm:text-sm font-medium text-slate-700 hover:bg-white transition-colors"
       >
+
+
         <span class="material-symbols-outlined text-[16px] text-slate-600">sort</span>
         <select
           v-model="selectedSort"
@@ -185,10 +247,17 @@ function statusClass(status) {
   <div class="px-4 pb-6 font-sans  transition-colors">
 
     <!-- ── Table Card ─────────────────────────────────── -->
-    <div class="bg-white rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.08)]">
+    <div
+      class="rounded-2xl overflow-hidden"
+      :class="
+        viewMode === 'list'
+          ? 'bg-white shadow-[0_2px_12px_rgba(15,23,42,0.08)]'
+          : 'bg-transparent shadow-none'
+      "
+    >
 
-      <!-- Desktop / Medium table (hidden on sm) -->
-      <div class="hidden sm:block overflow-x-auto">
+      <!-- Desktop / Medium table -->
+      <div v-if="viewMode === 'list'" class="hidden sm:block overflow-x-auto">
         <table class="w-full border-collapse min-w-180">
 
           <!-- Head -->
@@ -297,8 +366,74 @@ function statusClass(status) {
         </table>
       </div>
 
+      <!-- ── Box View ───────────────────────────────── -->
+      <div
+        v-if="viewMode === 'grid'"
+        class="grid gap-4 p-4"
+        :class="gridColumnsClass"
+      >
+        <div
+          v-for="(app, index) in allApplications"
+          :key="'g' + index"
+          class="rounded-2xl border border-slate-200 px-4 py-3.5 bg-white"
+        >
+          <div class="mb-3 flex items-center justify-between ">
+            <div class="flex items-center gap-2.5">
+              <div
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white"
+                :style="{ backgroundColor: app.companyColor }"
+              >
+                {{ app.companyInitial }}
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <span class="text-[0.78rem] font-semibold text-slate-800">{{ app.company }}</span>
+                <span class="text-[0.65rem] text-slate-400">{{ app.department }}</span>
+              </div>
+            </div>
+            <span :class="statusClass(app.status)">{{ app.status }}</span>
+          </div>
+
+          <div class="mb-3 grid grid-cols-2 gap-2">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[0.62rem] font-semibold tracking-wider text-slate-400 uppercase">ID</span>
+              <span class="text-[0.75rem] font-semibold text-slate-800">{{ app.id }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[0.62rem] font-semibold tracking-wider text-slate-400 uppercase">Type</span>
+              <span class="text-[0.75rem] font-medium text-slate-800">{{ app.type }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[0.62rem] font-semibold tracking-wider text-slate-400 uppercase">Position</span>
+              <span class="text-[0.75rem] font-medium text-slate-800">{{ app.position }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[0.62rem] font-semibold tracking-wider text-slate-400 uppercase">Applied</span>
+              <span class="text-[0.72rem] text-slate-500">{{ app.dateApplied }}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span
+                v-if="app.hasPhone"
+                class="material-symbols-outlined cursor-pointer text-[18px] text-[#40189d]"
+              >call</span>
+              <span
+                v-if="app.hasEmail"
+                class="material-symbols-outlined cursor-pointer text-[18px] text-[#40189d]"
+              >mail</span>
+              <span
+                v-if="!app.hasPhone && !app.hasEmail"
+                class="material-symbols-outlined cursor-pointer text-[18px] text-[#40189d]"
+              >call</span>
+            </div>
+            <span class="material-symbols-outlined cursor-pointer text-[20px] text-slate-400">more_vert</span>
+          </div>
+        </div>
+      </div>
+
       <!-- ── Mobile Card View (sm only) ─────────────── -->
-      <div class="block sm:hidden">
+      <div v-else class="block sm:hidden">
         <div
           v-for="(app, index) in allApplications"
           :key="'m' + index"
@@ -405,12 +540,8 @@ function statusClass(status) {
 
   </div>
 
-  <div class="text-end px-65 ">
-    <button class="text-slate-600 cursor-pointer rounded-lg border border-slate-300 bg-slate-100 absolute bottom-10 px-20 py-5 " >
-        <span class="material-symbols-outlined">add</span>
-        <h1 class="font-bold">New Tickets</h1>
-      </button>
-  </div>
+
+
 
 
 </template>

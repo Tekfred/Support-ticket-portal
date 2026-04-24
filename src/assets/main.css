@@ -2,6 +2,8 @@
 
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 /* #app {
   max-width: 1280px;
@@ -22,5 +24,4 @@
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 } */
-
 

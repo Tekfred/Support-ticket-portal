@@ -1,0 +1,140 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-mono,monospace);font-size:13px}
+.tree{padding:12px 0}
+.item{display:flex;align-items:flex-start;gap:0;cursor:pointer;padding:2px 0;line-height:1.5}
+.item:hover .label{color:var(--color-text-primary)}
+.indent{display:inline-block;width:20px;flex-shrink:0}
+.toggle{display:inline-block;width:16px;flex-shrink:0;color:var(--color-text-tertiary);user-select:none}
+.icon{display:inline-block;width:18px;flex-shrink:0;font-size:12px}
+.label{color:var(--color-text-secondary);transition:color .1s}
+.label.folder{color:var(--color-text-primary);font-weight:500}
+.label.entry{color:var(--color-text-primary)}
+.children{overflow:hidden;transition:max-height .2s ease}
+.info-panel{margin:16px 0 4px;padding:12px 14px;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:8px;min-height:56px}
+.info-panel .name{font-weight:500;color:var(--color-text-primary);margin-bottom:4px;font-size:13px}
+.info-panel .desc{color:var(--color-text-secondary);font-size:12px;line-height:1.6;font-family:var(--font-sans,sans-serif)}
+.info-panel .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;margin-bottom:6px;font-family:var(--font-sans)}
+.tag.config{background:var(--color-background-info);color:var(--color-text-info)}
+.tag.view{background:var(--color-background-success);color:var(--color-text-success)}
+.tag.comp{background:#EEEDFE;color:#3C3489}
+.tag.store{background:var(--color-background-warning);color:var(--color-text-warning)}
+.tag.api{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tag.util{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+</style>
+
+<div style="padding:0 4px">
+<div class="info-panel" id="info">
+  <div class="name">Vue.js project structure</div>
+  <div class="desc">Click any file or folder to learn what it does.</div>
+</div>
+<div class="tree" id="tree"></div>
+</div>
+
+<script>
+const data = [
+  {n:"support-ticket-portal/", t:"folder", desc:"Root of your Vue project. Created by running <code>npm create vue@latest</code>.", tag:"config", children:[
+    {n:"public/", t:"folder", desc:"Static assets served as-is. Files here are copied directly to the build output — not processed by Vite.", tag:"config", children:[
+      {n:"favicon.ico", t:"file", desc:"Browser tab icon for your app.", tag:"config"},
+    ]},
+    {n:"src/", t:"folder", desc:"Everything you write lives here. This is the heart of your Vue app.", tag:"comp", children:[
+      {n:"assets/", t:"folder", desc:"Images, fonts, global CSS. Vite processes these — they get hashed filenames in production.", tag:"util", children:[
+        {n:"main.css", t:"file", desc:"Global styles — CSS resets, typography, utility classes shared across the whole app.", tag:"util"},
+        {n:"logo.svg", t:"file", desc:"Your app logo used in the navbar and login page.", tag:"util"},
+      ]},
+      {n:"components/", t:"folder", desc:"Reusable UI building blocks. These are not pages — they're pieces used inside pages.", tag:"comp", children:[
+        {n:"shared/", t:"folder", desc:"Generic components used everywhere — not specific to tickets or auth.", tag:"comp", children:[
+          {n:"AppNavbar.vue", t:"file", desc:"Top navigation bar. Shows logo, nav links, and the logged-in user's name. Used in the default layout.", tag:"comp"},
+          {n:"AppButton.vue", t:"file", desc:"A styled button component with variants: primary, secondary, danger. Accepts loading and disabled props.", tag:"comp"},
+          {n:"StatusBadge.vue", t:"file", desc:"Displays a coloured pill for ticket status: Open (amber), In Progress (blue), Resolved (green).", tag:"comp"},
+          {n:"AppModal.vue", t:"file", desc:"A reusable modal dialog wrapper. Used for confirm-close and create-ticket overlays.", tag:"comp"},
+        ]},
+        {n:"tickets/", t:"folder", desc:"Components that render ticket-related UI. Used inside ticket views.", tag:"comp", children:[
+          {n:"TicketCard.vue", t:"file", desc:"A single row/card in the ticket list. Shows title, status badge, date, and assigned agent.", tag:"comp"},
+          {n:"TicketReplyThread.vue", t:"file", desc:"Renders the full conversation thread on a ticket detail page. Each reply shows the author, timestamp, and message body.", tag:"comp"},
+          {n:"TicketStatusSelect.vue", t:"file", desc:"A dropdown for agents to change the ticket status. Emits a status-change event to the parent view.", tag:"comp"},
+          {n:"CreateTicketForm.vue", t:"file", desc:"The form a customer fills in to submit a new ticket. Has subject, category, and message fields with validation.", tag:"comp"},
+        ]},
+      ]},
+      {n:"views/", t:"folder", desc:"Page-level components. Each one maps to a route. They compose smaller components together.", tag:"view", children:[
+        {n:"auth/", t:"folder", desc:"Pages for logging in and registering.", tag:"view", children:[
+          {n:"LoginView.vue", t:"file", desc:"The login page. Has email/password fields, calls the auth store, redirects on success.", tag:"view"},
+          {n:"RegisterView.vue", t:"file", desc:"New user registration. Creates a customer account. Agents are created by admins, not here.", tag:"view"},
+        ]},
+        {n:"customer/", t:"folder", desc:"Pages only customers see after logging in.", tag:"view", children:[
+          {n:"MyTicketsView.vue", t:"file", desc:"Lists all tickets submitted by the logged-in customer. Filterable by status.", tag:"view"},
+          {n:"SubmitTicketView.vue", t:"file", desc:"The page wrapping the CreateTicketForm component. Handles the submit action and shows a success message.", tag:"view"},
+          {n:"TicketDetailView.vue", t:"file", desc:"Customer's read-only view of a single ticket. Shows the thread and lets them add a reply.", tag:"view"},
+        ]},
+        {n:"agent/", t:"folder", desc:"Pages only support agents see after logging in.", tag:"view", children:[
+          {n:"DashboardView.vue", t:"file", desc:"Agent's main page. Shows all open tickets, filterable by status and date. Quick overview stats at the top.", tag:"view"},
+          {n:"TicketManageView.vue", t:"file", desc:"Agent's full view of a ticket. Can change status, reply, and see the full customer history.", tag:"view"},
+        ]},
+      ]},
+      {n:"router/", t:"folder", desc:"Vue Router config. Defines which URL path loads which view, and guards protected routes.", tag:"config", children:[
+        {n:"index.js", t:"file", desc:"All route definitions. Uses navigation guards to redirect unauthenticated users to /login, and block customers from agent routes.", tag:"config"},
+      ]},
+      {n:"stores/", t:"folder", desc:"Pinia stores. Each store manages a slice of global app state — auth session, tickets list, etc.", tag:"store", children:[
+        {n:"auth.js", t:"file", desc:"Stores the logged-in user (id, name, role). Handles login, logout, and exposes a computed isAgent getter.", tag:"store"},
+        {n:"tickets.js", t:"file", desc:"Fetches and caches the tickets list. Actions: fetchTickets, createTicket, updateStatus, addReply.", tag:"store"},
+      ]},
+      {n:"api/", t:"folder", desc:"All HTTP calls to your backend live here. Views and stores never call fetch() directly — they use these.", tag:"api", children:[
+        {n:"axios.js", t:"file", desc:"Configures an Axios instance with baseURL and an interceptor that attaches the JWT token to every request.", tag:"api"},
+        {n:"auth.api.js", t:"file", desc:"login(email, password) and register(data) functions. Returns user data and token on success.", tag:"api"},
+        {n:"tickets.api.js", t:"file", desc:"getTickets(), getTicket(id), createTicket(data), updateTicket(id, data), addReply(id, message).", tag:"api"},
+      ]},
+      {n:"utils/", t:"folder", desc:"Pure helper functions. No Vue, no API — just reusable logic.", tag:"util", children:[
+        {n:"formatDate.js", t:"file", desc:"Formats ISO date strings to readable labels like 'Apr 21, 2026' or '2 hours ago'.", tag:"util"},
+        {n:"roleGuard.js", t:"file", desc:"A helper used in the router to check if the current user has the required role before allowing navigation.", tag:"util"},
+      ]},
+      {n:"App.vue", t:"file", desc:"The root Vue component. Contains <RouterView /> which swaps in the current page. Also sets up the default layout with AppNavbar.", tag:"comp", entry:true},
+      {n:"main.js", t:"file", desc:"App entry point. Creates the Vue app, registers Pinia and Vue Router, then mounts to #app in index.html.", tag:"config", entry:true},
+    ]},
+    {n:"index.html", t:"file", desc:"The single HTML page your app lives in. Vite injects the compiled JS and CSS here at build time.", tag:"config", entry:true},
+    {n:"vite.config.js", t:"file", desc:"Vite build config. Sets up the Vue plugin, path aliases (@/ → src/), and dev server proxy to your backend.", tag:"config"},
+    {n:".env", t:"file", desc:"Environment variables. VITE_API_BASE_URL=http://localhost:3000. Never commit this file with real secrets.", tag:"config"},
+    {n:"package.json", t:"file", desc:"Project metadata and dependencies. Run npm install to install everything listed here.", tag:"config"},
+  ]}
+];
+
+const tagLabels = {config:"config",view:"view",comp:"component",store:"store",api:"api",util:"util"};
+const icons = {folder:"📁", file:"📄"};
+
+function render(items, depth=0){
+  return items.map(item => {
+    const hasChildren = item.children && item.children.length;
+    const id = Math.random().toString(36).slice(2);
+    const indent = Array(depth).fill('<span class="indent"></span>').join('');
+    const toggle = hasChildren ? `<span class="toggle" id="tog-${id}">▶</span>` : `<span class="toggle"></span>`;
+    const icon = item.t === 'folder' ? '📂' : '📄';
+    const labelClass = item.t==='folder' ? 'folder' : (item.entry ? 'entry' : '');
+    let html = `<div class="item" onclick="select('${id}',${JSON.stringify(item).replace(/'/g,"&#39;")})">${indent}${toggle}<span class="icon">${icon}</span><span class="label ${labelClass}">${item.n}</span></div>`;
+    if(hasChildren){
+      html += `<div class="children" id="ch-${id}" style="max-height:0">${render(item.children, depth+1)}</div>`;
+    }
+    return html;
+  }).join('');
+}
+
+const selected = {};
+function select(id, item){
+  const ch = document.getElementById('ch-'+id);
+  const tog = document.getElementById('tog-'+id);
+  if(ch){
+    const open = ch.style.maxHeight !== '0px' && ch.style.maxHeight !== '0';
+    ch.style.maxHeight = open ? '0' : '3000px';
+    if(tog) tog.textContent = open ? '▶' : '▼';
+  }
+  const panel = document.getElementById('info');
+  const tag = item.tag || 'util';
+  panel.innerHTML = `<div><span class="tag ${tag}">${tagLabels[tag]||tag}</span></div><div class="name">${item.n}</div><div class="desc">${item.desc}</div>`;
+}
+
+document.getElementById('tree').innerHTML = render(data);
+// auto-open root
+setTimeout(()=>{
+  const first = document.querySelector('.item');
+  if(first) first.click();
+},100);
+</script>

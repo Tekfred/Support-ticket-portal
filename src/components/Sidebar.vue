@@ -22,7 +22,7 @@ const Navigation = [
 
 <template>
   <aside
-    class="flex flex-col gap-4 border-r border-slate-200 bg-slate-100 p-4"
+    class="flex flex-col gap-4 border-r border-slate-300 bg-slate-200 p-4 transition-colors dark:border-slate-700 dark:bg-slate-900"
     :class="isSidebarOpen ? 'min-h-screen w-60' : 'w-auto min-h-auto'"
   >
     <div class="flex items-center justify-between gap-3">
@@ -35,23 +35,23 @@ const Navigation = [
       />
       <button
         type="button"
-        class="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-2"
+        class="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-2 transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
         @click="uiStore.toggleSidebar"
       >
         {{ isSidebarOpen ? 'Collapse' : 'Expand' }}
       </button>
     </div>
 
-    <nav v-if="isSidebarOpen" class="flex flex-col py-10 gap-3" aria-label="Primary">
+    <nav v-if="isSidebarOpen" class="flex flex-col gap-3 py-10" aria-label="Primary">
 
-      <h1 class=" font-bold pb-5">views</h1>
+      <h1 class="pb-5 font-bold text-slate-900 dark:text-slate-100">views</h1>
       <RouterLink
         :to="navValue.path"
         v-for="navValue in Navigation"
         :key="navValue.path"
         v-slot="{ isExactActive }"
-        class="px-1 font-semibold text-slate-900 no-underline transition-colors p-2 hover:text-blue-100"
-        active-class="text-blue-600 bg-blue-200 "
+        class="p-2 px-1 font-semibold text-slate-900 no-underline transition-colors hover:text-blue-100 dark:text-slate-100"
+        active-class="bg-blue-200 text-blue-600 dark:bg-slate-800"
       >
 
       <span
@@ -78,8 +78,8 @@ const Navigation = [
       </RouterLink>
 
 
-      <button class="text-start cursor-pointer rounded-lg border border-slate-300 bg-white absolute bottom-10 px-10 py-2" >
-        <h3 class="text-xs text-slate-400">Current View</h3>
+      <button class="absolute bottom-10 cursor-pointer rounded-lg border border-slate-300 bg-white px-10 py-2 text-start transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100" >
+        <h3 class="text-xs text-slate-400 dark:text-slate-300">Current View</h3>
         <h1 class="font-bold">Agent Dashboard</h1>
       </button>
     </nav>
