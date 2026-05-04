@@ -33,31 +33,26 @@ const handleLogout = () => {
 
 <template>
   <nav
-    class="relative top-0 flex items-center justify-between border-b border-slate-200 bg-slate-200 p-4 text-slate-900 transition-colors dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+    class="sticky top-0 z-40 flex shrink-0 items-center justify-between border-b border-slate-200 bg-slate-200 p-4 text-slate-900 transition-colors dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
   >
-
     <h1 class="text-xl font-bold">Unassigned Tickets</h1>
 
-
-    <div class="relative flex items-center ">
-
+    <div class="relative flex items-center">
       <button
         type="button"
-        class="mr-3 flex items-center justify-center text-slate-700 transition-colors  dark:border-slate-600 dark:bg-slate-800 dark:text-amber-300 "
+        class="mr-3 flex items-center justify-center text-slate-700 transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-amber-300"
         @click="themeStore.toggleTheme"
       >
         <span v-if="!isDark" class="material-symbols-outlined">light_mode</span>
         <span v-else class="material-symbols-outlined">dark_mode</span>
       </button>
 
-
       <button
         class="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1 transition hover:bg-gray-100 dark:hover:bg-slate-800"
         @click="toggleProfileDropdown"
       >
         <img :src="image" alt="profile" class="h-10 w-10 rounded-full" />
-        <div class="flex flex-col text-sm text-gray-600 dark:text-slate-300">
-        </div>
+        <div class="flex flex-col text-sm text-gray-600 dark:text-slate-300"></div>
       </button>
 
       <div
@@ -75,7 +70,8 @@ const handleLogout = () => {
 
           <button
             class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            @click="closeDropdown"          >
+            @click="closeDropdown"
+          >
             <span class="material-symbols-outlined text-lg">settings</span>
             <span>Settings</span>
           </button>
