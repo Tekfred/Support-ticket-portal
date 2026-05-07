@@ -30,11 +30,11 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="flex justify-center px-4 py-4">
+  <div class="flex justify-end px-6 py-6">
     <AppButton
       variant="secondary"
       icon="add"
-      class="bg-slate-200 px-10 py-4 text-slate-700 shadow-sm"
+      class="bg-slate-200 px-10 py-4 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
       @click="openModal"
     >
       New Tickets
@@ -45,24 +45,24 @@ function handleSubmit() {
     <Transition name="ticket-modal">
       <div
         v-if="isModalOpen"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/25 px-4 py-6 backdrop-blur-sm"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/25 px-4 py-6 backdrop-blur-sm dark:bg-slate-950/70"
         @click.self="closeModal"
       >
         <form
-          class="w-full max-w-2xl rounded-2xl border border-white/70 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22)]"
+          class="w-full max-w-2xl rounded-2xl border border-white/70 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22)] dark:border-slate-700 dark:bg-slate-900 dark:shadow-[0_24px_90px_rgba(0,0,0,0.45)]"
           @submit.prevent="handleSubmit"
         >
           <div class="mb-6 flex items-start justify-between gap-4">
             <div>
-              <h2 class="text-xl font-bold text-slate-900">Add Ticket</h2>
-              <p class="mt-1 text-sm text-slate-500">
+              <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Add Ticket</h2>
+              <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 Fill in the ticket details before issuing it.
               </p>
             </div>
 
             <button
               type="button"
-              class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900"
+              class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
               aria-label="Close ticket form"
               @click="closeModal"
             >
@@ -72,43 +72,49 @@ function handleSubmit() {
 
           <div class="grid gap-4 md:grid-cols-2">
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-semibold text-slate-700">Full name</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200"
+                >Full name</span
+              >
               <input
                 v-model="ticketForm.fullName"
                 type="text"
                 required
                 placeholder="Enter customer name"
-                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               />
             </label>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-semibold text-slate-700">Email address</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200"
+                >Email address</span
+              >
               <input
                 v-model="ticketForm.email"
                 type="email"
                 required
                 placeholder="name@example.com"
-                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               />
             </label>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-semibold text-slate-700">Phone number</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200"
+                >Phone number</span
+              >
               <input
                 v-model="ticketForm.phone"
                 type="tel"
                 placeholder="+233 00 000 0000"
-                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               />
             </label>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-semibold text-slate-700">Category</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Category</span>
               <select
                 v-model="ticketForm.category"
                 required
-                class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               >
                 <option value="" disabled>Select category</option>
                 <option>Billing</option>
@@ -119,21 +125,23 @@ function handleSubmit() {
             </label>
 
             <label class="flex flex-col gap-1.5 md:col-span-2">
-              <span class="text-sm font-semibold text-slate-700">Ticket subject</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200"
+                >Ticket subject</span
+              >
               <input
                 v-model="ticketForm.subject"
                 type="text"
                 required
                 placeholder="Short summary of the issue"
-                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               />
             </label>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-semibold text-slate-700">Priority</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Priority</span>
               <select
                 v-model="ticketForm.priority"
-                class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               >
                 <option>Low</option>
                 <option>Medium</option>
@@ -143,13 +151,15 @@ function handleSubmit() {
             </label>
 
             <label class="flex flex-col gap-1.5 md:col-span-2">
-              <span class="text-sm font-semibold text-slate-700">Description</span>
+              <span class="text-sm font-semibold text-slate-700 dark:text-slate-200"
+                >Description</span
+              >
               <textarea
                 v-model="ticketForm.description"
                 required
                 rows="5"
                 placeholder="Write the customer's ticket details"
-                class="resize-none rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15"
+                class="resize-none rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#40189d] focus:ring-2 focus:ring-[#40189d]/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-[#a991ff] dark:focus:ring-[#a991ff]/20"
               ></textarea>
             </label>
           </div>

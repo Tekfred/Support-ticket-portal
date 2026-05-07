@@ -76,7 +76,7 @@ export const ticketApplications = [
     hasPhone: true,
     hasEmail: true,
     status: 'Candidate',
-  }
+  },
 ]
 
 export const ticketFilters = ['All', 'Pending', 'On-Hold', 'Candidate']

@@ -15,42 +15,53 @@ const { isSidebarOpen } = storeToRefs(uiStore)
 
 const Navigation = [
   { text: 'My Tickets', path: '/tickets', icons: 'person' },
-  { text: 'Agent', path: '/agent', icons: 'person' },
+  { text: 'Agent', path: '/agent', icons: 'support_agent' },
 ]
 </script>
 
 <template>
   <aside
     class="sticky top-0 h-screen shrink-0 overflow-y-auto border-r border-slate-300 bg-slate-200 p-4 transition-colors dark:border-slate-700 dark:bg-slate-900"
-    :class="isSidebarOpen ? 'w-60' : 'w-auto'"
+    :class="isSidebarOpen ? 'w-60' : 'w-20'"
   >
-    <div class="flex items-center justify-between gap-3">
+    <div
+      class="flex items-center gap-3"
+      :class="isSidebarOpen ? 'justify-between' : 'justify-center'"
+    >
       <img alt="Vue logo" class="block" :src="icons" width="40" height="40" />
       <button
         type="button"
-        class="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-2 transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
+        class="cursor-pointer rounded-lg border border-slate-300 bg-white transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
+        :class="isSidebarOpen ? 'px-3 py-2' : 'absolute top-16 h-9 w-9'"
         @click="uiStore.toggleSidebar"
       >
-        {{ isSidebarOpen ? 'Collapse' : 'Expand' }}
+        <span v-if="isSidebarOpen">Collapse</span>
+        <span v-else class="material-symbols-outlined text-[20px]">menu_open</span>
       </button>
     </div>
 
-    <nav v-if="isSidebarOpen" class="flex flex-col gap-3 py-10" aria-label="Primary">
-      <h1 class="pb-5 font-bold text-slate-900 dark:text-slate-100">views</h1>
+    <nav
+      class="flex flex-col gap-3 py-10"
+      :class="isSidebarOpen ? '' : 'items-center pt-16'"
+      aria-label="Primary"
+    >
+      <h1 v-if="isSidebarOpen" class="pb-5 font-bold text-slate-900 dark:text-slate-100">views</h1>
       <RouterLink
         :to="navValue.path"
         v-for="navValue in Navigation"
         :key="navValue.path"
         v-slot="{ isExactActive }"
-        class="p-2 px-1 font-semibold text-slate-900 no-underline transition-colors hover:text-blue-100 dark:text-slate-100"
+        class="group flex items-center rounded-lg p-2 font-semibold text-slate-900 no-underline transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
+        :class="isSidebarOpen ? 'gap-3 px-2' : 'h-10 w-10 justify-center'"
         active-class="bg-blue-200 text-blue-600 dark:bg-slate-800"
+        :title="navValue.text"
       >
         <span
           class="material-symbols-outlined text-2xl transition-colors"
           :class="
             isExactActive
               ? 'text-[#4B2AAD] dark:text-[#9b8fd9]'
-              : 'text-white/70 group-hover:text-white dark:text-gray-400 dark:group-hover:text-gray-300'
+              : 'text-slate-500 group-hover:text-[#4B2AAD] dark:text-gray-400 dark:group-hover:text-[#9b8fd9]'
           "
         >
           {{ navValue.icons }}
@@ -67,6 +78,7 @@ const Navigation = [
       </RouterLink>
 
       <button
+        v-if="isSidebarOpen"
         class="absolute bottom-10 cursor-pointer rounded-lg border border-slate-300 bg-white px-10 py-2 text-start transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
       >
         <h3 class="text-xs text-slate-400 dark:text-slate-300">Current View</h3>

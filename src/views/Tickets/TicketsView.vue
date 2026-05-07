@@ -67,7 +67,7 @@ function setPage(page) {
       class="overflow-hidden rounded-2xl"
       :class="
         viewMode === 'list'
-          ? 'bg-white shadow-[0_2px_12px_rgba(15,23,42,0.08)]'
+          ? 'bg-white shadow-[0_2px_12px_rgba(15,23,42,0.08)] dark:bg-slate-900 dark:shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
           : 'bg-transparent shadow-none'
       "
     >
