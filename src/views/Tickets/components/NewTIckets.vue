@@ -49,7 +49,7 @@ function handleSubmit() {
         @click.self="closeModal"
       >
         <form
-          class="w-full max-w-2xl rounded-2xl border border-white/70 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22)] dark:border-slate-700 dark:bg-slate-900 dark:shadow-[0_24px_90px_rgba(0,0,0,0.45)]"
+          class="w-full max-w-2xl rounded-2xl  border border-white/70 bg-white p-8 shadow-[0_24px_80px_rgba(15,23,42,0.22)] dark:border-slate-700 dark:bg-slate-900 dark:shadow-[0_24px_90px_rgba(0,0,0,0.45)]"
           @submit.prevent="handleSubmit"
         >
           <div class="mb-6 flex items-start justify-between gap-4">
@@ -164,7 +164,7 @@ function handleSubmit() {
             </label>
           </div>
 
-          <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+          <div class="relative top-5 mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <AppButton
               type="button"
               variant="ghost"

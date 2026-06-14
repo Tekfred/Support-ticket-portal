@@ -9,6 +9,7 @@ defineOptions({
   name: 'AppNavbar',
 })
 
+
 const profileDropdownOpen = ref(false)
 const themeStore = useThemeStore()
 const { isDark } = storeToRefs(themeStore)
@@ -16,6 +17,7 @@ const { isDark } = storeToRefs(themeStore)
 const toggleProfileDropdown = () => {
   profileDropdownOpen.value = !profileDropdownOpen.value
 }
+
 
 const closeDropdown = () => {
   profileDropdownOpen.value = false
@@ -57,7 +59,7 @@ const handleLogout = () => {
 
       <div
         v-if="profileDropdownOpen"
-        class="absolute right-0 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800"
+        class="absolute right-0 top-15 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800"
       >
         <div class="py-2">
           <button
