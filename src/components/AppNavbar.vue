@@ -1,23 +1,37 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-
-import image from '@/assets/profile_img_1.png'
+import { useUiStore } from '@/stores/uiStore'
 import { useThemeStore } from '@/stores/themeStore'
+import image from '@/assets/profile_img_1.png'
+import { INITIAL_TICKETS, INITIAL_BOOKINGS } from '@/stores/Data'
 
-defineOptions({
-  name: 'AppNavbar',
-})
+import { 
+  Sun, 
+  Moon, 
+  Bell, 
+  Info, 
+  LifeBuoy, 
+  ChevronRight, 
+  Check,
+  Sparkles
+} from 'lucide-vue-next';
 
+defineOptions({ name: 'AppNavbar' })
 
-const profileDropdownOpen = ref(false)
+// UI & Theme stores
+const uiStore = useUiStore()
 const themeStore = useThemeStore()
 const { isDark } = storeToRefs(themeStore)
+
+// Local reactive state
+const profileDropdownOpen = ref(false)
+
+const isSidebarCollapsed = computed(() => !uiStore.isSidebarOpen)
 
 const toggleProfileDropdown = () => {
   profileDropdownOpen.value = !profileDropdownOpen.value
 }
-
 
 const closeDropdown = () => {
   profileDropdownOpen.value = false
@@ -25,68 +39,105 @@ const closeDropdown = () => {
 
 const handleLogout = () => {
   closeDropdown()
+  // placeholder for actual logout logic
 }
 
-// const currentPageName = computed(() => {
-//   const current = menuItems.find((item) => item.path === route.path);
-//   return current ? current.name : "Dashboard";
-// });
+// Reset demo states if they want to restore initial values
+const handleResetDemoState = () => {
+  if (window.confirm('Reset all local tickets and bookings state back to defaults?')) {
+    localStorage.removeItem('booking_support_tickets');
+    localStorage.removeItem('booking_support_bookings');
+    // reload to let app reinitialize from defaults
+    window.location.reload()
+  }
+}
 </script>
 
 <template>
-  <nav
-    class="sticky top-0 z-40 flex shrink-0 items-center justify-between border-b border-slate-200 bg-slate-200 p-4 text-slate-900 transition-colors dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-  >
-    <h1 class="text-xl font-bold">Unassigned Tickets</h1>
-
-    <div class="relative flex items-center">
-      <button
-        type="button"
-        class="mr-3 flex items-center justify-center text-slate-700 transition-colors dark:border-slate-600 dark:bg-slate-800 dark:text-amber-300"
-        @click="themeStore.toggleTheme"
+  <!-- Top universal Header bar -->
+  <header class="h-20 border-b border-slate-200 bg-white shrink-0 px-6 md:px-8 flex items-center justify-between z-10 shadow-xs" id="universal-header">
+    <!-- Left path info -->
+    <div class="flex items-center gap-3 select-none">
+      <button 
+        v-if="isSidebarCollapsed"
+        @click="uiStore.toggleSidebar()"
+        class="p-1.5 px-2.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-705 text-slate-600 transition cursor-pointer"
+        id="sidebar-expand-btn-outer"
+        title="Expand Sidebar"
       >
-        <span v-if="!isDark" class="material-symbols-outlined">light_mode</span>
-        <span v-else class="material-symbols-outlined">dark_mode</span>
+        Expand
+      </button>
+      <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+        <span class="uppercase">VeloPort Console</span>
+        <ChevronRight class="h-3 w-3 text-slate-350" />
+        <span class="uppercase text-indigo-600 font-bold tracking-wider">
+          <slot name="active-label">Backlog queue</slot>
+        </span>
+      </div>
+    </div>
+
+    <!-- Right widgets -->
+    <div class="flex items-center gap-4">
+      
+      <!-- Demo Reset helper -->
+      <button
+        @click="handleResetDemoState"
+        class="text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-200 transition-colors cursor-pointer"
+        title="Reset state values to starter defaults"
+      >
+        Reset Demo values
       </button>
 
+      <!-- Dark & Light Toggle block -->
       <button
-        class="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1 transition hover:bg-gray-100 dark:hover:bg-slate-800"
-        @click="toggleProfileDropdown"
+        @click="themeStore.toggleTheme()"
+        class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 cursor-pointer"
+        title="Toggle theme mode"
+        id="theme-toggler"
       >
-        <img :src="image" alt="profile" class="h-10 w-10 rounded-full" />
-        <div class="flex flex-col text-sm text-gray-600 dark:text-slate-300"></div>
+        <Moon v-if="!isDark" class="h-5 w-5" />
+        <Sun v-else class="h-5 w-5 text-amber-400" />
       </button>
 
-      <div
-        v-if="profileDropdownOpen"
-        class="absolute right-0 top-15 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800"
-      >
+      <!-- Notification system bell -->
+      <div class="relative">
+        <button class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200">
+          <Bell class="h-5 w-5" />
+        </button>
+        <span class="absolute top-1 right-1 h-2.5 w-2.5 bg-indigo-600 rounded-full ring-2 ring-white animate-none" />
+      </div>
+
+      <div class="border-l border-slate-200 h-6 shrink-0" />
+
+      <!-- User identification avatar card -->
+      <div class="flex items-center gap-3 select-none">
+        <div class="text-right hidden sm:block font-sans">
+          <p class="text-xs font-bold text-slate-800 leading-none">M Mike</p>
+          <p class="text-[10px] text-slate-400 mt-1 font-mono leading-none">Desk Agent</p>
+        </div>
+        <div @click="toggleProfileDropdown" class="h-9 w-9 rounded-xl bg-indigo-600 text-white font-bold flex items-center justify-center shadow shadow-indigo-600/30 border border-indigo-500/10 text-xs shrink-0 select-none cursor-pointer">
+          <img :src="image" alt="profile" class="h-9 w-9 rounded-xl object-cover" />
+        </div>
+      </div>
+
+      <!-- Profile dropdown -->
+      <div v-if="profileDropdownOpen" class="absolute right-6 top-20 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800">
         <div class="py-2">
-          <button
-            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            @click="closeDropdown"
-          >
-            <span class="material-symbols-outlined text-lg">account_circle</span>
+          <button @click="closeDropdown" class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700">
+            <span class="text-lg"><LifeBuoy class="h-4 w-4" /></span>
             <span>My Profile</span>
           </button>
-
-          <button
-            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            @click="closeDropdown"
-          >
-            <span class="material-symbols-outlined text-lg">settings</span>
+          <button @click="closeDropdown" class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700">
+            <span class="text-lg"><Info class="h-4 w-4" /></span>
             <span>Settings</span>
           </button>
-
-          <button
-            class="flex w-full items-center gap-2 px-4 py-2 text-left font-semibold text-red-600 transition hover:bg-red-50"
-            @click="handleLogout"
-          >
-            <span class="material-symbols-outlined text-lg">logout</span>
+          <button @click="handleLogout" class="flex w-full items-center gap-2 px-4 py-2 text-left font-semibold text-red-600 transition hover:bg-red-50">
+            <span class="text-lg"><Check class="h-4 w-4" /></span>
             <span>Logout</span>
           </button>
         </div>
       </div>
+
     </div>
-  </nav>
+  </header>
 </template>

@@ -35,7 +35,15 @@ const unassignedCount = tickets.filter(t => t.acceptedBy == null).length
     <div
       class="flex h-screen min-w-0 flex-1 flex-col overflow-hidden bg-slate-100 transition-colors dark:bg-slate-950"
     >
-      <AppNavbar />
+      <AppNavbar>
+        <template #active-label>
+          <template v-if="activeTab === 'unassigned'">Backlog queue</template>
+          <template v-else-if="activeTab === 'my-tickets'">Agent claimed</template>
+          <template v-else-if="activeTab === 'booked-tickets'">Luggage manifests</template>
+          <template v-else-if="activeTab === 'analytics'">Operational dashboard</template>
+        </template>
+      </AppNavbar>
+
       <main
         class="min-w-0 flex-1 overflow-y-auto bg-slate-100 p-6 transition-colors dark:bg-slate-950"
       >
