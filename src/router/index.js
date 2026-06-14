@@ -1,24 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Tickets from '@/views/Tickets/TicketsView.vue'
+import Sidebar from '@/components/Sidebar.vue'
+import UnassignedTicketsPage from '@/components/UnassignedTicketsPage.vue'
+import MyWorkspacePage from '@/components/MyWorkspacePage.vue'
+import BookedTicketsPage from '@/components/BookedTicketsPage.vue'
+import DashboardAnalyticsPage from '@/components/DashboardAnalyticsPage.vue'
+
+const routes = [
+  { path: '/', redirect: '/unassigned' },
+  { path: '/unassigned', name: 'unassigned', component: UnassignedTicketsPage },
+  { path: '/my-tickets', name: 'my-tickets', component: MyWorkspacePage },
+  { path: '/booked-tickets', name: 'booked-tickets', component: BookedTicketsPage },
+  { path: '/analytics', name: 'analytics', component: DashboardAnalyticsPage },
+  // Fallback to unassigned
+  { path: '/:catchAll(.*)', redirect: '/unassigned' },
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      redirect: '/tickets',
-    },
-    {
-      path: '/tickets',
-      name: 'tickets',
-      component: Tickets,
-    },
-    {
-      path: '/agent',
-      name: 'agent',
-      component: () => import('@/views/Agents/AgentsViews.vue'),
-    },
-  ],
+  routes,
 })
 
 export default router
