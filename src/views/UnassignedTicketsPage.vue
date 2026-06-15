@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { Plus, X, Sparkles } from 'lucide-vue-next';
 
 import SortControls from '@/components/UnassignedTickets/SortControls.vue'
@@ -12,7 +12,17 @@ import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
 
 const ticketStore = useTicketStore()
-const { tickets } = storeToRefs(ticketStore)
+let tickets = ref([])
+try {
+  const refs = storeToRefs(ticketStore)
+  if (refs && refs.tickets) tickets = refs.tickets
+} catch (e) {
+  console.error('Failed to get tickets from ticketStore', e)
+}
+
+onMounted(()=>{
+  console.log('UnassignedTicketsPage mounted - tickets count:', Array.isArray(tickets.value) ? tickets.value.length : typeof tickets.value, tickets.value)
+})
 
 
 // handler functions
