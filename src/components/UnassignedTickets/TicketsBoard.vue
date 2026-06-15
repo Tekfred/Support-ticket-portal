@@ -15,6 +15,11 @@ const emit = defineEmits(['acceptTicket','update:currentPage'])
 const startIndex = computed(() => (props.currentPage - 1) * props.itemsPerPage)
 const paginatedTickets = computed(() => props.tickets.slice(startIndex.value, startIndex.value + props.itemsPerPage))
 
+let activeActionsId = null
+function toggleActions(id){ activeActionsId = activeActionsId === id ? null : id }
+
+function handleAccept(id){ emit('acceptTicket', id) }
+
 function getAvatarInitials(comp){ if(!comp) return '?'; return comp.split(' ')[0][0].toUpperCase() }
 function getAvatarBackground(comp){ const char = getAvatarInitials(comp); const code = char.charCodeAt(0) || 0; if(code % 3 === 0) return 'bg-orange-500 text-white'; if(code % 3 === 1) return 'bg-slate-700 text-white'; return 'bg-indigo-600 text-white'; }
 function getStatusStyle(status){ switch(status){ case 'Pending': return 'bg-violet-50 text-violet-600 border border-violet-200'; case 'On-Hold': return 'bg-amber-50 text-amber-600 border border-amber-200'; case 'Candidate': return 'bg-indigo-50 text-indigo-700 border border-indigo-200'; case 'Resolved': return 'bg-emerald-50 text-emerald-700 border border-emerald-200'; default: return 'bg-slate-50 text-slate-600 border border-slate-200'; } }
@@ -83,7 +88,7 @@ function toggleActions(id){ activeActionsId = activeActionsId === id ? null : id
           </div>
         </div>
 
-        <div @click="$emit('acceptTicket', ticket.id)" class="absolute inset-x-0 bottom-0 py-3 bg-indigo-600 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold text-xs tracking-wide cursor-pointer shadow-inner gap-1"><UserPlus class="h-3.5 w-3.5"/>ACCEPT AND CLAIM TICKET</div>
+        <div @click="handleAccept(ticket.id)" class="absolute inset-x-0 bottom-0 py-3 bg-indigo-600 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold text-xs tracking-wide cursor-pointer shadow-inner gap-1"><UserPlus class="h-3.5 w-3.5"/>ACCEPT AND CLAIM TICKET</div>
       </div>
     </div>
 

@@ -23,14 +23,22 @@ import SortControls from '@/components/UnassignedTickets/SortControls.vue'
 import TicketsBoard from '@/components/UnassignedTickets/TicketsBoard.vue'
 import NewTickets from '@/components/UnassignedTickets/NewTickets.vue'
 
-const props = defineProps({
-  tickets: {
-    type: Array,
-    required: true
-  }
-});
+import { storeToRefs } from 'pinia'
+import { useTicketStore } from '@/stores/ticketStore'
 
-const emit = defineEmits(['acceptTicket', 'createTicket']);
+const ticketStore = useTicketStore()
+const { tickets } = storeToRefs(ticketStore)
+
+const emit = defineEmits(['createTicket']);
+
+// handler functions
+const acceptTicketHandler = (id) => {
+  ticketStore.acceptTicket(id)
+}
+const createTicketHandler = (payload) => {
+  ticketStore.createTicket(payload)
+}
+
 
 // Local page state
 const activeFilter = ref('All');
@@ -59,7 +67,7 @@ const currentPage = ref(1);
 const itemsPerPage = 6;
 
 // Filter unassigned tickets
-const unassignedTickets = computed(() => props.tickets.filter(t => !t.acceptedBy));
+const unassignedTickets = computed(() => tickets.value.filter(t => !t.acceptedBy));
 
 // Apply filters
 const filteredTickets = computed(() => {
@@ -216,16 +224,16 @@ const toggleActions = (id) => {
     />
 
     <!-- New Tickets summary -->
-    <NewTickets :tickets="props.tickets" :activeFilter="activeFilter" :searchQuery="searchQuery" :sortBy="sortBy" />
+    <NewTickets :tickets="tickets.value" :activeFilter="activeFilter" :searchQuery="searchQuery" :sortBy="sortBy" />
 
 
     <TicketsBoard
-      :tickets="sortedTickets"
+      :tickets="sortedTickets.value"
       :viewMode="viewMode"
       :currentPage="currentPage"
       :itemsPerPage="itemsPerPage"
       :totalPages="totalPages"
-      @acceptTicket="id => emit('acceptTicket', id)"
+      @acceptTicket="id => acceptTicketHandler(id)"
       @update:currentPage="val => currentPage = val"
     />
 
