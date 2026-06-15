@@ -1,19 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import {
-  Search,
-  LayoutGrid,
-  List,
-  Plus,
-  Phone,
-  Mail,
-  MoreVertical,
-  X,
-  AlertCircle,
-  Clock,
-  UserPlus,
-  Trash2,
-  SlidersHorizontal,
+
   ChevronLeft,
   ChevronRight,
   Sparkles
@@ -152,7 +140,7 @@ const handleCreateSubmit = () => {
     return;
   }
 
-  emit('createTicket', {
+  createTicketHandler({
     company: newTicketComp.value,
     category: newTicketCat.value || 'Support Operations',
     position: newTicketPos.value,
@@ -175,9 +163,7 @@ const handleCreateSubmit = () => {
   isCreateOpen.value = false;
 };
 
-const toggleActions = (id) => {
-  activeActionsId.value = activeActionsId.value === id ? null : id;
-};
+
 </script>
 
 <template>
@@ -335,177 +321,168 @@ const toggleActions = (id) => {
       </button>
     </div>
 
-    <!-- Create Ticket Dialog Modal Overlay -->
-    <Transition name="modal">
-      <div v-if="isCreateOpen" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-none" id="modal-container-create-ticket">
-        <!-- Click-outside listener -->
-        <div class="absolute inset-0" @click="isCreateOpen = false" />
+    <Modal :show="isCreateOpen" @update:show="isCreateOpen = $event">
+      <!-- Header -->
+      <div class="bg-slate-900 text-white p-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <Sparkles class="h-5 w-5 text-indigo-400" />
+          <h2 class="text-lg font-display font-bold">Launch Customer Ticket</h2>
+        </div>
+        <button
+          @click="isCreateOpen = false"
+          class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+        >
+          <X class="h-5 w-5" />
+        </button>
+      </div>
 
-        <!-- Modal Dialog Content -->
-        <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl relative z-10 border border-slate-200 overflow-hidden text-left">
-          <!-- Header -->
-          <div class="bg-slate-900 text-white p-5 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <Sparkles class="h-5 w-5 text-indigo-400" />
-              <h2 class="text-lg font-display font-bold">Launch Customer Ticket</h2>
-            </div>
-            <button
-              @click="isCreateOpen = false"
-              class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
-            >
-              <X class="h-5 w-5" />
-            </button>
+      <!-- Form Body -->
+      <form @submit.prevent="handleCreateSubmit" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Company/Client Name -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Company Name *</label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. Mosciski Inc."
+              v-model="newTicketComp"
+              class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
+            />
           </div>
 
-          <!-- Form Body -->
-          <form @submit.prevent="handleCreateSubmit" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-            <div class="grid grid-cols-2 gap-4">
-              <!-- Company/Client Name -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Company Name *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Mosciski Inc."
-                  v-model="newTicketComp"
-                  class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
-                />
-              </div>
-
-              <!-- Category -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Category</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Creative Design Agency"
-                  v-model="newTicketCat"
-                  class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
-                />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-              <!-- Position -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Target Title *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Intern UI Designer"
-                  v-model="newTicketPos"
-                  class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
-                />
-              </div>
-
-              <!-- Department -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Department</label>
-                <input
-                  type="text"
-                  v-model="newTicketDept"
-                  class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
-                />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-3">
-              <!-- Ticket Type -->
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Contract Type</label>
-                <select
-                  v-model="newTicketType"
-                  class="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-medium cursor-pointer"
-                >
-                  <option value="FREELANCE">Freelance</option>
-                  <option value="PART TIME">Part Time</option>
-                  <option value="FULLTIME">Fulltime</option>
-                </select>
-              </div>
-
-              <!-- Initial Status -->
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Status</label>
-                <select
-                  v-model="newTicketStatus"
-                  class="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-medium cursor-pointer"
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="On-Hold">On-Hold</option>
-                  <option value="Candidate">Candidate</option>
-                </select>
-              </div>
-
-              <!-- Priority -->
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
-                <select
-                  v-model="newTicketPriority"
-                  class="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-medium cursor-pointer"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                  <option value="critical">Critical</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-              <!-- Email -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Email address</label>
-                <input
-                  type="email"
-                  placeholder="customer@net.com"
-                  v-model="newTicketEmail"
-                  class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
-                />
-              </div>
-
-              <!-- Phone -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Phone line</label>
-                <input
-                  type="text"
-                  placeholder="+1 (555) 000-0000"
-                  v-model="newTicketPhone"
-                  class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
-                />
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div>
-              <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Support Issue Details *</label>
-              <textarea
-                rows="3"
-                placeholder="Provide a functional overview of the customer’s request, luggage challenges, or transport issues..."
-                v-model="newTicketDesc"
-                class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans resize-none"
-                required
-              />
-            </div>
-
-            <!-- Submit Panel -->
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                @click="isCreateOpen = false"
-                class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 text-xs font-bold transition-all cursor-pointer"
-              >
-                Discard
-              </button>
-              <button
-                type="submit"
-                class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-600/10 cursor-pointer"
-              >
-                Release Ticket
-              </button>
-            </div>
-          </form>
+          <!-- Category -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Category</label>
+            <input
+              type="text"
+              placeholder="e.g. Creative Design Agency"
+              v-model="newTicketCat"
+              class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
+            />
+          </div>
         </div>
-      </div>
-    </Transition>
+
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Position -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Target Title *</label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. Intern UI Designer"
+              v-model="newTicketPos"
+              class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
+            />
+          </div>
+
+          <!-- Department -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Department</label>
+            <input
+              type="text"
+              v-model="newTicketDept"
+              class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Ticket Type -->
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Contract Type</label>
+            <select
+              v-model="newTicketType"
+              class="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-medium cursor-pointer"
+            >
+              <option value="FREELANCE">Freelance</option>
+              <option value="PART TIME">Part Time</option>
+              <option value="FULLTIME">Fulltime</option>
+            </select>
+          </div>
+
+          <!-- Initial Status -->
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Status</label>
+            <select
+              v-model="newTicketStatus"
+              class="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-medium cursor-pointer"
+            >
+              <option value="Pending">Pending</option>
+              <option value="On-Hold">On-Hold</option>
+              <option value="Candidate">Candidate</option>
+            </select>
+          </div>
+
+          <!-- Priority -->
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
+            <select
+              v-model="newTicketPriority"
+              class="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-medium cursor-pointer"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Email -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Email address</label>
+            <input
+              type="email"
+              placeholder="customer@net.com"
+              v-model="newTicketEmail"
+              class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Phone line</label>
+            <input
+              type="text"
+              placeholder="+1 (555) 000-0000"
+              v-model="newTicketPhone"
+              class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans"
+            />
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Support Issue Details *</label>
+          <textarea
+            rows="3"
+            placeholder="Provide a functional overview of the customer’s request, luggage challenges, or transport issues..."
+            v-model="newTicketDesc"
+            class="w-full text-xs p-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none focus:border-indigo-500 font-sans resize-none"
+            required
+          />
+        </div>
+
+        <!-- Submit Panel -->
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+          <button
+            type="button"
+            @click="isCreateOpen = false"
+            class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 text-xs font-bold transition-all cursor-pointer"
+          >
+            Discard
+          </button>
+          <button
+            type="submit"
+            class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-600/10 cursor-pointer"
+          >
+            Release Ticket
+          </button>
+        </div>
+      </form>
+    </Modal>
   </div>
 </template>
 
