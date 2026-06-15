@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
 import UnassignedTicketsPage from '@/components/UnassignedTicketsPage.vue'
 import MyWorkspacePage from '@/components/MyWorkspacePage.vue'
 import BookedTicketsPage from '@/components/BookedTicketsPage.vue'
