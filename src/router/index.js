@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import UnassignedTicketsPage from '@/components/UnassignedTicketsPage.vue'
-import MyWorkspacePage from '@/components/MyWorkspacePage.vue'
-import BookedTicketsPage from '@/components/BookedTicketsPage.vue'
-import DashboardAnalyticsPage from '@/components/DashboardAnalyticsPage.vue'
+import UnassignedTicketsPage from '@/views/UnassignedTicketsPage.vue'
+import MyWorkspacePage from '@/views/MyWorkspacePage.vue'
+import BookedTicketsPage from '@/views/BookedTicketsPage.vue'
+import DashboardAnalyticsPage from '@/views/DashboardAnalyticsPage.vue'
 
 const routes = [
   { path: '/', redirect: '/unassigned' },
