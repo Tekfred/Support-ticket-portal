@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { UserPlus, Clock } from 'lucide-vue-next'
+import { computed } from 'vue'
+import { Clock } from 'lucide-vue-next'
 
 const props = defineProps({
   tickets: { type: Array, required: true },
@@ -9,8 +9,6 @@ const props = defineProps({
   sortBy: { type: String, required: true },
   itemsPerPage: { type: Number, default: 3 }
 })
-
-const emit = defineEmits(['acceptTicket'])
 
 const unassignedTickets = computed(() => props.tickets.filter(t => !t.acceptedBy))
 
