@@ -4,7 +4,7 @@ import { Plus, X, Sparkles } from 'lucide-vue-next';
 
 import SortControls from '@/components/UnassignedTickets/SortControls.vue'
 import TicketsBoard from '@/components/UnassignedTickets/TicketsBoard.vue'
-import NewTickets from '@/components/UnassignedTickets/NewTickets.vue'
+// import NewTickets from '@/components/UnassignedTickets/NewTickets.vue'
 import NewTicketForm from '@/components/UnassignedTickets/NewTicketForm.vue'
 import Modal from '@/components/Shared/Modal.vue'
 
@@ -90,7 +90,7 @@ const totalPages = computed(() => Math.ceil(sortedTickets.value.length / itemsPe
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen overflow-y-auto bg-slate-50 p-6 md:p-8 font-sans">
+  <div class="flex-1 min-h-screen overflow-y-auto  p-6 md:p-8 font-sans">
     <!-- Top Header Section -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8" id="unassigned-header-section">
       <div>
@@ -133,11 +133,11 @@ const totalPages = computed(() => Math.ceil(sortedTickets.value.length / itemsPe
     />
 
     <!-- New Tickets summary -->
-    <NewTickets :tickets="tickets.value" :activeFilter="activeFilter" :searchQuery="searchQuery" :sortBy="sortBy" />
+    <!-- <NewTickets :tickets="tickets" :activeFilter="activeFilter" :searchQuery="searchQuery" :sortBy="sortBy" /> -->
 
 
     <TicketsBoard
-      :tickets="sortedTickets.value"
+      :tickets="sortedTickets"
       :viewMode="viewMode"
       :currentPage="currentPage"
       :itemsPerPage="itemsPerPage"

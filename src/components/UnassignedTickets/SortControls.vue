@@ -1,8 +1,7 @@
 <script setup>
-import { toRefs } from 'vue'
 import { Search, LayoutGrid, List, SlidersHorizontal } from 'lucide-vue-next'
 
-const props = defineProps({
+const { activeFilter, searchQuery, sortBy, viewMode } = defineProps({
   activeFilter: { type: String, required: true },
   searchQuery: { type: String, required: true },
   sortBy: { type: String, required: true },

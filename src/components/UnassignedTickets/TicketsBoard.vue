@@ -25,8 +25,6 @@ function getAvatarBackground(comp){ const char = getAvatarInitials(comp); const 
 function getStatusStyle(status){ switch(status){ case 'Pending': return 'bg-violet-50 text-violet-600 border border-violet-200'; case 'On-Hold': return 'bg-amber-50 text-amber-600 border border-amber-200'; case 'Candidate': return 'bg-indigo-50 text-indigo-700 border border-indigo-200'; case 'Resolved': return 'bg-emerald-50 text-emerald-700 border border-emerald-200'; default: return 'bg-slate-50 text-slate-600 border border-slate-200'; } }
 function getPriorityStyle(p){ switch(p){ case 'critical': return 'bg-red-500 text-white font-semibold'; case 'high': return 'bg-rose-100 text-rose-700'; case 'medium': return 'bg-yellow-100 text-yellow-800'; case 'low': return 'bg-slate-100 text-slate-700'; } }
 
-let activeActionsId = null
-function toggleActions(id){ activeActionsId = activeActionsId === id ? null : id }
 </script>
 
 <template>

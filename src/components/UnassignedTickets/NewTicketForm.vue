@@ -1,3 +1,60 @@
+
+<script setup>
+import { ref } from 'vue'
+const emit = defineEmits(['create', 'close'])
+
+const company = ref('')
+const category = ref('')
+const position = ref('')
+const type = ref('FULLTIME')
+const status = ref('Pending')
+const department = ref('Support Operations')
+const priority = ref('medium')
+const email = ref('')
+const phone = ref('')
+const description = ref('')
+
+const resetForm = () => {
+  company.value = ''
+  category.value = ''
+  position.value = ''
+  type.value = 'FULLTIME'
+  status.value = 'Pending'
+  department.value = 'Support Operations'
+  priority.value = 'medium'
+  email.value = ''
+  phone.value = ''
+  description.value = ''
+}
+
+const onSubmit = () => {
+  if (!company.value || !position.value || !description.value) {
+    window.alert('Please fill out the Company, Position, and Description fields.')
+    return
+  }
+
+  emit('create', {
+    company: company.value,
+    category: category.value || 'Support Operations',
+    position: position.value,
+    type: type.value,
+    status: status.value,
+    department: department.value,
+    priority: priority.value,
+    email: email.value || 'customer@example.com',
+    phone: phone.value || '+1 (555) 012-3456',
+    description: description.value,
+  })
+
+  resetForm()
+  emit('close')
+}
+
+const onDiscard = () => {
+  resetForm()
+  emit('close')
+}
+</script>
 <template>
   <form @submit.prevent="onSubmit" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
     <div class="grid grid-cols-2 gap-4">
@@ -72,60 +129,3 @@
     </div>
   </form>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-const emit = defineEmits(['create', 'close'])
-
-const company = ref('')
-const category = ref('')
-const position = ref('')
-const type = ref('FULLTIME')
-const status = ref('Pending')
-const department = ref('Support Operations')
-const priority = ref('medium')
-const email = ref('')
-const phone = ref('')
-const description = ref('')
-
-const resetForm = () => {
-  company.value = ''
-  category.value = ''
-  position.value = ''
-  type.value = 'FULLTIME'
-  status.value = 'Pending'
-  department.value = 'Support Operations'
-  priority.value = 'medium'
-  email.value = ''
-  phone.value = ''
-  description.value = ''
-}
-
-const onSubmit = () => {
-  if (!company.value || !position.value || !description.value) {
-    window.alert('Please fill out the Company, Position, and Description fields.')
-    return
-  }
-
-  emit('create', {
-    company: company.value,
-    category: category.value || 'Support Operations',
-    position: position.value,
-    type: type.value,
-    status: status.value,
-    department: department.value,
-    priority: priority.value,
-    email: email.value || 'customer@example.com',
-    phone: phone.value || '+1 (555) 012-3456',
-    description: description.value,
-  })
-
-  resetForm()
-  emit('close')
-}
-
-const onDiscard = () => {
-  resetForm()
-  emit('close')
-}
-</script>
