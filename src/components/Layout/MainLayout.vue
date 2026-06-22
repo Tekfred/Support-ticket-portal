@@ -1,10 +1,14 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import AppNavbar from '@/components/Layout/AppNavbar.vue'
 import Sidebar from '@/components/Layout/Sidebar.vue'
 import { useUiStore } from '@/stores/uiStore'
 import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
+
+const router = useRouter()
+const route = useRoute()
 
 // UI store controls the sidebar open/closed state. Sidebar component expects "isCollapsed" boolean.
 const uiStore = useUiStore()
@@ -17,9 +21,25 @@ const setIsCollapsed = (val) => {
 // Local UI state for active tab and counts derived from ticketStore
 const ticketStore = useTicketStore()
 const { tickets } = storeToRefs(ticketStore)
-const activeTab = ref('unassigned')
+const activeTab = computed(() => {
+  const routeName = route.name
+  if (routeName === 'my-tickets') return 'my-tickets'
+  if (routeName === 'booked-tickets') return 'booked-tickets'
+  if (routeName === 'analytics') return 'analytics'
+  return 'unassigned'
+})
 const myTicketsCount = computed(() => tickets.value.filter(t => t.acceptedBy === 'ansahaudi86@gmail.com').length)
 const unassignedCount = computed(() => tickets.value.filter(t => t.acceptedBy == null).length)
+
+const selectTab = (tabId) => {
+  const routeMap = {
+    'unassigned': '/unassigned',
+    'my-tickets': '/my-tickets',
+    'booked-tickets': '/booked-tickets',
+    'analytics': '/analytics'
+  }
+  router.push(routeMap[tabId])
+}
 </script>
 
 <template>
@@ -28,7 +48,7 @@ const unassignedCount = computed(() => tickets.value.filter(t => t.acceptedBy ==
   >
     <Sidebar
       :activeTab="activeTab"
-      @selectTab="activeTab = $event"
+      @selectTab="selectTab"
       :isCollapsed="isCollapsed"
       @setIsCollapsed="setIsCollapsed"
       :myTicketsCount="myTicketsCount"
