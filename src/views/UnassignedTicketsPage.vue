@@ -12,13 +12,7 @@ import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
 
 const ticketStore = useTicketStore()
-let tickets = ref([])
-try {
-  const refs = storeToRefs(ticketStore)
-  if (refs && refs.tickets) tickets = refs.tickets
-} catch (e) {
-  console.error('Failed to get tickets from ticketStore', e)
-}
+const { tickets } = storeToRefs(ticketStore)
 
 onMounted(()=>{
   console.log('UnassignedTicketsPage mounted - tickets count:', Array.isArray(tickets.value) ? tickets.value.length : typeof tickets.value, tickets.value)

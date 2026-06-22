@@ -45,9 +45,25 @@ export const useTicketStore = defineStore('tickets', () => {
     return ticket
   }
 
+  function updateTicket(updatedTicket) {
+    const index = tickets.value.findIndex(t => t.id === updatedTicket.id)
+    if (index === -1) return
+    tickets.value[index] = updatedTicket
+    persist()
+  }
+
+  function releaseTicket(id) {
+    const t = tickets.value.find(x => x.id === id)
+    if (!t) return
+    t.acceptedBy = null
+    persist()
+  }
+
   function reload() {
     tickets.value = loadTickets() || INITIAL_TICKETS
   }
 
-  return { tickets, acceptTicket, createTicket, persist, reload }
+  return { tickets, acceptTicket, createTicket, updateTicket, releaseTicket, persist, reload }
 })
+
+
