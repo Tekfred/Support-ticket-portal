@@ -3,9 +3,9 @@ import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
 
-// import WorkspaceHeader from '@/components/MyTickets/Workspaceheader.vue'
+import WorkspaceHeader from '@/components/MyTickets/Workspaceheader.vue'
 import TicketGrid from '@/components/MyTickets/Ticketsgrid.vue'
-// import TicketDetailView from '@/components/MyTickets/Ticketdetailview.vue'
+import TicketDetailView from '@/components/MyTickets/Ticketdetailview.vue'
 
 // ── Store ──────────────────────────────────────────────────────────────
 const ticketStore = useTicketStore()
