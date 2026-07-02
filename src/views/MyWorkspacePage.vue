@@ -3,9 +3,9 @@ import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
 
-// import WorkspaceHeader from '@/components/MyTickets/Workspaceheader.vue'
+import WorkspaceHeader from '@/components/MyTickets/Workspaceheader.vue'
 import TicketGrid from '@/components/MyTickets/Ticketsgrid.vue'
-// import TicketDetailView from '@/components/MyTickets/Ticketdetailview.vue'
+import TicketDetailView from '@/components/MyTickets/Ticketdetailview.vue'
 
 // ── Store ──────────────────────────────────────────────────────────────
 const ticketStore = useTicketStore()
@@ -45,7 +45,7 @@ function handleReleaseTicket(id) {
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen bg-slate-50 p-6 md:p-8 overflow-y-auto font-sans">
+  <div class="flex-1 min-h-screen p-6 md:p-8 overflow-y-auto font-sans">
     <Transition name="fade-slide" mode="out-in">
 
       <!-- LIST VIEW -->

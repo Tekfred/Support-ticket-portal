@@ -129,7 +129,7 @@ const totalPages = computed(() => Math.ceil(sortedTickets.value.length / itemsPe
     <!-- New Tickets summary -->
     <!-- <NewTickets :tickets="tickets" :activeFilter="activeFilter" :searchQuery="searchQuery" :sortBy="sortBy" /> -->
 
-
+   
     <TicketsBoard
       :tickets="sortedTickets"
       :viewMode="viewMode"
