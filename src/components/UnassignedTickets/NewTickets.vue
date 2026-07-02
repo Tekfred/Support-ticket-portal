@@ -42,19 +42,19 @@ function getAvatarBackground(comp){ const char = getAvatarInitials(comp); const 
 
 <template>
   <div class="space-y-3">
-    <h2 class="text-lg font-semibold">New Tickets</h2>
+    <h2 class="text-lg font-semibold dark:text-slate-100">New Tickets</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div v-for="t in recent" :key="t.id" class="p-3 bg-white rounded-xl border border-slate-200 flex items-start gap-3">
+      <div v-for="t in recent" :key="t.id" class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-start gap-3 transition-colors">
         <div class="h-10 w-10 rounded-lg flex items-center justify-center font-bold" :class="getAvatarBackground(t.company)">{{ getAvatarInitials(t.company) }}</div>
         <div class="flex-1">
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-sm font-bold">{{ t.company }}</div>
-              <div class="text-xs text-slate-500">{{ t.position }}</div>
+              <div class="text-sm font-bold dark:text-slate-100">{{ t.company }}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400">{{ t.position }}</div>
             </div>
-            <div class="text-xs text-slate-400 font-mono">#{{ t.id }}</div>
+            <div class="text-xs text-slate-400 dark:text-slate-500 font-mono">#{{ t.id }}</div>
           </div>
-          <div class="mt-2 text-xs text-slate-500 flex items-center gap-2">
+          <div class="mt-2 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
             <Clock class="h-3.5 w-3.5" />
             <span>{{ t.appliedDate }}</span>
           </div>
