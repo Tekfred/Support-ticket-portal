@@ -9,7 +9,7 @@ import BookingForm from '@/components/BookedTickets/BookingForm.vue'
 defineOptions({ name: 'BookedTicketsPage' })
 
 // Props from App.vue
-defineProps({
+const props = defineProps({
   bookings: { type: Array, default: () => [] }
 })
 
@@ -101,7 +101,7 @@ const handleCreateBooking = (newBooking) => {
   <div class="flex-1 min-h-screen overflow-y-auto p-6 md:p-8 font-sans">
     <!-- Page Header -->
     <BookingsHeader
-      :bookingsCount="bookings.length"
+      :bookingsCount="props.bookings.length"
       @openAddModal="isFormOpen = true"
     />
 
