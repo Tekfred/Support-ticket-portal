@@ -27,7 +27,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
   <Transition name="slide">
     <div
       v-if="isOpen && booking"
-      class="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-white dark:bg-slate-900 shadow-2xl dark:shadow-2xl border-l border-slate-200 dark:border-slate-700 overflow-y-auto transition-colors"
+      class="fixed right-0 top-0 bottom-0 w-full sm:w-120 bg-white dark:bg-slate-900 shadow-2xl dark:shadow-2xl border-l border-slate-200 dark:border-slate-700 overflow-y-auto transition-colors"
       style="z-index: 41"
     >
       <!-- Close Button -->
@@ -124,7 +124,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
         <!-- Notes -->
         <div class="space-y-2">
           <h5 class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Notes</h5>
-          <p class="text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-200 dark:border-slate-700 min-h-[60px] leading-relaxed transition-colors">
+          <p class="text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-200 dark:border-slate-700 min-h-15 leading-relaxed transition-colors">
             {{ booking.notes || '—' }}
           </p>
         </div>

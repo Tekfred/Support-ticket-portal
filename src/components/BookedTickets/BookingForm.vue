@@ -7,7 +7,7 @@ defineProps({
   isOpen: { type: Boolean, required: true }
 })
 
-defineEmits(['close', 'submit'])
+const emit = defineEmits(['close', 'submit'])
 
 const formData = ref({
   customerName: '',

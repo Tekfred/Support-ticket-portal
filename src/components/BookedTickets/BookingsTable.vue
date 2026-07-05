@@ -39,7 +39,7 @@ const getStatusColor = (status) => {
   </div>
 
   <!-- Bookings Table -->
-  <div v-else class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm flex-1 min-h-[300px] transition-colors">
+  <div v-else class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm flex-1 min-h-75 transition-colors">
     <div class="overflow-x-auto h-full">
       <table class="w-full text-left border-collapse font-sans text-xs" id="bookings-table">
         <thead>
@@ -59,19 +59,19 @@ const getStatusColor = (status) => {
             @click="$emit('selectBooking', booking.id)"
             class="hover:bg-slate-50/30 dark:hover:bg-slate-800/30 group cursor-pointer transition-all"
             :class="[
-              booking.id === selectedBookingId 
-                ? 'bg-indigo-50/80 dark:bg-indigo-900/20 font-medium' 
+              booking.id === selectedBookingId
+                ? 'bg-indigo-50/80 dark:bg-indigo-900/20 font-medium'
                 : ''
             ]"
           >
             <!-- Store Code -->
             <td class="p-4 pl-6 select-none">
               <div class="flex items-center gap-2">
-                <div 
+                <div
                   class="h-8 w-8 rounded-lg flex items-center justify-center font-bold text-[10px] shadow-sm shrink-0 transition-colors"
                   :class="[
-                    booking.id === selectedBookingId 
-                      ? 'bg-indigo-600 text-white' 
+                    booking.id === selectedBookingId
+                      ? 'bg-indigo-600 text-white'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                   ]"
                 >
@@ -111,11 +111,11 @@ const getStatusColor = (status) => {
                 <span class="px-2.5 py-1 rounded-full font-semibold text-[10px] inline-block shrink-0" :class="getStatusColor(booking.status)">
                   {{ booking.status }}
                 </span>
-                <ChevronRight 
+                <ChevronRight
                   class="h-3.5 w-3.5 transition-all"
                   :class="[
-                    booking.id === selectedBookingId 
-                      ? 'text-indigo-600 dark:text-indigo-400 translate-x-1' 
+                    booking.id === selectedBookingId
+                      ? 'text-indigo-600 dark:text-indigo-400 translate-x-1'
                       : 'text-slate-300 dark:text-slate-600 opacity-0 group-hover:opacity-100'
                   ]"
                 />
