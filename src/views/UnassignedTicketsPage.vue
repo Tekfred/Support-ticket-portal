@@ -88,7 +88,7 @@ const totalPages = computed(() => Math.ceil(sortedTickets.value.length / itemsPe
     <!-- Top Header Section -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8" id="unassigned-header-section">
       <div>
-        <h1 class="text-3xl font-display font-bold text-slate-900 tracking-tight flex items-center gap-2">
+        <h1 class="text-3xl font-display font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
           Unassigned Tickets
           <span class="text-sm bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full font-mono font-medium ml-2">
             {{ unassignedTickets.length }} open
@@ -129,7 +129,7 @@ const totalPages = computed(() => Math.ceil(sortedTickets.value.length / itemsPe
     <!-- New Tickets summary -->
     <!-- <NewTickets :tickets="tickets" :activeFilter="activeFilter" :searchQuery="searchQuery" :sortBy="sortBy" /> -->
 
-   
+
     <TicketsBoard
       :tickets="sortedTickets"
       :viewMode="viewMode"
