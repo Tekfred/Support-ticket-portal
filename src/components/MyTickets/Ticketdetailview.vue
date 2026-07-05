@@ -69,15 +69,15 @@ function handleRelease(id) {
     <div class="flex items-center justify-between">
       <button
         @click="emit('back')"
-        class="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 bg-white px-4 py-2.5 border border-slate-200 rounded-xl shadow-sm transition-all cursor-pointer"
+        class="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 bg-white dark:bg-slate-900 px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm transition-all cursor-pointer"
       >
         <ArrowLeft class="h-4 w-4" />
         Back to Workspace
       </button>
 
       <div class="flex items-center gap-2">
-        <span class="text-xs text-slate-400 font-medium">Assigned Agent:</span>
-        <span class="text-xs bg-slate-900 text-white font-mono px-2.5 py-1 rounded-lg">
+        <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">Assigned Agent:</span>
+        <span class="text-xs bg-slate-900 dark:bg-slate-700 text-white dark:text-slate-100 font-mono px-2.5 py-1 rounded-lg">
           {{ ticket.acceptedBy }}
         </span>
       </div>
@@ -90,25 +90,25 @@ function handleRelease(id) {
       <div class="lg:col-span-2 space-y-6">
 
         <!-- Company Profile Card -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 md:p-8 transition-colors">
           <!-- Header Row -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100 dark:border-slate-700">
             <div class="flex items-center gap-4">
               <div class="h-14 w-14 bg-linear-to-tr from-indigo-600 to-violet-500 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg shrink-0">
                 {{ ticket.company.substring(0, 2).toUpperCase() }}
               </div>
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <h2 class="text-2xl font-display font-bold text-slate-900 leading-tight">
+                  <h2 class="text-2xl font-display font-bold text-slate-900 dark:text-slate-100 leading-tight">
                     {{ ticket.company }}
                   </h2>
                   <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" :class="getStatusStyle(ticket.status)">
                     {{ ticket.status }}
                   </span>
                 </div>
-                <p class="text-sm text-slate-500 font-medium mt-1">
+                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
                   {{ ticket.category }} •
-                  <span class="text-indigo-600 font-semibold font-mono">ID: #{{ ticket.id }}</span>
+                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold font-mono">ID: #{{ ticket.id }}</span>
                 </p>
               </div>
             </div>
@@ -120,30 +120,30 @@ function handleRelease(id) {
           <!-- Details Block -->
           <div class="space-y-4">
             <div>
-              <h4 class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-1">Target Application Role</h4>
-              <p class="text-lg font-semibold text-slate-800 font-display">{{ ticket.position }}</p>
+              <h4 class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500 mb-1">Target Application Role</h4>
+              <p class="text-lg font-semibold text-slate-800 dark:text-slate-200 font-display">{{ ticket.position }}</p>
             </div>
 
-            <div class="border-t border-slate-100 pt-4">
-              <h4 class="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Issue / Job Overview</h4>
-              <div class="text-sm text-slate-600 leading-relaxed bg-slate-50 rounded-xl p-4 border border-slate-100 whitespace-pre-wrap">
+            <div class="border-t border-slate-100 dark:border-slate-700 pt-4">
+              <h4 class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500 mb-2">Issue / Job Overview</h4>
+              <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700 whitespace-pre-wrap">
                 {{ ticket.description }}
               </div>
             </div>
 
             <!-- Meta Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 text-xs">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 dark:border-slate-700 text-xs">
               <div>
-                <span class="text-slate-400 block">Department</span>
-                <span class="font-bold text-slate-700 mt-1 block">{{ ticket.department }}</span>
+                <span class="text-slate-400 dark:text-slate-500 block">Department</span>
+                <span class="font-bold text-slate-700 dark:text-slate-300 mt-1 block">{{ ticket.department }}</span>
               </div>
               <div>
-                <span class="text-slate-400 block">Filing Timestamp</span>
-                <span class="text-slate-500 mt-1 font-mono block">{{ ticket.appliedDate }}</span>
+                <span class="text-slate-400 dark:text-slate-500 block">Filing Timestamp</span>
+                <span class="text-slate-500 dark:text-slate-400 mt-1 font-mono block">{{ ticket.appliedDate }}</span>
               </div>
               <div>
-                <span class="text-slate-400 block">Contract Format</span>
-                <span class="font-semibold bg-gray-100 text-gray-800 px-2 py-0.5 rounded inline-block mt-1">
+                <span class="text-slate-400 dark:text-slate-500 block">Contract Format</span>
+                <span class="font-semibold bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-slate-300 px-2 py-0.5 rounded inline-block mt-1">
                   {{ ticket.type }}
                 </span>
               </div>

@@ -24,7 +24,7 @@ function close() {
     >
       <div class="absolute inset-0" @click="close" />
       <div
-        class="bg-white rounded-2xl w-full max-w-lg shadow-2xl relative z-10 border border-slate-200 overflow-hidden text-left"
+        class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg shadow-2xl relative z-10 border border-slate-200 dark:border-slate-700 overflow-hidden text-left transition-colors"
       >
         <slot />
       </div>

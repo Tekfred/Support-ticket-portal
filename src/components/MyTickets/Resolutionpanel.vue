@@ -96,18 +96,18 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
     </div>
 
     <!-- Customer Contact Card -->
-    <div class="bg-white border border-slate-200 rounded-2xl p-6 text-left space-y-4 shadow-sm">
-      <h3 class="text-sm font-bold uppercase tracking-wider font-mono text-slate-400">Customer Contact Card</h3>
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 text-left space-y-4 shadow-sm transition-colors">
+      <h3 class="text-sm font-bold uppercase tracking-wider font-mono text-slate-400 dark:text-slate-500">Customer Contact Card</h3>
       <div class="space-y-3 text-xs leading-relaxed">
-        <div class="flex items-center gap-2.5 text-slate-600">
-          <Mail class="h-4 w-4 text-slate-400 shrink-0" />
-          <a :href="`mailto:${ticket.email}`" class="hover:underline hover:text-indigo-600 truncate">
+        <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
+          <Mail class="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" />
+          <a :href="`mailto:${ticket.email}`" class="hover:underline hover:text-indigo-600 dark:hover:text-indigo-400 truncate">
             {{ ticket.email }}
           </a>
         </div>
-        <div class="flex items-center gap-2.5 text-slate-600">
-          <Phone class="h-4 w-4 text-slate-400 shrink-0" />
-          <a :href="`tel:${ticket.phone}`" class="hover:underline hover:text-indigo-600">
+        <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
+          <Phone class="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" />
+          <a :href="`tel:${ticket.phone}`" class="hover:underline hover:text-indigo-600 dark:hover:text-indigo-400">
             {{ ticket.phone }}
           </a>
         </div>
