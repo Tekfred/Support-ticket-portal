@@ -1,5 +1,6 @@
 <script setup>
 import { X } from 'lucide-vue-next'
+import { ref } from 'vue'
 
 defineOptions({ name: 'BookingForm' })
 
@@ -42,7 +43,7 @@ const handleSubmit = () => {
     alert('Please fill in all required fields')
     return
   }
-  
+
   const newBooking = {
     id: Date.now().toString(),
     ...formData.value,
@@ -65,8 +66,6 @@ const handleClose = () => {
   resetForm()
   emit('close')
 }
-
-import { ref } from 'vue'
 </script>
 
 <template>
@@ -236,20 +235,22 @@ import { ref } from 'vue'
     </div>
   </Transition>
 
-  <style>
-    .fade-enter-active, .fade-leave-active {
-      transition: opacity 0.3s ease;
-    }
-    .fade-enter-from, .fade-leave-to {
-      opacity: 0;
-    }
-
-    .scale-enter-active, .scale-leave-active {
-      transition: all 0.3s ease;
-    }
-    .scale-enter-from, .scale-leave-to {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-  </style>
 </template>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.scale-enter-active, .scale-leave-active {
+  transition: all 0.3s ease;
+}
+.scale-enter-from, .scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+</style>
+
