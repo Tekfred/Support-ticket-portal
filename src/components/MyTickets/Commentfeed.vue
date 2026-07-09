@@ -22,7 +22,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden p-6 text-left transition-colors">
+  <div class="surface-card rounded-2xl overflow-hidden p-6 text-left">
     <!-- Header -->
     <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4 font-display">
       <MessageSquare class="h-5 w-5 text-indigo-500" />
@@ -48,8 +48,8 @@ function handleSubmit() {
         class="p-3.5 rounded-xl border flex gap-3 transition-colors"
         :class="[
           comment.author === 'M Mike'
-            ? 'bg-indigo-50/50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-900/30 ml-10'
-            : 'bg-slate-50/50 dark:bg-slate-800/30 border-slate-100 dark:border-slate-700 mr-10'
+            ? 'bg-indigo-50/60 dark:bg-indigo-950/30 border-indigo-100 dark:border-indigo-800/40 ml-10'
+            : 'bg-slate-50/70 dark:bg-slate-900/70 border-slate-100 dark:border-slate-800 mr-10'
         ]"
       >
         <!-- Avatar -->
@@ -83,7 +83,7 @@ function handleSubmit() {
           rows="2"
           placeholder="Type updates or correspondence notes (e.g. 'Site menu wireframes finished'...)"
           v-model="commentText"
-          class="w-full text-xs p-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-sans resize-none bg-slate-50/50 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-500 transition-colors"
+          class="w-full text-xs p-3 rounded-xl control-input font-sans resize-none"
           required
         />
       </div>

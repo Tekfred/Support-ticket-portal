@@ -27,11 +27,11 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
   <Transition name="slide">
     <div
       v-if="isOpen && booking"
-      class="fixed right-0 top-0 bottom-0 w-full sm:w-120 bg-white dark:bg-slate-900 shadow-2xl dark:shadow-2xl border-l border-slate-200 dark:border-slate-700 overflow-y-auto transition-colors"
+      class="fixed right-0 top-0 bottom-0 w-full sm:w-120 bg-white dark:bg-[#0d111a] shadow-2xl dark:shadow-black/50 border-l border-slate-200 dark:border-slate-800 overflow-y-auto transition-colors"
       style="z-index: 41"
     >
       <!-- Close Button -->
-      <div class="sticky top-0 flex items-center justify-between p-6 bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+      <div class="sticky top-0 flex items-center justify-between p-6 bg-slate-50/90 dark:bg-slate-950/80 backdrop-blur border-b border-slate-200 dark:border-slate-800">
         <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Booking Details</h3>
         <button
           @click="$emit('close')"
@@ -43,7 +43,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
 
       <div class="p-6 space-y-6">
         <!-- Booking Header Card -->
-        <div class="bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-700 rounded-2xl p-4 transition-colors">
+        <div class="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/50 rounded-2xl p-4 transition-colors">
           <div class="flex items-start justify-between gap-4 mb-3">
             <div>
               <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100">{{ booking.customerName }}</h4>
@@ -108,7 +108,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
         </div>
 
         <!-- Luggage Summary -->
-        <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-200 dark:border-slate-700 transition-colors">
+        <div class="surface-soft rounded-xl p-4 transition-colors">
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
               <Luggage class="h-4 w-4 text-slate-600 dark:text-slate-400" />
@@ -124,7 +124,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
         <!-- Notes -->
         <div class="space-y-2">
           <h5 class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Notes</h5>
-          <p class="text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-200 dark:border-slate-700 min-h-15 leading-relaxed transition-colors">
+          <p class="text-sm text-slate-700 dark:text-slate-300 surface-soft rounded-lg p-3 min-h-15 leading-relaxed transition-colors">
             {{ booking.notes || '—' }}
           </p>
         </div>

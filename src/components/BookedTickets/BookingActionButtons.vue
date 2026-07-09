@@ -13,14 +13,14 @@ const statuses = ['Active', 'Checked in', 'Upcoming', 'Cancelled']
 </script>
 
 <template>
-  <div class="space-y-3 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors">
+  <div class="space-y-3 p-4 surface-soft rounded-xl transition-colors">
     <!-- Status Selector -->
     <div class="space-y-2">
       <label class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Update Status</label>
       <select
         :value="booking.status"
         @change="(e) => $emit('updateStatus', e.target.value)"
-        class="w-full px-3 py-2 text-sm rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 cursor-pointer hover:border-slate-300 dark:hover:border-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors font-medium"
+        class="w-full px-3 py-2 text-sm rounded-lg control-input cursor-pointer font-medium"
       >
         <option v-for="status in statuses" :key="status" :value="status">
           {{ status }}

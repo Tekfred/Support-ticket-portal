@@ -17,7 +17,7 @@ function onView(v){ emit('update:viewMode', v) }
 </script>
 
 <template>
-  <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700 shadow-sm mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-colors" id="filters-toolbar">
+  <div class="surface-card rounded-2xl p-4 mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4" id="filters-toolbar">
     <div class="flex flex-wrap items-center gap-1.5" id="status-chips-container">
       <button
         v-for="filter in ['All','Pending','On-Hold','Candidate']"
@@ -27,7 +27,7 @@ function onView(v){ emit('update:viewMode', v) }
         :class="[
           activeFilter === filter
             ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-            : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
+            : 'chip-muted'
         ]"
       >
         {{ filter }}
@@ -42,13 +42,13 @@ function onView(v){ emit('update:viewMode', v) }
           placeholder="Search details..."
           :value="searchQuery"
           @input="onSearch"
-          class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-sans dark:text-slate-100 dark:placeholder-slate-500"
+          class="w-full pl-9 pr-4 py-2 text-sm rounded-xl control-input font-sans"
         />
       </div>
 
       <div class="flex items-center gap-1.5">
         <SlidersHorizontal class="h-4 w-4 text-slate-400 dark:text-slate-500" />
-        <select :value="sortBy" @change="e => onSort(e.target.value)" class="text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-600 dark:text-slate-300 font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors">
+        <select :value="sortBy" @change="e => onSort(e.target.value)" class="text-xs control-input rounded-xl px-3 py-2 font-medium">
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
           <option value="priority">Priority</option>
@@ -56,11 +56,11 @@ function onView(v){ emit('update:viewMode', v) }
         </select>
       </div>
 
-      <div class="flex items-center rounded-xl bg-slate-100 dark:bg-slate-800 p-1">
-        <button @click="onView('grid')" class="p-1.5 rounded-lg transition-all cursor-pointer" :class="[viewMode === 'grid' ? 'bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-slate-100' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-400']" title="Grid Layout">
+      <div class="flex items-center rounded-xl surface-soft p-1">
+        <button @click="onView('grid')" class="p-1.5 rounded-lg transition-all cursor-pointer" :class="[viewMode === 'grid' ? 'bg-white dark:bg-slate-800 shadow-sm text-slate-800 dark:text-slate-100 ring-1 ring-slate-200 dark:ring-slate-700' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300']" title="Grid Layout">
           <LayoutGrid class="h-4 w-4" />
         </button>
-        <button @click="onView('list')" class="p-1.5 rounded-lg transition-all cursor-pointer" :class="[viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-slate-100' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-400']" title="List Layout">
+        <button @click="onView('list')" class="p-1.5 rounded-lg transition-all cursor-pointer" :class="[viewMode === 'list' ? 'bg-white dark:bg-slate-800 shadow-sm text-slate-800 dark:text-slate-100 ring-1 ring-slate-200 dark:ring-slate-700' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300']" title="List Layout">
           <List class="h-4 w-4" />
         </button>
       </div>

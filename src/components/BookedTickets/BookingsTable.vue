@@ -30,7 +30,7 @@ const getStatusColor = (status) => {
 
 <template>
   <!-- Empty State -->
-  <div v-if="bookings.length === 0" class="flex-1 py-16 text-center bg-white dark:bg-slate-900 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 p-8 transition-colors">
+  <div v-if="bookings.length === 0" class="flex-1 py-16 text-center bg-white dark:bg-slate-900/60 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 p-8 transition-colors">
     <AlertCircle class="h-10 w-10 text-slate-300 dark:text-slate-600 mx-auto mb-2" />
     <p class="text-sm font-bold text-slate-700 dark:text-slate-200">No storage manifests found</p>
     <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-xs mx-auto">
@@ -39,7 +39,7 @@ const getStatusColor = (status) => {
   </div>
 
   <!-- Bookings Table -->
-  <div v-else class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm flex-1 min-h-75 transition-colors">
+  <div v-else class="surface-card rounded-2xl overflow-hidden flex-1 min-h-75">
     <div class="overflow-x-auto h-full">
       <table class="w-full text-left border-collapse font-sans text-xs" id="bookings-table">
         <thead>
@@ -57,10 +57,10 @@ const getStatusColor = (status) => {
             v-for="booking in bookings"
             :key="booking.id"
             @click="$emit('selectBooking', booking.id)"
-            class="hover:bg-slate-50/30 dark:hover:bg-slate-800/30 group cursor-pointer transition-all"
+            class="hover:bg-slate-50/70 dark:hover:bg-slate-900/70 group cursor-pointer transition-all"
             :class="[
               booking.id === selectedBookingId
-                ? 'bg-indigo-50/80 dark:bg-indigo-900/20 font-medium'
+                ? 'bg-indigo-50/80 dark:bg-indigo-950/30 font-medium'
                 : ''
             ]"
           >
