@@ -49,7 +49,7 @@ const handleResetDemoState = () => {
 <template>
   <!-- Top universal Header bar -->
   <header
-    class="h-20 border-b border-slate-200 bg-white shrink-0 px-6 md:px-8 flex items-center justify-between z-10 shadow-xs transition-colors dark:bg-slate-900 dark:border-slate-700 dark:shadow-slate-900/50"
+    class="h-20 border-b border-slate-200/80 bg-white/90 shrink-0 px-6 md:px-8 flex items-center justify-between z-10 shadow-sm backdrop-blur transition-colors dark:bg-[#080b12]/95 dark:border-slate-800 dark:shadow-black/30"
     id="universal-header"
   >
     <!-- Left path info -->
@@ -57,7 +57,7 @@ const handleResetDemoState = () => {
       <button
         v-if="isSidebarCollapsed"
         @click="uiStore.toggleSidebar()"
-        class="p-1.5 px-2.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-705 text-slate-600 transition cursor-pointer dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+        class="p-1.5 px-2.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600 transition cursor-pointer dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-200 dark:border dark:border-slate-800"
         id="sidebar-expand-btn-outer"
         title="Expand Sidebar"
       >
@@ -86,7 +86,7 @@ const handleResetDemoState = () => {
       <!-- Dark & Light Toggle block -->
       <button
         @click="themeStore.toggleTheme()"
-        class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 cursor-pointer dark:text-slate-400 dark:hover:text-indigo-400 dark:hover:bg-slate-800"
+        class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 cursor-pointer dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
         title="Toggle theme mode"
         id="theme-toggler"
       >
@@ -97,7 +97,7 @@ const handleResetDemoState = () => {
       <!-- Notification system bell -->
       <div class="relative">
         <button
-          class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 dark:text-slate-400 dark:hover:text-indigo-400 dark:hover:bg-slate-800"
+          class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
         >
           <Bell class="h-5 w-5" />
         </button>
@@ -125,19 +125,19 @@ const handleResetDemoState = () => {
       <!-- Profile dropdown -->
       <div
         v-if="profileDropdownOpen"
-        class="absolute right-6 top-20 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800 transition-colors"
+        class="absolute right-6 top-20 z-50 mt-2 w-48 rounded-xl surface-panel overflow-hidden transition-colors"
       >
         <div class="py-2">
           <button
             @click="closeDropdown"
-            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700"
+            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             <span class="text-lg"><LifeBuoy class="h-4 w-4" /></span>
             <span>My Profile</span>
           </button>
           <button
             @click="closeDropdown"
-            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-slate-700"
+            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             <span class="text-lg"><Info class="h-4 w-4" /></span>
             <span>Settings</span>

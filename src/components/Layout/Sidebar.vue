@@ -71,15 +71,15 @@ const menuItems = [
 
 <template>
   <aside
-    class="relative h-screen bg-slate-900 border-r border-slate-800 flex flex-col transition-all duration-300 ease-in-out z-30 font-sans"
+    class="relative h-screen bg-[#070a12] border-r border-slate-800/90 flex flex-col transition-all duration-300 ease-in-out z-30 font-sans shadow-2xl shadow-black/30"
     :class="[isCollapsed ? 'w-20' : 'w-72']"
     id="main-sidebar"
   >
     <!-- Brand Header -->
-    <div class="h-20 flex items-center justify-between px-5 border-b border-slate-800">
+    <div class="h-20 flex items-center justify-between px-5 border-b border-slate-800/90">
       <div class="flex items-center gap-3 overflow-hidden">
         <div
-          class="h-10 w-10 shrink-0 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20"
+          class="h-10 w-10 shrink-0 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 ring-1 ring-indigo-300/20"
         >
           <LifeBuoy class="h-5 w-5 animate-pulse" />
         </div>
@@ -99,7 +99,7 @@ const menuItems = [
       <button
         v-if="!isCollapsed"
         @click="emit('setIsCollapsed', true)"
-        class="p-1 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors cursor-pointer"
+        class="p-1 px-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-colors cursor-pointer"
         id="sidebar-collapse-btn-inner"
         title="Collapse Sidebar"
       >
@@ -125,8 +125,8 @@ const menuItems = [
             class="w-full group flex items-center justify-between p-3 rounded-xl transition-all duration-200 outline-none cursor-pointer relative"
             :class="[
               activeTab === item.id
-                ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/10'
-                : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-100',
+                ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20 ring-1 ring-indigo-400/20'
+                : 'text-slate-400 hover:bg-slate-900 hover:text-slate-100 hover:ring-1 hover:ring-slate-800',
             ]"
             :title="item.label"
           >
@@ -175,7 +175,7 @@ const menuItems = [
       <div v-if="isCollapsed" class="flex justify-center">
         <button
           @click="emit('setIsCollapsed', false)"
-          class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-400 hover:text-white cursor-pointer"
+          class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-indigo-400 hover:text-white border border-slate-800 cursor-pointer"
           title="Expand Sidebar"
         >
           <ChevronRight class="h-5 w-5" />
@@ -183,7 +183,7 @@ const menuItems = [
       </div>
 
       <!-- Quick System Health Metric Panel -->
-      <div v-if="!isCollapsed" class="p-4 rounded-xl bg-slate-800/40 border border-slate-800/50">
+      <div v-if="!isCollapsed" class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 shadow-inner">
         <div class="flex items-center gap-2 mb-2">
           <Sparkles class="h-4 w-4 text-amber-400 animate-spin" />
           <span class="text-[11px] font-semibold text-slate-300 font-display"
@@ -198,7 +198,7 @@ const menuItems = [
     </div>
 
     <!-- Logged in Agent Card / Footer -->
-    <div class="p-4 border-t border-slate-800 bg-slate-950/40">
+    <div class="p-4 border-t border-slate-800 bg-black/25">
       <div
         class="flex items-center gap-3"
         :class="[isCollapsed ? 'justify-center' : 'justify-between']"

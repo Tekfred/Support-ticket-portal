@@ -12,15 +12,15 @@ const emit = defineEmits(['selectTicket'])
 function getStatusStyle(status) {
   switch (status) {
     case 'Pending':
-      return 'bg-violet-50 text-violet-600 border border-violet-100'
+      return 'status-pending'
     case 'On-Hold':
-      return 'bg-amber-50 text-amber-600 border border-amber-100'
+      return 'status-hold'
     case 'Candidate':
-      return 'bg-indigo-50 text-indigo-700 border border-indigo-100'
+      return 'status-candidate'
     case 'Resolved':
-      return 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+      return 'status-resolved'
     default:
-      return 'bg-slate-50 text-slate-600'
+      return 'surface-soft text-slate-600 dark:text-slate-300'
   }
 }
 
@@ -29,11 +29,11 @@ function getPriorityStyle(p) {
     case 'critical':
       return 'bg-red-500 text-white font-bold ring-4 ring-red-500/10'
     case 'high':
-      return 'bg-rose-100 text-rose-700 font-semibold'
+      return 'bg-rose-100 text-rose-700 font-semibold dark:bg-rose-950/40 dark:text-rose-300 dark:border dark:border-rose-800/60'
     case 'medium':
-      return 'bg-amber-100 text-amber-800 font-semibold'
+      return 'bg-amber-100 text-amber-800 font-semibold dark:bg-amber-950/40 dark:text-amber-300 dark:border dark:border-amber-800/60'
     case 'low':
-      return 'bg-slate-100 text-slate-700 font-medium'
+      return 'bg-slate-100 text-slate-700 font-medium dark:bg-slate-800 dark:text-slate-300 dark:border dark:border-slate-700'
   }
 }
 </script>
@@ -42,7 +42,7 @@ function getPriorityStyle(p) {
   <!-- Empty State -->
   <div
     v-if="tickets.length === 0"
-    class="h-96 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-900 shadow-sm transition-colors"
+    class="h-96 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-900/60 shadow-sm transition-colors"
   >
     <Briefcase class="h-12 w-12 text-slate-300 dark:text-slate-600 mb-3" />
     <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 font-display">Your workspace is clear</h3>
@@ -58,7 +58,7 @@ function getPriorityStyle(p) {
       v-for="ticket in tickets"
       :key="ticket.id"
       @click="emit('selectTicket', ticket.id)"
-      class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-950/50 transition-all duration-200 flex flex-col relative cursor-pointer"
+      class="group surface-card surface-card-hover rounded-2xl p-6 flex flex-col relative cursor-pointer"
     >
       <!-- Card Header -->
       <div class="flex items-start justify-between mb-4">
@@ -109,7 +109,7 @@ function getPriorityStyle(p) {
 
       <!-- Description snippet -->
       <p
-        class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed bg-slate-50/50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700 flex-1 mb-5"
+        class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed surface-soft p-2.5 rounded-lg flex-1 mb-5"
       >
         {{ ticket.description }}
       </p>

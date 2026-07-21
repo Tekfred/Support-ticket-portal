@@ -28,7 +28,7 @@ const { tickets } = defineProps({
     <!-- Stat Cards Row -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <!-- Claimed Queue -->
-      <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between transition-colors">
+      <div class="surface-card p-4 rounded-xl flex items-center justify-between">
         <div>
           <p class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500">Claimed Queue</p>
           <p class="text-2xl font-bold text-slate-800 dark:text-slate-200 mt-1">{{ tickets.length }} Tickets</p>
@@ -39,7 +39,7 @@ const { tickets } = defineProps({
       </div>
 
       <!-- Critical Priority -->
-      <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between transition-colors">
+      <div class="surface-card p-4 rounded-xl flex items-center justify-between">
         <div>
           <p class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500">Critical Priority</p>
           <p class="text-2xl font-bold text-rose-600 dark:text-rose-400 mt-1">
@@ -52,7 +52,7 @@ const { tickets } = defineProps({
       </div>
 
       <!-- Resolved Today -->
-      <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between transition-colors">
+      <div class="surface-card p-4 rounded-xl flex items-center justify-between">
         <div>
           <p class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500">Resolved Today</p>
           <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">

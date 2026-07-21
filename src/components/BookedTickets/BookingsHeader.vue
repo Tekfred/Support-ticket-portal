@@ -11,7 +11,7 @@ defineEmits(['openAddModal'])
 </script>
 
 <template>
-  <div class="p-6 md:p-8 pb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-700 shadow-xs transition-colors">
+  <div class="surface-card rounded-2xl p-6 md:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
     <div>
       <h1 class="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-2">
         Bookings Workspace

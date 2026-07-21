@@ -22,7 +22,7 @@ const handleTabClick = (tab) => {
 
 <template>
   <div
-    class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors"
+    class="surface-card flex flex-col md:flex-row md:items-center justify-between gap-4 p-3.5 rounded-2xl"
   >
     <!-- Status Tabs -->
     <div class="flex flex-wrap items-center gap-1.5" id="bookings-status-tabs">
@@ -34,7 +34,7 @@ const handleTabClick = (tab) => {
         :class="[
           activeTab === tab
             ? 'bg-slate-900 dark:bg-indigo-600 text-white shadow-md'
-            : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800',
+            : 'chip-muted',
         ]"
       >
         {{ tab }}
@@ -56,7 +56,7 @@ const handleTabClick = (tab) => {
             $emit('resetPage')
           }
         "
-        class="pl-9 pr-4 py-2 font-sans text-xs w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-slate-100 dark:placeholder-slate-500 rounded-xl focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors"
+        class="pl-9 pr-4 py-2 font-sans text-xs w-full control-input rounded-xl"
       />
     </div>
   </div>

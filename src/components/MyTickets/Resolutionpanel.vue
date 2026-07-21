@@ -16,7 +16,7 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
   <div class="space-y-6">
 
     <!-- Resolution Workstation -->
-    <div class="bg-slate-900 text-white rounded-2xl p-6 space-y-6 shadow-xl border border-slate-800 relative overflow-hidden text-left">
+    <div class="bg-[#090d16] text-white rounded-2xl p-6 space-y-6 shadow-xl shadow-black/30 border border-slate-800 relative overflow-hidden text-left">
       <!-- Glow accent -->
       <div class="absolute top-0 right-0 h-40 w-40 bg-linear-to-tr from-violet-600 to-indigo-500 opacity-10 rounded-full blur-2xl" />
 
@@ -96,7 +96,7 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
     </div>
 
     <!-- Customer Contact Card -->
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 text-left space-y-4 shadow-sm transition-colors">
+    <div class="surface-card rounded-2xl p-6 text-left space-y-4">
       <h3 class="text-sm font-bold uppercase tracking-wider font-mono text-slate-400 dark:text-slate-500">Customer Contact Card</h3>
       <div class="space-y-3 text-xs leading-relaxed">
         <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">

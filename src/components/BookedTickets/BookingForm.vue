@@ -83,11 +83,11 @@ const handleClose = () => {
   <Transition name="scale">
     <div
       v-if="isOpen"
-      class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl dark:shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-y-auto transition-colors"
+      class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl surface-panel rounded-2xl shadow-2xl dark:shadow-black/50 max-h-[90vh] overflow-y-auto transition-colors"
       style="z-index: 51"
     >
       <!-- Modal Header -->
-      <div class="sticky top-0 flex items-center justify-between p-6 bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+      <div class="sticky top-0 flex items-center justify-between p-6 bg-slate-50/90 dark:bg-slate-950/80 backdrop-blur border-b border-slate-200 dark:border-slate-800">
         <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Create New Booking</h3>
         <button
           @click="handleClose"
@@ -253,4 +253,3 @@ const handleClose = () => {
   transform: scale(0.95);
 }
 </style>
-
