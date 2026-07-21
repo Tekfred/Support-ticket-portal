@@ -44,7 +44,7 @@ const selectTab = (tabId) => {
 
 <template>
   <div
-    class="flex h-screen overflow-hidden bg-[var(--app-bg)] text-slate-900 transition-colors dark:text-slate-100"
+    class="flex h-screen overflow-hidden bg-(--app-bg) text-slate-900 transition-colors dark:text-slate-100"
   >
     <Sidebar
       :activeTab="activeTab"
@@ -55,7 +55,7 @@ const selectTab = (tabId) => {
       :unassignedCount="unassignedCount"
     />
     <div
-      class="flex h-screen min-w-0 flex-1 flex-col overflow-hidden bg-[var(--app-bg)] transition-colors"
+      class="flex h-screen min-w-0 flex-1 flex-col overflow-hidden bg-(--app-bg) transition-colors"
     >
       <AppNavbar>
         <template #active-label>
@@ -67,7 +67,7 @@ const selectTab = (tabId) => {
       </AppNavbar>
 
       <main
-        class="min-w-0 flex-1 overflow-y-auto bg-[var(--app-bg)] p-6 transition-colors"
+        class="min-w-0 flex-1 overflow-y-auto bg-(--app-bg) p-6 transition-colors"
       >
         <slot />
       </main>
