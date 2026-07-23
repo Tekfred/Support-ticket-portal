@@ -65,5 +65,3 @@ export const useTicketStore = defineStore('tickets', () => {
 
   return { tickets, acceptTicket, createTicket, updateTicket, releaseTicket, persist, reload }
 })
-
-
