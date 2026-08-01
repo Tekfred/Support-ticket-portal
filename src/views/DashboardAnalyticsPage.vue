@@ -1,243 +1,327 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed } from 'vue';
+import { useTicketStore } from '@/stores/ticketStore';
+import { 
+  TrendingUp, 
+  Users, 
+  DollarSign, 
+  Activity, 
+  Calendar, 
+  CheckCircle, 
+  AlertTriangle,
+  Clock,
+  ArrowUpRight,
+  TrendingDown,
+  ShoppingBag,
+  Bus,
+  Sparkles
+} from 'lucide-vue-next';
 
-const router = useRouter()
-const glitchActive = ref(false)
+import HeaderBanner from '@/components/Analytics/HeaderBanner.vue'
+import KPIGrid from '@/components/Analytics/KPIGrid.vue'
+import AreaChart from '@/components/Analytics/AreaChart.vue'
+import DonutChart from '@/components/Analytics/DonutChart.vue'
+import ActivityFeed from '@/components/Analytics/ActivityFeed.vue'
+import DepotBars from '@/components/Analytics/DepotBars.vue'
 
-onMounted(() => {
-  // Trigger glitch randomly every few seconds
-  const triggerGlitch = () => {
-    glitchActive.value = true
-    setTimeout(() => { glitchActive.value = false }, 400)
-    setTimeout(triggerGlitch, 2500 + Math.random() * 2000)
+const props = defineProps({
+  bookings: {
+    type: Array,
+    default: () => []
+  },
+  tickets: {
+    type: Array,
+    default: null
   }
-  setTimeout(triggerGlitch, 1200)
+});
 
-  // GSAP entrance if available
-  const gsap = window.gsap
-  if (gsap) {
-    gsap.from('.not-found-content', { y: 30, opacity: 0, duration: 0.7, ease: 'power3.out' })
-    gsap.from('.not-found-tag',     { y: 10, opacity: 0, duration: 0.5, delay: 0.2, ease: 'power2.out' })
-    gsap.from('.not-found-msg',     { y: 10, opacity: 0, duration: 0.5, delay: 0.35, ease: 'power2.out' })
-    gsap.from('.not-found-actions', { y: 10, opacity: 0, duration: 0.5, delay: 0.5, ease: 'power2.out' })
-    gsap.from('.floating-card',     { y: 20, opacity: 0, duration: 0.6, delay: 0.6, stagger: 0.1, ease: 'power2.out' })
+// Use ticket store when tickets are not passed via props
+const ticketStore = useTicketStore();
+const ticketsRef = computed(() => props.tickets ?? ticketStore.tickets);
+const bookingsRef = computed(() => props.bookings || []);
+
+// Calculate dynamic metrics
+const activeBookingsCount = computed(() => bookingsRef.value.filter(b => b.status === 'Active' || b.status === 'Checked in').length);
+const totalEarnings = computed(() => bookingsRef.value.reduce((sum, b) => b.status !== 'Cancelled' ? sum + (b.earnings || 0) : sum, 0));
+const totalBags = computed(() => bookingsRef.value.reduce((sum, b) => b.status !== 'Cancelled' ? sum + (b.bagsCount || 0) : sum, 0));
+const resolvedTicketsCount = computed(() => ticketsRef.value.filter(t => t.status === 'Resolved').length);
+const openTicketsCount = computed(() => ticketsRef.value.filter(t => !t.acceptedBy).length);
+
+// Mock static data matching EasyBus ratios for rich trend visuals
+const dynamicBookingTrend = [
+  { hour: '08:00 AM', bookings: 12, tickets: 4 },
+  { hour: '10:00 AM', bookings: 24, tickets: 8 },
+  { hour: '12:00 PM', bookings: 45, tickets: 15 },
+  { hour: '02:00 PM', bookings: 38, tickets: 11 },
+  { hour: '04:00 PM', bookings: 56, tickets: 19 },
+  { hour: '06:00 PM', bookings: 42, tickets: 14 }
+];
+
+// SVG telemetry layout calculations for the area chart (ViewBox: 0 0 600 240)
+const width = 600;
+const height = 245;
+const paddingX = 45;
+const paddingY = 25;
+
+const trendPoints = computed(() => {
+  const maxBooking = 60;
+  const count = dynamicBookingTrend.length;
+  
+  const bookingsCoords = [];
+  const ticketsCoords = [];
+  
+  dynamicBookingTrend.forEach((item, index) => {
+    const x = paddingX + ((width - paddingX * 2) / (count - 1)) * index;
+    // Map max value to height
+    const bookingY = height - paddingY - ((height - paddingY * 2) / maxBooking) * item.bookings;
+    const ticketY = height - paddingY - ((height - paddingY * 2) / maxBooking) * (item.tickets * 3); // Scaled for visual comparison
+    
+    bookingsCoords.push({ x, y: bookingY });
+    ticketsCoords.push({ x, y: ticketY });
+  });
+  
+  const createPath = (coords) => {
+    if (coords.length === 0) return '';
+    return coords.reduce((acc, point, index) => {
+      if (index === 0) return `M ${point.x} ${point.y}`;
+      return `${acc} L ${point.x} ${point.y}`;
+    }, '');
+  };
+
+  const createClosedPath = (coords) => {
+    if (coords.length === 0) return '';
+    const linePath = createPath(coords);
+    return `${linePath} L ${coords[coords.length - 1].x} ${height - paddingY} L ${coords[0].x} ${height - paddingY} Z`;
+  };
+
+  return {
+    bookingsLine: createPath(bookingsCoords),
+    bookingsArea: createClosedPath(bookingsCoords),
+    ticketsLine: createPath(ticketsCoords),
+    ticketsArea: createClosedPath(ticketsCoords),
+    bookingsCoords,
+    ticketsCoords
+  };
+});
+
+// Bags handled by store depot code
+const depotChartData = computed(() => {
+  const map = {};
+  bookingsRef.value.forEach(b => {
+    if (b.status !== 'Cancelled') {
+      map[b.storeCode] = (map[b.storeCode] || 0) + (b.bagsCount || 0);
+    }
+  });
+  return Object.entries(map).map(([name, bags]) => ({ name, bags }));
+});
+
+const maxDepotBags = computed(() => {
+  const values = depotChartData.value.map(d => d.bags);
+  return Math.max(...values, 1);
+});
+
+// Ticket status distributions
+const pendingCount = computed(() => ticketsRef.value.filter(t => t.status === 'Pending').length);
+const onHoldCount = computed(() => ticketsRef.value.filter(t => t.status === 'On-Hold').length);
+const candidateCount = computed(() => ticketsRef.value.filter(t => t.status === 'Candidate').length);
+const resolvedCount = computed(() => ticketsRef.value.filter(t => t.status === 'Resolved').length);
+
+const ticketStatusData = computed(() => [
+  { name: 'Pending', value: pendingCount.value, color: '#8b5cf6', strokeClass: 'stroke-violet-500' },
+  { name: 'On-Hold', value: onHoldCount.value, color: '#f59e0b', strokeClass: 'stroke-amber-500' },
+  { name: 'Candidate', value: candidateCount.value, color: '#6366f1', strokeClass: 'stroke-indigo-500' },
+  { name: 'Resolved', value: resolvedCount.value, color: '#10b981', strokeClass: 'stroke-emerald-500' }
+]);
+
+const donutSlices = computed(() => {
+  const total = pendingCount.value + onHoldCount.value + candidateCount.value + resolvedCount.value;
+  if (!total) return [];
+  
+  let currentOffset = 0;
+  const radius = 50;
+  const circumference = 2 * Math.PI * radius; // 314.16
+  
+  return ticketStatusData.value.map(item => {
+    const percentage = item.value / total;
+    const dashArray = `${percentage * circumference} ${circumference}`;
+    const strokeDashoffset = -currentOffset * circumference;
+    currentOffset += percentage;
+    return {
+      ...item,
+      dashArray,
+      strokeDashoffset,
+      percentage: Math.round(percentage * 100)
+    };
+  });
+});
+
+// Dynamic recent action timeline feed
+const recentActivities = [
+  {
+    id: 'a1',
+    title: 'Baggage Count modified',
+    desc: 'Eleanor Pena added 1 luggage card bag on BOX-302',
+    time: '12 mins ago',
+    type: 'luggage'
+  },
+  {
+    id: 'a2',
+    title: 'Ticket Accepted',
+    desc: 'M Mike claimed ticket APL-0003 for Mosciski Inc.',
+    time: '34 mins ago',
+    type: 'ticket'
+  },
+  {
+    id: 'a3',
+    title: 'New Storage Reservation',
+    desc: 'Bessie Cooper stored 3 spinner cases on AFC-107',
+    time: '45 mins ago',
+    type: 'booking'
+  },
+  {
+    id: 'a4',
+    title: 'Terminal Routing Sync',
+    desc: 'Systems escalated priority to critical for Sauer Group ticket',
+    time: '1 hour ago',
+    type: 'system'
   }
-})
+];
+
+const getLogTypeColor = (type) => {
+  switch (type) {
+    case 'luggage': return 'bg-amber-100 text-amber-700';
+    case 'ticket': return 'bg-indigo-100 text-indigo-700';
+    case 'booking': return 'bg-emerald-100 text-emerald-700';
+    default: return 'bg-slate-100 text-slate-700';
+  }
+};
 </script>
 
 <template>
-  <div class="relative flex flex-col items-center justify-center min-h-screen px-6 overflow-hidden not-found-page">
+  <div class="flex-1 min-h-screen p-6 space-y-8 overflow-y-auto font-sans bg-slate-50 md:p-8" id="analytics-portal">
+    <HeaderBanner :syncTime="new Date().toLocaleString()" />
 
-    <!-- Ambient background orbs -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+    <KPIGrid
+      :totalEarnings="totalEarnings"
+      :totalBags="totalBags"
+      :openTicketsCount="openTicketsCount"
+      :resolvedTicketsCount="resolvedTicketsCount"
+    />
 
-    <!-- Floating ghost cards for atmosphere -->
-    <div class="floating-card ghost-card ghost-card-1">
-      <span class="material-symbols-outlined">confirmation_number</span>
-      <span class="ghost-label">Tickets</span>
-    </div>
-    <div class="floating-card ghost-card ghost-card-2">
-      <span class="material-symbols-outlined">support_agent</span>
-      <span class="ghost-label">Agents</span>
-    </div>
-    <div class="floating-card ghost-card ghost-card-3">
-      <span class="material-symbols-outlined">analytics</span>
-      <span class="ghost-label">Analytics</span>
-    </div>
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3" id="analytics-charts-grid">
+      <AreaChart
+        :dynamicBookingTrend="dynamicBookingTrend"
+        :trendPoints="trendPoints"
+        :width="width"
+        :height="height"
+        :paddingX="paddingX"
+        :paddingY="paddingY"
+      />
 
-    <!-- Main content -->
-    <div class="relative z-10 flex flex-col items-center max-w-lg text-center not-found-content">
-
-      <!-- EduSuite logo mark -->
-      <div class="mb-8 grid h-16 w-16 place-items-center rounded-3xl bg-brand-500 text-[#0f172a] shadow-lg shadow-brand-500/30">
-        <span class="text-3xl material-symbols-outlined">auto_stories</span>
-      </div>
-
-      <!-- Glitchy 404 -->
-      <div class="relative mb-4 select-none" :class="{ glitch: glitchActive }">
-        <span class="the-404 heading-text" data-text="404">404</span>
-        <span class="glitch-layer glitch-layer-1 heading-text" aria-hidden="true">404</span>
-        <span class="glitch-layer glitch-layer-2 heading-text" aria-hidden="true">404</span>
-      </div>
-
-      <!-- Tag line -->
-      <div class="not-found-tag inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-(--app-border) bg-(--app-surface-soft) mb-5">
-        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-        <span class="text-xs font-semibold tracking-widest uppercase text-(--app-text-muted)">Page not found</span>
-      </div>
-
-      <!-- Message -->
-      <p class="max-w-sm mb-8 text-base leading-relaxed not-found-msg body-text">
-        page under construction
-      </p>
-
-      <!-- Actions -->
-      <div class="flex flex-col items-center gap-3 not-found-actions sm:flex-row">
-        <button
-          @click="router.back()"
-          class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-(--app-border) bg-(--app-surface-soft) text-sm font-semibold body-text hover:border-(--app-border-strong) transition-all duration-200 hover:-translate-y-0.5"
-        >
-          <span class="text-base material-symbols-outlined">arrow_back</span>
-          Home
-        </button>
-        <RouterLink
-          to="/app/dashboard"
-          class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-500 text-[#0f172a] text-sm font-bold shadow-lg shadow-brand-500/20 hover:opacity-90 transition-all duration-200 hover:-translate-y-0.5 no-underline"
-        >
-          <span class="text-base material-symbols-outlined">home</span>
-          Back to main tickets
-        </RouterLink>
-      </div>
-
+      <DonutChart :donutSlices="donutSlices" :totalTasks="ticketsRef.length" />
     </div>
 
-    <!-- Bottom credit -->
-    <p class="absolute text-xs tracking-wide bottom-6 muted-text">
-      VELOPORT · Booking OS
-    </p>
-
+    <div class="grid grid-cols-1 gap-6 pb-6 lg:grid-cols-2">
+      <ActivityFeed :recentActivities="recentActivities" />
+      <DepotBars :depotChartData="depotChartData" :maxDepotBags="maxDepotBags" />
+    </div>
   </div>
 </template>
 
-<style scoped>
-.not-found-page {
-  background:
-    radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(129, 140, 248, 0.06), transparent 40%),
-    var(--app-bg);
-}
+          <p class="mt-1 text-xs font-medium tracking-tight uppercase text-slate-400 font-display">Backlog Channels Status Ratio</p>
+        </div>
 
-/* Ambient orbs */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  opacity: 0.35;
-  animation: drift 8s ease-in-out infinite alternate;
-}
-.orb-1 {
-  width: 380px;
-  height: 380px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 70%);
-  top: -80px;
-  left: -80px;
-  animation-delay: 0s;
-}
-.orb-2 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(129, 140, 248, 0.2), transparent 70%);
-  bottom: -60px;
-  right: -60px;
-  animation-delay: -4s;
-}
-@keyframes drift {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(24px, 16px) scale(1.08); }
-}
+        <!-- Custom SVG Donut representation -->
+        <div class="relative flex items-center justify-center h-44">
+          <svg width="140" height="140" viewBox="0 0 120 120" class="transform -rotate-90">
+            <!-- Background base circle -->
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#f1f5f9" stroke-width="11" />
+            
+            <!-- Segments -->
+            <circle 
+              v-for="slice in donutSlices" 
+              :key="slice.name"
+              cx="60" 
+              cy="60" 
+              r="50" 
+              fill="none" 
+              :stroke="slice.color" 
+              stroke-width="11" 
+              :stroke-dasharray="slice.dashArray"
+              :stroke-dashoffset="slice.strokeDashoffset"
+              stroke-linecap="round"
+              class="transition-all duration-300"
+            />
+          </svg>
+          
+          <!-- Center counter badge -->
+          <div class="absolute flex flex-col items-center">
+            <span class="font-mono text-2xl font-extrabold text-slate-800">{{ ticketsRef.length }}</span>
+            <span class="text-[9px] text-slate-400 uppercase font-bold tracking-widest mt-0.5">Total tasks</span>
+          </div>
+        </div>
 
-/* Ghost floating cards */
-.ghost-card {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1rem;
-  border-radius: 14px;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  box-shadow: var(--app-shadow);
-  backdrop-filter: blur(12px);
-  opacity: 0.5;
-  pointer-events: none;
-}
-.ghost-card .material-symbols-outlined {
-  font-size: 1.1rem;
-  color: var(--color-brand-500);
-}
-.ghost-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--app-text-muted);
-}
-.ghost-card-1 {
-  top: 18%;
-  left: 6%;
-  animation: floatA 6s ease-in-out infinite;
-}
-.ghost-card-2 {
-  top: 14%;
-  right: 8%;
-  animation: floatB 7s ease-in-out infinite;
-}
-.ghost-card-3 {
-  bottom: 22%;
-  left: 8%;
-  animation: floatA 8s ease-in-out infinite reverse;
-}
-@keyframes floatA {
-  0%, 100% { transform: translateY(0px) rotate(-1deg); }
-  50%       { transform: translateY(-12px) rotate(1deg); }
-}
-@keyframes floatB {
-  0%, 100% { transform: translateY(0px) rotate(1deg); }
-  50%       { transform: translateY(-16px) rotate(-1deg); }
-}
+        <!-- Legend indicator badges -->
+        <div class="grid grid-cols-2 gap-2 text-[10px] font-semibold">
+          <div v-for="item in donutSlices" :key="item.name" class="flex items-center gap-1.5 p-1.5 rounded-lg bg-slate-50 border border-slate-100">
+            <div class="w-2 h-2 rounded-full shrink-0 animate-none" :style="{ backgroundColor: item.color }" />
+            <span class="truncate text-slate-600 font-display">{{ item.name }} ({{ item.value }})</span>
+          </div>
+        </div>
 
-/* Big 404 */
-.the-404 {
-  display: block;
-  font-size: clamp(6rem, 20vw, 9rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-}
+      </div>
 
-/* Glitch layers */
-.glitch-layer {
-  position: absolute;
-  inset: 0;
-  display: block;
-  font-size: clamp(6rem, 20vw, 9rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  opacity: 0;
-  pointer-events: none;
-}
-.glitch-layer-1 { color: #6366f1; }
-.glitch-layer-2 { color: #818cf8; }
+    </div>
 
-/* Glitch animation triggers */
-.glitch .glitch-layer-1 {
-  opacity: 0.8;
-  animation: glitch1 0.4s steps(2) forwards;
-}
-.glitch .glitch-layer-2 {
-  opacity: 0.6;
-  animation: glitch2 0.4s steps(2) forwards;
-}
-@keyframes glitch1 {
-  0%   { clip-path: inset(30% 0 50% 0); transform: translate(-4px, 2px); opacity: 0.8; }
-  25%  { clip-path: inset(60% 0 10% 0); transform: translate(4px, -2px); }
-  50%  { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 4px); }
-  75%  { clip-path: inset(80% 0 5%  0); transform: translate(2px, -4px); }
-  100% { opacity: 0; transform: translate(0, 0); }
-}
-@keyframes glitch2 {
-  0%   { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); opacity: 0.6; }
-  25%  { clip-path: inset(10% 0 60% 0); transform: translate(-4px, 2px); }
-  50%  { clip-path: inset(70% 0 10% 0); transform: translate(2px, -4px); }
-  75%  { clip-path: inset(5%  0 80% 0); transform: translate(-2px, 4px); }
-  100% { opacity: 0; transform: translate(0, 0); }
-}
+    <div class="grid grid-cols-1 gap-6 pb-6 lg:grid-cols-2">
+      <!-- Dynamic Activity Log stream -->
+      <div class="flex flex-col justify-between p-6 text-left bg-white border shadow-sm rounded-2xl border-slate-200">
+        <div class="mb-4">
+          <h3 class="text-base font-bold text-slate-900 font-display">Live Telemetry Feed</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Real-time logs representing ongoing operations.</p>
+        </div>
 
-@media (prefers-reduced-motion: reduce) {
-  .orb, .ghost-card, .glitch-layer { animation: none !important; }
-}
-</style>
+        <div class="flex-1 space-y-4">
+          <div v-for="log in recentActivities" :key="log.id" class="flex items-start gap-3 p-3 transition-colors border border-transparent rounded-xl hover:bg-slate-50 hover:border-slate-100">
+            <span class="px-2 py-1 rounded-lg text-[9px] font-bold font-mono uppercase tracking-wider shrink-0 mt-0.5" :class="getLogTypeColor(log.type)">
+              {{ log.type }}
+            </span>
+            <div class="flex-1 space-y-0.5 font-sans">
+              <h4 class="text-xs font-bold leading-none text-slate-800">{{ log.title }}</h4>
+              <p class="text-[11px] text-slate-500 leading-normal">{{ log.desc }}</p>
+            </div>
+            <span class="text-[10px] font-mono text-slate-400 shrink-0">{{ log.time }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Depot capacity overview Bar chart -->
+      <div class="flex flex-col justify-between p-6 text-left bg-white border shadow-sm rounded-2xl border-slate-200">
+        <div class="mb-4">
+          <h3 class="text-base font-bold text-slate-900 font-display">Bags Handled by Store Depot</h3>
+          <p class="text-xs text-slate-400 mt-0.5 font-sans">Luggage volume allocation per box / depot code.</p>
+        </div>
+
+        <div v-if="depotChartData.length === 0" class="flex items-center justify-center font-sans text-xs italic h-44 text-slate-400">
+          No storage allocation data. Add bags checks on booked workspace.
+        </div>
+        
+        <div v-else class="space-y-3.5 flex-1 flex flex-col justify-center">
+          <div v-for="(depot, index) in depotChartData" :key="depot.name" class="space-y-1">
+            <div class="flex justify-between text-xs font-semibold text-slate-700">
+              <span class="font-mono">DEPOT CODE: {{ depot.name }}</span>
+              <span class="font-mono">{{ depot.bags }} Bag{{ depot.bags > 1 ? 's' : '' }}</span>
+            </div>
+            <div class="w-full bg-slate-150 bg-slate-100 h-2.5 rounded-full overflow-hidden">
+              <div 
+                class="h-full transition-all duration-500 rounded-full"
+                :class="[index % 2 === 0 ? 'bg-indigo-600' : 'bg-violet-500']"
+                :style="`width: ${(depot.bags / maxDepotBags) * 100}%`"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
