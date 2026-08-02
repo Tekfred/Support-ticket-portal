@@ -10,20 +10,20 @@ import DonutChart from '@/components/Analytics/DonutChart.vue'
 import ActivityFeed from '@/components/Analytics/ActivityFeed.vue'
 import DepotBars from '@/components/Analytics/DepotBars.vue'
 
-// ── Stores (single source of truth — no props needed) ──────────────────
-const ticketStore = useTicketStore()
+// ── Stores ─────────────────────────────────────────────────────────────
+const ticketStore  = useTicketStore()
 const bookingStore = useBookingStore()
 
 const ticketsRef  = computed(() => ticketStore.tickets)
 const bookingsRef = computed(() => bookingStore.bookings)
 
 // ── KPI Metrics ────────────────────────────────────────────────────────
-const totalEarnings       = computed(() => bookingsRef.value.reduce((sum, b) => b.status !== 'Cancelled' ? sum + (b.earnings || 0) : sum, 0))
-const totalBags           = computed(() => bookingsRef.value.reduce((sum, b) => b.status !== 'Cancelled' ? sum + (b.bagsCount || 0) : sum, 0))
-const openTicketsCount    = computed(() => ticketsRef.value.filter(t => !t.acceptedBy).length)
+const totalEarnings        = computed(() => bookingsRef.value.reduce((sum, b) => b.status !== 'Cancelled' ? sum + (b.earnings || 0) : sum, 0))
+const totalBags            = computed(() => bookingsRef.value.reduce((sum, b) => b.status !== 'Cancelled' ? sum + (b.bagsCount || 0) : sum, 0))
+const openTicketsCount     = computed(() => ticketsRef.value.filter(t => !t.acceptedBy).length)
 const resolvedTicketsCount = computed(() => ticketsRef.value.filter(t => t.status === 'Resolved').length)
 
-// ── Area Chart: static trend data + SVG coordinate calculations ────────
+// ── Area Chart ─────────────────────────────────────────────────────────
 const dynamicBookingTrend = [
   { hour: '08:00 AM', bookings: 12, tickets: 4  },
   { hour: '10:00 AM', bookings: 24, tickets: 8  },
@@ -45,7 +45,7 @@ const trendPoints = computed(() => {
   const ticketsCoords  = []
 
   dynamicBookingTrend.forEach((item, index) => {
-    const x = paddingX + ((width - paddingX * 2) / (count - 1)) * index
+    const x        = paddingX + ((width - paddingX * 2) / (count - 1)) * index
     const bookingY = height - paddingY - ((height - paddingY * 2) / maxBooking) * item.bookings
     const ticketY  = height - paddingY - ((height - paddingY * 2) / maxBooking) * (item.tickets * 3)
     bookingsCoords.push({ x, y: bookingY })
@@ -70,20 +70,18 @@ const trendPoints = computed(() => {
   }
 })
 
-// ── Depot bar chart ────────────────────────────────────────────────────
+// ── Depot Bars ─────────────────────────────────────────────────────────
 const depotChartData = computed(() => {
   const map = {}
   bookingsRef.value.forEach(b => {
-    if (b.status !== 'Cancelled') {
-      map[b.storeCode] = (map[b.storeCode] || 0) + (b.bagsCount || 0)
-    }
+    if (b.status !== 'Cancelled') map[b.storeCode] = (map[b.storeCode] || 0) + (b.bagsCount || 0)
   })
   return Object.entries(map).map(([name, bags]) => ({ name, bags }))
 })
 
 const maxDepotBags = computed(() => Math.max(...depotChartData.value.map(d => d.bags), 1))
 
-// ── Donut chart ────────────────────────────────────────────────────────
+// ── Donut Chart ────────────────────────────────────────────────────────
 const pendingCount   = computed(() => ticketsRef.value.filter(t => t.status === 'Pending').length)
 const onHoldCount    = computed(() => ticketsRef.value.filter(t => t.status === 'On-Hold').length)
 const candidateCount = computed(() => ticketsRef.value.filter(t => t.status === 'Candidate').length)
@@ -100,30 +98,29 @@ const donutSlices = computed(() => {
     { name: 'Resolved',  value: resolvedCount.value,  color: '#10b981' },
   ]
 
-  const circumference = 2 * Math.PI * 50 // r=50 → 314.16
+  const circumference = 2 * Math.PI * 50
   let currentOffset = 0
 
   return statusData.map(item => {
-    const percentage      = item.value / total
-    const dashArray       = `${percentage * circumference} ${circumference}`
+    const percentage       = item.value / total
+    const dashArray        = `${percentage * circumference} ${circumference}`
     const strokeDashoffset = -currentOffset * circumference
     currentOffset += percentage
     return { ...item, dashArray, strokeDashoffset, percentage: Math.round(percentage * 100) }
   })
 })
 
-// ── Activity feed (static demo data) ──────────────────────────────────
+// ── Activity Feed ──────────────────────────────────────────────────────
 const recentActivities = [
-  { id: 'a1', title: 'Baggage Count modified',   desc: 'Eleanor Pena added 1 luggage card bag on BOX-302',                   time: '12 mins ago', type: 'luggage' },
-  { id: 'a2', title: 'Ticket Accepted',           desc: 'M Mike claimed ticket APL-0003 for Mosciski Inc.',                   time: '34 mins ago', type: 'ticket'  },
-  { id: 'a3', title: 'New Storage Reservation',   desc: 'Bessie Cooper stored 3 spinner cases on AFC-107',                    time: '45 mins ago', type: 'booking' },
-  { id: 'a4', title: 'Terminal Routing Sync',     desc: 'Systems escalated priority to critical for Sauer Group ticket',      time: '1 hour ago',  type: 'system'  },
+  { id: 'a1', title: 'Baggage Count modified',  desc: 'Eleanor Pena added 1 luggage card bag on BOX-302',              time: '12 mins ago', type: 'luggage' },
+  { id: 'a2', title: 'Ticket Accepted',          desc: 'M Mike claimed ticket APL-0003 for Mosciski Inc.',              time: '34 mins ago', type: 'ticket'  },
+  { id: 'a3', title: 'New Storage Reservation',  desc: 'Bessie Cooper stored 3 spinner cases on AFC-107',               time: '45 mins ago', type: 'booking' },
+  { id: 'a4', title: 'Terminal Routing Sync',    desc: 'Systems escalated priority to critical for Sauer Group ticket', time: '1 hour ago',  type: 'system'  },
 ]
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen p-6 space-y-8 overflow-y-auto font-sans md:p-8 bg-slate-50" id="analytics-portal">
-
+  <div class="flex-1 min-h-screen p-6 space-y-8 overflow-y-auto font-sans md:p-8 bg-slate-50 dark:bg-slate-950" id="analytics-portal">
     <HeaderBanner :syncTime="new Date().toLocaleString()" />
 
     <KPIGrid
@@ -149,6 +146,5 @@ const recentActivities = [
       <ActivityFeed :recentActivities="recentActivities" />
       <DepotBars :depotChartData="depotChartData" :maxDepotBags="maxDepotBags" />
     </div>
-
   </div>
 </template>
