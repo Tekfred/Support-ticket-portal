@@ -6,26 +6,31 @@ import DashboardAnalyticsPage from '@/views/DashboardAnalyticsPage.vue'
 
 const routes = [
   {
-    path: '/', redirect: '/unassigned'
+    path: '/',
+    redirect: '/analytics',
   },
   {
-    path: '/unassigned', name: 'unassigned',
-    component: UnassignedTicketsPage
+    path: '/unassigned',
+    name: 'unassigned',
+    component: UnassignedTicketsPage,
   },
   {
-    path: '/my-tickets', name: 'my-tickets',
-    component: MyWorkspacePage
+    path: '/my-tickets',
+    name: 'my-tickets',
+    component: MyWorkspacePage,
   },
   {
-    path: '/booked-tickets', name: 'booked-tickets',
-    component: BookedTicketsPage
+    path: '/booked-tickets',
+    name: 'booked-tickets',
+    component: BookedTicketsPage,
   },
   {
-    path: '/analytics', name: 'analytics',
-    component: DashboardAnalyticsPage
+    path: '/analytics',
+    name: 'analytics',
+    component: DashboardAnalyticsPage,
   },
-  // Fallback to unassigned
-  { path: '/:catchAll(.*)', redirect: '/unassigned' },
+  // Fallback to analytics dashboard
+  { path: '/:catchAll(.*)', redirect: '/analytics' },
 ]
 
 const router = createRouter({
