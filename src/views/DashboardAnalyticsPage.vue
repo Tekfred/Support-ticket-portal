@@ -70,7 +70,7 @@ const trendPoints = computed(() => {
   }
 })
 
-// ── Depot Bars ─────────────────────────────────────────────────────────
+// ── Depot Bars ─────────────────────────────────────────────
 const depotChartData = computed(() => {
   const map = {}
   bookingsRef.value.forEach(b => {
@@ -81,7 +81,7 @@ const depotChartData = computed(() => {
 
 const maxDepotBags = computed(() => Math.max(...depotChartData.value.map(d => d.bags), 1))
 
-// ── Donut Chart ────────────────────────────────────────────────────────
+// ── Donut Chart ──────────────────────────────────────────────
 const pendingCount   = computed(() => ticketsRef.value.filter(t => t.status === 'Pending').length)
 const onHoldCount    = computed(() => ticketsRef.value.filter(t => t.status === 'On-Hold').length)
 const candidateCount = computed(() => ticketsRef.value.filter(t => t.status === 'Candidate').length)
