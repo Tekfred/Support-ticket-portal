@@ -103,18 +103,18 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="lg:col-span-7 p-8 lg:p-12 flex flex-col justify-center">
-    <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-800">
+  <div class="flex flex-col justify-center p-8 lg:col-span-7 lg:p-12">
+    <div class="flex items-center justify-between pb-4 mb-8 border-b border-slate-800">
       <div>
-        <h3 class="text-xl font-bold font-display text-white">
+        <h3 class="text-xl font-bold text-white font-display">
           {{ authMode === 'login' ? 'Welcome Back' : 'Create Agent Account' }}
         </h3>
-        <p class="text-xs text-slate-400 mt-1">
+        <p class="mt-1 text-xs text-slate-400">
           {{ authMode === 'login' ? 'Enter your credentials to access your support dashboard.' : 'Register a new support agent or operator account.' }}
         </p>
       </div>
 
-      <div class="bg-slate-950 p-1 rounded-2xl border border-slate-800 flex items-center gap-1 shrink-0">
+      <div class="flex items-center gap-1 p-1 border bg-slate-950 rounded-2xl border-slate-800 shrink-0">
         <button
           @click="toggleAuthMode('login')"
           type="button"
@@ -137,12 +137,12 @@ const handleSubmit = () => {
     </div>
 
     <div v-if="errorMessage" class="mb-6 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2.5">
-      <AlertCircle class="h-4 w-4 shrink-0 text-rose-400" />
+      <AlertCircle class="w-4 h-4 shrink-0 text-rose-400" />
       <span>{{ errorMessage }}</span>
     </div>
 
     <div v-if="successMessage" class="mb-6 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2.5">
-      <CheckCircle2 class="h-4 w-4 shrink-0 text-emerald-400" />
+      <CheckCircle2 class="w-4 h-4 shrink-0 text-emerald-400" />
       <span>{{ successMessage }}</span>
     </div>
 
@@ -158,7 +158,7 @@ const handleSubmit = () => {
             @input="$emit('update:fullName', $event.target.value)"
             type="text"
             placeholder="e.g. Eleanor Pena"
-            class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+            class="w-full py-3 pl-10 pr-4 text-xs text-white transition-colors border bg-slate-950 border-slate-800 rounded-2xl placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             required
           />
         </div>
@@ -175,13 +175,13 @@ const handleSubmit = () => {
             @input="$emit('update:email', $event.target.value)"
             type="email"
             placeholder="name@company.com"
-            class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+            class="w-full py-3 pl-10 pr-4 text-xs text-white transition-colors border bg-slate-950 border-slate-800 rounded-2xl placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             required
           />
         </div>
       </div>
 
-      <div v-if="authMode === 'signup'" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div v-if="authMode === 'signup'" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label class="block text-xs font-medium text-slate-300 mb-1.5 font-display">
             Role Title
@@ -189,7 +189,7 @@ const handleSubmit = () => {
           <select
             :value="role"
             @change="$emit('update:role', $event.target.value)"
-            class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-3 py-3 text-xs text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 cursor-pointer"
+            class="w-full px-3 py-3 text-xs text-white border cursor-pointer bg-slate-950 border-slate-800 rounded-2xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           >
             <option v-for="r in roles" :key="r" :value="r">{{ r }}</option>
           </select>
@@ -202,7 +202,7 @@ const handleSubmit = () => {
           <select
             :value="department"
             @change="$emit('update:department', $event.target.value)"
-            class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-3 py-3 text-xs text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 cursor-pointer"
+            class="w-full px-3 py-3 text-xs text-white border cursor-pointer bg-slate-950 border-slate-800 rounded-2xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           >
             <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
           </select>
@@ -225,7 +225,7 @@ const handleSubmit = () => {
             @input="$emit('update:password', $event.target.value)"
             :type="showPassword ? 'text' : 'password'"
             placeholder="••••••••••••"
-            class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-10 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors font-mono"
+            class="w-full py-3 pl-10 pr-10 font-mono text-xs text-white transition-colors border bg-slate-950 border-slate-800 rounded-2xl placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             required
           />
           <button
@@ -233,8 +233,8 @@ const handleSubmit = () => {
             @click="$emit('update:showPassword', !showPassword)"
             class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
           >
-            <EyeOff v-if="showPassword" class="h-4 w-4" />
-            <Eye v-else class="h-4 w-4" />
+            <EyeOff v-if="showPassword" class="w-4 h-4" />
+            <Eye v-else class="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -245,7 +245,7 @@ const handleSubmit = () => {
             :checked="rememberMe"
             @change="$emit('update:rememberMe', $event.target.checked)"
             type="checkbox"
-            class="rounded border-slate-800 bg-slate-950 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+            class="w-4 h-4 text-indigo-600 rounded border-slate-800 bg-slate-950 focus:ring-indigo-500"
           />
           <span class="text-xs text-slate-400">Keep me signed in</span>
         </label>
@@ -260,7 +260,7 @@ const handleSubmit = () => {
             class="rounded border-slate-800 bg-slate-950 text-indigo-600 focus:ring-indigo-500 h-4 w-4 mt-0.5 shrink-0"
           />
           <span class="text-[11px] text-slate-400 leading-normal">
-            I agree to the <span class="text-indigo-400 font-semibold">Terms of Service</span> and acknowledge the security protocol guidelines.
+            I agree to the <span class="font-semibold text-indigo-400">Terms of Service</span> and acknowledge the security protocol guidelines.
           </span>
         </label>
       </div>
@@ -268,15 +268,15 @@ const handleSubmit = () => {
       <button
         type="submit"
         :disabled="isLoading"
-        class="w-full mt-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-indigo-600/30 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-xs disabled:opacity-60"
+        class="w-full mt-4 bg-linear-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-indigo-600/30 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-xs disabled:opacity-60"
       >
         <template v-if="isLoading">
-          <div class="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          <div class="w-4 h-4 border-2 rounded-full border-white/30 border-t-white animate-spin" />
           <span>Authenticating...</span>
         </template>
         <template v-else>
           <span>{{ authMode === 'login' ? 'Sign In to Console' : 'Register New Account' }}</span>
-          <ArrowRight class="h-4 w-4" />
+          <ArrowRight class="w-4 h-4" />
         </template>
       </button>
     </form>

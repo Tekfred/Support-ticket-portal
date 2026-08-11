@@ -24,15 +24,10 @@ const departments = [
   'Luggage Storage Ops',
   'Customer Care & Logistics',
   'Technical Support',
-  'Security & Transport'
+  'Security & Transport',
 ]
 
-const roles = [
-  'Desk Agent',
-  'Operations Lead',
-  'Support Specialist',
-  'System Administrator'
-]
+const roles = ['Desk Agent', 'Operations Lead', 'Support Specialist', 'System Administrator']
 
 const getInitials = (name) => {
   if (!name) return 'VP'
@@ -45,7 +40,7 @@ const getInitials = (name) => {
 
 const selectDemoAccount = (account) => {
   email.value = account.email
-  password.value = 'veloport2026'
+  password.value = 'TicketBase2026'
   errorMessage.value = ''
 
   isLoading.value = true
@@ -56,7 +51,7 @@ const selectDemoAccount = (account) => {
       email: account.email,
       role: account.role,
       department: account.department,
-      initials: account.initials || getInitials(account.name)
+      initials: account.initials || getInitials(account.name),
     }
     emit('loginSuccess', user)
   }, 400)
@@ -94,7 +89,9 @@ const handleSubmit = () => {
 
     if (authMode.value === 'login') {
       const registeredUsers = JSON.parse(localStorage.getItem('booking_support_users') || '[]')
-      const matchedUser = registeredUsers.find(u => u.email.toLowerCase() === email.value.toLowerCase())
+      const matchedUser = registeredUsers.find(
+        (u) => u.email.toLowerCase() === email.value.toLowerCase(),
+      )
 
       if (matchedUser) {
         emit('loginSuccess', matchedUser)
@@ -104,7 +101,7 @@ const handleSubmit = () => {
           email: email.value.toLowerCase(),
           role: role.value,
           department: department.value,
-          initials: getInitials(fullName.value || email.value)
+          initials: getInitials(fullName.value || email.value),
         }
         emit('loginSuccess', userObj)
       }
@@ -115,11 +112,11 @@ const handleSubmit = () => {
         role: role.value,
         department: department.value,
         initials: getInitials(fullName.value),
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       }
 
       const existingUsers = JSON.parse(localStorage.getItem('booking_support_users') || '[]')
-      const filtered = existingUsers.filter(u => u.email.toLowerCase() !== newUser.email)
+      const filtered = existingUsers.filter((u) => u.email.toLowerCase() !== newUser.email)
       filtered.push(newUser)
       localStorage.setItem('booking_support_users', JSON.stringify(filtered))
 
@@ -154,15 +151,15 @@ const handleForgotPassword = () => {
       :isLoading="isLoading"
       :departments="departments"
       :roles="roles"
-      @update:authMode="val => authMode = val"
-      @update:email="val => email = val"
-      @update:password="val => password = val"
-      @update:fullName="val => fullName = val"
-      @update:department="val => department = val"
-      @update:role="val => role = val"
-      @update:rememberMe="val => rememberMe = val"
-      @update:termsAccepted="val => termsAccepted = val"
-      @update:showPassword="val => showPassword = val"
+      @update:authMode="(val) => (authMode = val)"
+      @update:email="(val) => (email = val)"
+      @update:password="(val) => (password = val)"
+      @update:fullName="(val) => (fullName = val)"
+      @update:department="(val) => (department = val)"
+      @update:role="(val) => (role = val)"
+      @update:rememberMe="(val) => (rememberMe = val)"
+      @update:termsAccepted="(val) => (termsAccepted = val)"
+      @update:showPassword="(val) => (showPassword = val)"
       @submit="handleSubmit"
       @forgotPassword="handleForgotPassword"
     />
