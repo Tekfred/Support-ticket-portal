@@ -7,18 +7,28 @@ import { useUiStore } from '@/stores/uiStore'
 import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
 
+defineOptions({
+  name: 'MainLayout',
+})
+
+defineProps({
+  currentUser: {
+    type: Object,
+    default: null,
+  }
+})
+
+const emit = defineEmits(['logout'])
+
 const router = useRouter()
 const route = useRoute()
 
-// UI store controls the sidebar open/closed state. Sidebar component expects "isCollapsed" boolean.
 const uiStore = useUiStore()
 const isCollapsed = computed(() => !uiStore.isSidebarOpen)
 const setIsCollapsed = (val) => {
-  // val is true when sidebar should be collapsed
   uiStore.isSidebarOpen = !val
 }
 
-// Local UI state for active tab and counts derived from ticketStore
 const ticketStore = useTicketStore()
 const { tickets } = storeToRefs(ticketStore)
 const activeTab = computed(() => {
@@ -40,6 +50,10 @@ const selectTab = (tabId) => {
   }
   router.push(routeMap[tabId])
 }
+
+const handleLogout = () => {
+  emit('logout')
+}
 </script>
 
 <template>
@@ -53,6 +67,8 @@ const selectTab = (tabId) => {
       @setIsCollapsed="setIsCollapsed"
       :myTicketsCount="myTicketsCount"
       :unassignedCount="unassignedCount"
+      :currentUser="currentUser"
+      @logout="handleLogout"
     />
     <div
       class="flex h-screen min-w-0 flex-1 flex-col overflow-hidden bg-(--app-bg) transition-colors"

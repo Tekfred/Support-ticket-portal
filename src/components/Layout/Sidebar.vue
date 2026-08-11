@@ -8,6 +8,7 @@ import {
   ChevronRight,
   LifeBuoy,
   Sparkles,
+  LogOut
 } from 'lucide-vue-next'
 
 defineOptions({
@@ -31,9 +32,19 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  currentUser: {
+    type: Object,
+    default: () => ({
+      name: 'M Mike',
+      email: 'ansahaudi86@gmail.com',
+      role: 'Desk Agent',
+      department: 'Desk Operations',
+      initials: 'MM'
+    })
+  }
 })
 
-const emit = defineEmits(['selectTab', 'setIsCollapsed'])
+const emit = defineEmits(['selectTab', 'setIsCollapsed', 'logout'])
 
 const menuItems = [
   {
@@ -198,29 +209,31 @@ const menuItems = [
     </div>
 
     <!-- Logged in Agent Card / Footer -->
-    <div class="p-4 border-t border-slate-800 bg-black/25">
-      <div
-        class="flex items-center gap-3"
-        :class="[isCollapsed ? 'justify-center' : 'justify-between']"
-      >
+    <div class="p-4 border-t border-slate-800 bg-slate-950/40">
+      <div class="flex items-center gap-3" :class="[isCollapsed ? 'justify-center' : 'justify-between']">
         <div class="flex items-center gap-3 overflow-hidden">
-          <div
-            class="h-10 w-10 rounded-xl bg-linear-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white font-bold select-none text-sm shrink-0 shadow-lg shadow-indigo-600/20 border border-indigo-400/20 animate-none"
-          >
-            MM
+          <div class="h-10 w-10 rounded-xl bg-linear-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white font-bold select-none text-sm shrink-0 shadow-lg shadow-indigo-600/20 border border-indigo-400/20">
+            {{ currentUser.initials || 'VP' }}
           </div>
           <div v-if="!isCollapsed" class="text-left overflow-hidden">
             <p class="text-sm font-semibold text-white leading-none truncate font-display">
-              M Mike
+              {{ currentUser.name }}
             </p>
-            <p class="text-xs text-slate-500 truncate font-mono mt-1">ansahaudi86@gmail.com</p>
+            <p class="text-xs text-slate-500 truncate font-mono mt-1">
+              {{ currentUser.email }}
+            </p>
           </div>
         </div>
-        <div
-          v-if="!isCollapsed"
-          class="h-2 w-2 rounded-full bg-emerald-500 ring-4 ring-emerald-500/10"
-          title="Online"
-        />
+        
+        <div v-if="!isCollapsed" class="flex items-center gap-2">
+          <button 
+            @click="emit('logout')"
+            class="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
+            title="Sign Out"
+          >
+            <LogOut class="h-4 w-4" />
+          </button>
+        </div>
       </div>
     </div>
   </aside>
