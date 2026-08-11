@@ -8,7 +8,7 @@ import {
   ChevronRight,
   LifeBuoy,
   Sparkles,
-  LogOut
+  LogOut,
 } from 'lucide-vue-next'
 
 defineOptions({
@@ -39,9 +39,9 @@ const props = defineProps({
       email: 'ansahaudi86@gmail.com',
       role: 'Desk Agent',
       department: 'Desk Operations',
-      initials: 'MM'
-    })
-  }
+      initials: 'MM',
+    }),
+  },
 })
 
 const emit = defineEmits(['selectTab', 'setIsCollapsed', 'logout'])
@@ -96,7 +96,7 @@ const menuItems = [
         </div>
         <div v-if="!isCollapsed" class="flex flex-col">
           <span class="text-white font-display font-semibold tracking-tight text-lg">
-            VeloPort
+            TicketBase
           </span>
           <span
             class="text-indigo-400 font-mono text-[10px] tracking-widest font-semibold uppercase"
@@ -194,7 +194,10 @@ const menuItems = [
       </div>
 
       <!-- Quick System Health Metric Panel -->
-      <div v-if="!isCollapsed" class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 shadow-inner">
+      <div
+        v-if="!isCollapsed"
+        class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 shadow-inner"
+      >
         <div class="flex items-center gap-2 mb-2">
           <Sparkles class="h-4 w-4 text-amber-400 animate-spin" />
           <span class="text-[11px] font-semibold text-slate-300 font-display"
@@ -210,9 +213,14 @@ const menuItems = [
 
     <!-- Logged in Agent Card / Footer -->
     <div class="p-4 border-t border-slate-800 bg-slate-950/40">
-      <div class="flex items-center gap-3" :class="[isCollapsed ? 'justify-center' : 'justify-between']">
+      <div
+        class="flex items-center gap-3"
+        :class="[isCollapsed ? 'justify-center' : 'justify-between']"
+      >
         <div class="flex items-center gap-3 overflow-hidden">
-          <div class="h-10 w-10 rounded-xl bg-linear-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white font-bold select-none text-sm shrink-0 shadow-lg shadow-indigo-600/20 border border-indigo-400/20">
+          <div
+            class="h-10 w-10 rounded-xl bg-linear-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white font-bold select-none text-sm shrink-0 shadow-lg shadow-indigo-600/20 border border-indigo-400/20"
+          >
             {{ currentUser.initials || 'VP' }}
           </div>
           <div v-if="!isCollapsed" class="text-left overflow-hidden">
@@ -224,9 +232,9 @@ const menuItems = [
             </p>
           </div>
         </div>
-        
+
         <div v-if="!isCollapsed" class="flex items-center gap-2">
-          <button 
+          <button
             @click="emit('logout')"
             class="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
             title="Sign Out"

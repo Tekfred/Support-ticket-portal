@@ -6,9 +6,8 @@ import { useThemeStore } from '@/stores/themeStore'
 import image from '@/assets/profile_img_1.png'
 // import { INITIAL_TICKETS, INITIAL_BOOKINGS } from '@/stores/Data'
 
-import { Sun, Moon, Bell, Info, LifeBuoy, ChevronRight, Check,  } from 'lucide-vue-next'
+import { Sun, Moon, Bell, Info, LifeBuoy, ChevronRight, Check } from 'lucide-vue-next'
 // import { Sparkles } from 'lucide-vue-next'
-
 
 defineOptions({ name: 'AppNavbar' })
 
@@ -64,9 +63,9 @@ const handleResetDemoState = () => {
         Expand
       </button>
       <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono dark:text-slate-500">
-        <span class="uppercase">VeloPort Console</span>
-        <ChevronRight class="h-3 w-3 text-slate-350 dark:text-slate-600" />
-        <span class="uppercase text-indigo-600 font-bold tracking-wider dark:text-indigo-400">
+        <span class="uppercase">TBase Console</span>
+        <ChevronRight class="w-3 h-3 text-slate-350 dark:text-slate-600" />
+        <span class="font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">
           <slot name="active-label">Backlog queue</slot>
         </span>
       </div>
@@ -86,67 +85,69 @@ const handleResetDemoState = () => {
       <!-- Dark & Light Toggle block -->
       <button
         @click="themeStore.toggleTheme()"
-        class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 cursor-pointer dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
+        class="p-2 transition duration-200 cursor-pointer rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
         title="Toggle theme mode"
         id="theme-toggler"
       >
-        <Moon v-if="!isDark" class="h-5 w-5" />
-        <Sun v-else class="h-5 w-5 text-amber-400" />
+        <Moon v-if="!isDark" class="w-5 h-5" />
+        <Sun v-else class="w-5 h-5 text-amber-400" />
       </button>
 
       <!-- Notification system bell -->
       <div class="relative">
         <button
-          class="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition duration-200 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
+          class="p-2 transition duration-200 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
         >
-          <Bell class="h-5 w-5" />
+          <Bell class="w-5 h-5" />
         </button>
         <span
           class="absolute top-1 right-1 h-2.5 w-2.5 bg-indigo-600 rounded-full ring-2 ring-white animate-none dark:ring-slate-900"
         />
       </div>
 
-      <div class="border-l border-slate-200 h-6 shrink-0 dark:border-slate-700" />
+      <div class="h-6 border-l border-slate-200 shrink-0 dark:border-slate-700" />
 
       <!-- User identification avatar card -->
       <div class="flex items-center gap-3 select-none">
-        <div class="text-right hidden sm:block font-sans">
-          <p class="text-xs font-bold text-slate-800 leading-none dark:text-slate-200">M Mike</p>
-          <p class="text-[10px] text-slate-400 mt-1 font-mono leading-none dark:text-slate-500">Desk Agent</p>
+        <div class="hidden font-sans text-right sm:block">
+          <p class="text-xs font-bold leading-none text-slate-800 dark:text-slate-200">M Mike</p>
+          <p class="text-[10px] text-slate-400 mt-1 font-mono leading-none dark:text-slate-500">
+            Desk Agent
+          </p>
         </div>
         <div
           @click="toggleProfileDropdown"
-          class="h-9 w-9 rounded-xl  text-white font-bold flex items-center justify-center shadow shadow-indigo-600/30 border border-indigo-500/10 text-xs shrink-0 select-none cursor-pointer"
+          class="flex items-center justify-center text-xs font-bold text-white border shadow cursor-pointer select-none h-9 w-9 rounded-xl shadow-indigo-600/30 border-indigo-500/10 shrink-0"
         >
-          <img :src="image" alt="profile" class="h-9 w-9 rounded-xl object-cover" />
+          <img :src="image" alt="profile" class="object-cover h-9 w-9 rounded-xl" />
         </div>
       </div>
 
       <!-- Profile dropdown -->
       <div
         v-if="profileDropdownOpen"
-        class="absolute right-6 top-20 z-50 mt-2 w-48 rounded-xl surface-panel overflow-hidden transition-colors"
+        class="absolute z-50 w-48 mt-2 overflow-hidden transition-colors right-6 top-20 rounded-xl surface-panel"
       >
         <div class="py-2">
           <button
             @click="closeDropdown"
-            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+            class="flex items-center w-full gap-2 px-4 py-2 text-left transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
           >
-            <span class="text-lg"><LifeBuoy class="h-4 w-4" /></span>
+            <span class="text-lg"><LifeBuoy class="w-4 h-4" /></span>
             <span>My Profile</span>
           </button>
           <button
             @click="closeDropdown"
-            class="flex w-full items-center gap-2 px-4 py-2 text-left transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+            class="flex items-center w-full gap-2 px-4 py-2 text-left transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
           >
-            <span class="text-lg"><Info class="h-4 w-4" /></span>
+            <span class="text-lg"><Info class="w-4 h-4" /></span>
             <span>Settings</span>
           </button>
           <button
             @click="handleLogout"
-            class="flex w-full items-center gap-2 px-4 py-2 text-left font-semibold text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
+            class="flex items-center w-full gap-2 px-4 py-2 font-semibold text-left text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
           >
-            <span class="text-lg"><Check class="h-4 w-4" /></span>
+            <span class="text-lg"><Check class="w-4 h-4" /></span>
             <span>Logout</span>
           </button>
         </div>
