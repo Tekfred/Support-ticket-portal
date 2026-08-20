@@ -1,5 +1,5 @@
 <script setup>
-import { Inbox, Briefcase, CalendarDays, BarChart3 } from 'lucide-vue-next'
+import { Inbox, Briefcase, CalendarDays, BarChart3, LogOut } from 'lucide-vue-next'
 
 defineOptions({ name: 'BottomNav' })
 
@@ -7,14 +7,18 @@ defineProps({
   activeTab: { type: String, required: true },
 })
 
-const emit = defineEmits(['selectTab'])
+const emit = defineEmits(['selectTab', 'logout'])
 
 const menuItems = [
-  { id: 'unassigned',  label: 'Backlog',    icon: Inbox },
-  { id: 'my-tickets',  label: 'My Tickets',  icon: Briefcase },
-  { id: 'booked-tickets', label: 'Bookings', icon: CalendarDays },
-  { id: 'analytics',   label: 'Dashboard',   icon: BarChart3 },
+  { id: 'unassigned',    label: 'Backlog',     icon: Inbox },
+  { id: 'my-tickets',    label: 'My Tickets',  icon: Briefcase },
+  { id: 'booked-tickets', label: 'Bookings',   icon: CalendarDays },
+  { id: 'analytics',     label: 'Dashboard',   icon: BarChart3 },
 ]
+
+const emitLogout = () => {
+  emit('logout')
+}
 
 const selectTab = (tabId) => {
   emit('selectTab', tabId)
@@ -50,6 +54,13 @@ const selectTab = (tabId) => {
             v-if="activeTab === item.id"
             class="absolute top-1 h-0.5 w-4 bg-brand-600 rounded-full"
           />
+        </button>
+        <button
+          @click="emitLogout"
+          class="flex flex-col items-center justify-center gap-0.5 h-full w-full py-1.5 transition-colors relative text-slate-400 dark:text-slate-500"
+        >
+          <LogOut class="h-5 w-5" />
+          <span class="text-[10px] font-medium leading-none">Logout</span>
         </button>
       </div>
     </div>

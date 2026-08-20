@@ -75,7 +75,9 @@ const handleLogout = () => {
     <div
       class="flex h-screen min-w-0 flex-1 flex-col overflow-hidden bg-(--app-bg) transition-colors"
     >
-      <AppNavbar>
+      <AppNavbar
+        @logout="handleLogout"
+      >
         <template #active-label>
           <template v-if="activeTab === 'unassigned'">Backlog queue</template>
           <template v-else-if="activeTab === 'my-tickets'">Agent claimed</template>
@@ -93,6 +95,7 @@ const handleLogout = () => {
     <BottomNav
       :activeTab="activeTab"
       @selectTab="selectTab"
+      @logout="handleLogout"
     />
   </div>
 </template>
