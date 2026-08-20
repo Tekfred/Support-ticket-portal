@@ -17,6 +17,8 @@ const themeStore = useThemeStore()
 const { isDark } = storeToRefs(themeStore)
 
 // Local reactive state
+const emit = defineEmits(['logout'])
+
 const profileDropdownOpen = ref(false)
 
 const isSidebarCollapsed = computed(() => !uiStore.isSidebarOpen)
@@ -31,7 +33,7 @@ const closeDropdown = () => {
 
 const handleLogout = () => {
   closeDropdown()
-  // placeholder for actual logout logic
+  emit('logout')
 }
 
 // Reset demo states if they want to restore initial values
@@ -62,9 +64,20 @@ const handleResetDemoState = () => {
       >
         Expand
       </button>
-      <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono dark:text-slate-500 truncate">
-        <span class="hidden sm:inline uppercase">TBase Console</span>
-        <ChevronRight class="hidden sm:block w-3 h-3 text-slate-350 dark:text-slate-600" />
+
+      <!-- Mobile logo + page name -->
+      <div class="flex items-center gap-2 lg:hidden">
+        <div class="h-8 w-8 shrink-0 bg-indigo-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 ring-1 ring-indigo-300/20">
+          <LifeBuoy class="h-4 w-4 animate-pulse" />
+        </div>
+        <span class="font-display font-semibold tracking-tight text-sm text-slate-900 dark:text-white truncate">
+          <slot name="active-label">Backlog queue</slot>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono dark:text-slate-500 truncate hidden lg:flex">
+        <span class="uppercase">TBase Console</span>
+        <ChevronRight class="w-3 h-3 text-slate-350 dark:text-slate-600" />
         <span class="font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400 truncate">
           <slot name="active-label">Backlog queue</slot>
         </span>
@@ -72,11 +85,11 @@ const handleResetDemoState = () => {
     </div>
 
     <!-- Right widgets -->
-    <div class="flex items-center gap-3 sm:gap-4">
+    <div class="flex items-center gap-2 sm:gap-3">
       <!-- Demo Reset helper -->
       <button
         @click="handleResetDemoState"
-        class="hidden md:flex text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800"
+        class="flex text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2 py-1 rounded-lg border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800 md:text-[10px] md:px-2.5 md:py-1.5"
         title="Reset state values to starter defaults"
       >
         Reset Demo values
