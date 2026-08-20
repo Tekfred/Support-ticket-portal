@@ -56,27 +56,27 @@ const handleResetDemoState = () => {
       <button
         v-if="isSidebarCollapsed"
         @click="uiStore.toggleSidebar()"
-        class="p-1.5 px-2.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600 transition cursor-pointer dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-200 dark:border dark:border-slate-800"
+        class="hidden md:flex p-1.5 px-2.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600 transition cursor-pointer dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-200 dark:border dark:border-slate-800"
         id="sidebar-expand-btn-outer"
         title="Expand Sidebar"
       >
         Expand
       </button>
-      <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono dark:text-slate-500">
-        <span class="uppercase">TBase Console</span>
-        <ChevronRight class="w-3 h-3 text-slate-350 dark:text-slate-600" />
-        <span class="font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">
+      <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono dark:text-slate-500 truncate">
+        <span class="hidden sm:inline uppercase">TBase Console</span>
+        <ChevronRight class="hidden sm:block w-3 h-3 text-slate-350 dark:text-slate-600" />
+        <span class="font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400 truncate">
           <slot name="active-label">Backlog queue</slot>
         </span>
       </div>
     </div>
 
     <!-- Right widgets -->
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3 sm:gap-4">
       <!-- Demo Reset helper -->
       <button
         @click="handleResetDemoState"
-        class="text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800"
+        class="hidden md:flex text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800"
         title="Reset state values to starter defaults"
       >
         Reset Demo values
@@ -105,7 +105,7 @@ const handleResetDemoState = () => {
         />
       </div>
 
-      <div class="h-6 border-l border-slate-200 shrink-0 dark:border-slate-700" />
+      <div class="h-6 border-l border-slate-200 shrink-0 dark:border-slate-700 hidden sm:block" />
 
       <!-- User identification avatar card -->
       <div class="flex items-center gap-3 select-none">

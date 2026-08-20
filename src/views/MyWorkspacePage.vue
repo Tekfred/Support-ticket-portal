@@ -45,7 +45,7 @@ function handleReleaseTicket(id) {
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen p-6 md:p-8 overflow-y-auto font-sans">
+  <div class="flex-1 min-h-screen overflow-y-auto font-sans">
     <Transition name="fade-slide" mode="out-in">
 
       <!-- LIST VIEW -->
