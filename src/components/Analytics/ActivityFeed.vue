@@ -16,8 +16,8 @@ const getLogTypeColor = (type) => {
 <template>
   <div class="flex flex-col justify-between p-6 text-left bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200 dark:border-slate-700">
     <div class="mb-4">
-      <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Live Telemetry Feed</h3>
-      <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Real-time logs representing ongoing operations.</p>
+      <h3 class="heading-md text-slate-900 dark:text-white font-display">Live Telemetry Feed</h3>
+      <p class="text-subtle mt-0.5">Real-time logs representing ongoing operations.</p>
     </div>
 
     <div class="flex-1 space-y-4">

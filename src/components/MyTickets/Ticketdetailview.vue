@@ -69,14 +69,14 @@ function handleRelease(id) {
     <div class="flex items-center justify-between">
       <button
         @click="emit('back')"
-        class="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 surface-card px-4 py-2.5 rounded-xl transition-all cursor-pointer"
+        class="flex items-center gap-2 text-data font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 surface-card px-4 py-2.5 rounded-xl transition-all cursor-pointer"
       >
         <ArrowLeft class="h-4 w-4" />
         Back to Workspace
       </button>
 
       <div class="flex items-center gap-2">
-        <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">Assigned Agent:</span>
+        <span class="text-label">Assigned Agent:</span>
         <span class="text-xs bg-slate-900 dark:bg-slate-700 text-white dark:text-slate-100 font-mono px-2.5 py-1 rounded-lg">
           {{ ticket.acceptedBy }}
         </span>
@@ -99,14 +99,14 @@ function handleRelease(id) {
               </div>
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <h2 class="text-2xl font-display font-bold text-slate-900 dark:text-slate-100 leading-tight">
+                  <h2 class="heading-lg text-slate-900 dark:text-slate-100 leading-tight">
                     {{ ticket.company }}
                   </h2>
                   <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" :class="getStatusStyle(ticket.status)">
                     {{ ticket.status }}
                   </span>
                 </div>
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
+                <p class="text-body mt-1">
                   {{ ticket.category }} •
                   <span class="text-indigo-600 dark:text-indigo-400 font-semibold font-mono">ID: #{{ ticket.id }}</span>
                 </p>
@@ -120,13 +120,13 @@ function handleRelease(id) {
           <!-- Details Block -->
           <div class="space-y-4">
             <div>
-              <h4 class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500 mb-1">Target Application Role</h4>
-              <p class="text-lg font-semibold text-slate-800 dark:text-slate-200 font-display">{{ ticket.position }}</p>
+              <h4 class="text-label mb-1">Target Application Role</h4>
+              <p class="heading-md text-slate-800 dark:text-slate-200 font-display">{{ ticket.position }}</p>
             </div>
 
             <div class="border-t border-slate-100 dark:border-slate-700 pt-4">
-              <h4 class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500 mb-2">Issue / Job Overview</h4>
-              <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed surface-soft rounded-xl p-4 whitespace-pre-wrap">
+              <h4 class="text-label mb-2">Issue / Job Overview</h4>
+              <div class="text-body leading-relaxed surface-soft rounded-xl p-4 whitespace-pre-wrap">
                 {{ ticket.description }}
               </div>
             </div>
@@ -134,12 +134,12 @@ function handleRelease(id) {
             <!-- Meta Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 dark:border-slate-700 text-xs">
               <div>
-                <span class="text-slate-400 dark:text-slate-500 block">Department</span>
+                <span class="text-label block">Department</span>
                 <span class="font-bold text-slate-700 dark:text-slate-300 mt-1 block">{{ ticket.department }}</span>
               </div>
               <div>
-                <span class="text-slate-400 dark:text-slate-500 block">Filing Timestamp</span>
-                <span class="text-slate-500 dark:text-slate-400 mt-1 font-mono block">{{ ticket.appliedDate }}</span>
+                <span class="text-label block">Filing Timestamp</span>
+                <span class="text-data mt-1 block">{{ ticket.appliedDate }}</span>
               </div>
               <div>
                 <span class="text-slate-400 dark:text-slate-500 block">Contract Format</span>

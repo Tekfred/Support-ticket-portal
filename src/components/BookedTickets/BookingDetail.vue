@@ -32,7 +32,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
     >
       <!-- Close Button -->
       <div class="sticky top-0 flex items-center justify-between p-6 bg-slate-50/90 dark:bg-slate-950/80 backdrop-blur border-b border-slate-200 dark:border-slate-800">
-        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Booking Details</h3>
+        <h3 class="heading-md text-slate-900 dark:text-slate-100">Booking Details</h3>
         <button
           @click="$emit('close')"
           class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
@@ -69,7 +69,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
 
         <!-- Contact Information -->
         <div class="space-y-3">
-          <h5 class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Contact</h5>
+              <h4 class="text-label mb-1">Contact</h4>
           <div class="space-y-2">
             <div class="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
               <Mail class="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" />
@@ -88,7 +88,7 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
 
         <!-- Dates & Times -->
         <div class="space-y-3">
-          <h5 class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Timeline</h5>
+              <h4 class="text-label mb-2">Timeline</h4>
           <div class="space-y-2">
             <div class="flex items-start gap-3 text-sm">
               <Calendar class="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" />
@@ -123,10 +123,10 @@ defineEmits(['close', 'updateBooking', 'addBag', 'removeBag', 'cancelBooking', '
 
         <!-- Notes -->
         <div class="space-y-2">
-          <h5 class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Notes</h5>
-          <p class="text-sm text-slate-700 dark:text-slate-300 surface-soft rounded-lg p-3 min-h-15 leading-relaxed transition-colors">
-            {{ booking.notes || '—' }}
-          </p>
+          <h4 class="text-label mb-2">Notes</h4>
+        <p class="text-subtle text-slate-700 dark:text-slate-300 surface-soft rounded-lg p-3 min-h-15 leading-relaxed transition-colors">
+          {{ booking.notes || '—' }}
+        </p>
         </div>
 
         <!-- Action Buttons -->

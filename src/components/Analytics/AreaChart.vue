@@ -22,8 +22,8 @@ const labelColor    = computed(() => themeStore.isDark ? '#475569' : '#94a3b8')
 <template>
   <div class="flex flex-col justify-between p-5 text-left bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200 dark:border-slate-700 md:p-6 lg:col-span-2">
     <div class="mb-4 select-none">
-      <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Real-time Booking & Ticket Influx</h3>
-      <p class="font-sans text-xs text-slate-400 dark:text-slate-500">Chronological telemetry monitoring booking checks and support requirements.</p>
+      <h3 class="heading-md text-slate-900 dark:text-white font-display">Real-time Booking & Ticket Influx</h3>
+      <p class="text-subtle">Chronological telemetry monitoring booking checks and support requirements.</p>
     </div>
 
     <div class="relative w-full overflow-hidden">

@@ -45,7 +45,7 @@ const selectTab = (tabId) => {
             :class="activeTab === item.id ? 'scale-110' : ''"
           />
           <span
-            class="text-[10px] font-medium leading-none"
+            class="text-data-sm font-medium leading-none"
             :class="activeTab === item.id ? 'font-semibold text-brand-600' : ''"
           >
             {{ item.label }}
@@ -60,7 +60,7 @@ const selectTab = (tabId) => {
           class="flex flex-col items-center justify-center gap-0.5 h-full w-full py-1.5 transition-colors relative text-slate-400 dark:text-slate-500"
         >
           <LogOut class="h-5 w-5" />
-          <span class="text-[10px] font-medium leading-none">Logout</span>
+          <span class="text-data-sm font-medium leading-none">Logout</span>
         </button>
       </div>
     </div>

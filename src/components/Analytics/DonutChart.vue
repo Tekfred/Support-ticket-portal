@@ -8,8 +8,8 @@ defineProps({
 <template>
   <div class="flex flex-col justify-between p-5 text-left bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200 dark:border-slate-700 md:p-6">
     <div>
-      <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Backlog Status Shares</h3>
-      <p class="mt-1 text-xs font-medium tracking-tight uppercase text-slate-400 dark:text-slate-500 font-display">Backlog Channels Status Ratio</p>
+      <h3 class="heading-md text-slate-900 dark:text-white font-display">Backlog Status Shares</h3>
+      <p class="text-subtle mt-1 font-display">Backlog Channels Status Ratio</p>
     </div>
 
     <div class="relative flex items-center justify-center h-44">

@@ -123,7 +123,7 @@ const menuItems = [
       <div>
         <p
           v-if="!isCollapsed"
-          class="px-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-3"
+          class="px-3 text-label text-slate-500 uppercase tracking-wider mb-3"
         >
           Support Views
         </p>
@@ -156,7 +156,7 @@ const menuItems = [
                   {{ item.label }}
                 </p>
                 <p
-                  class="text-[10px] mt-1 font-light"
+                  class="text-subtle mt-1 font-light"
                   :class="[activeTab === item.id ? 'text-indigo-200' : 'text-slate-500']"
                 >
                   {{ item.description }}
@@ -200,11 +200,11 @@ const menuItems = [
       >
         <div class="flex items-center gap-2 mb-2">
           <Sparkles class="h-4 w-4 text-amber-400 animate-spin" />
-          <span class="text-[11px] font-semibold text-slate-300 font-display"
+          <span class="text-label text-slate-300 font-display"
             >Priority Grounding</span
           >
         </div>
-        <p class="text-[11px] text-slate-500 leading-relaxed font-sans">
+        <p class="text-subtle leading-relaxed font-sans">
           Dynamic workload balancers are operational. Ticket escalations are synchronized with
           active storage depots.
         </p>
@@ -224,12 +224,12 @@ const menuItems = [
             {{ currentUser.initials || 'VP' }}
           </div>
           <div v-if="!isCollapsed" class="text-left overflow-hidden">
-            <p class="text-sm font-semibold text-white leading-none truncate font-display">
-              {{ currentUser.name }}
-            </p>
-            <p class="text-xs text-slate-500 truncate font-mono mt-1">
-              {{ currentUser.email }}
-            </p>
+          <p class="text-sm font-semibold text-white leading-none truncate font-display">
+            {{ currentUser.name }}
+          </p>
+          <p class="text-data-sm text-slate-500 truncate font-mono mt-1">
+            {{ currentUser.email }}
+          </p>
           </div>
         </div>
 

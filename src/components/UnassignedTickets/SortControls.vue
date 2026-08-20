@@ -23,11 +23,11 @@ function onView(v){ emit('update:viewMode', v) }
         v-for="filter in ['All','Pending','On-Hold','Candidate']"
         :key="filter"
         @click="setFilter(filter)"
-        class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+        class="px-4 py-2 rounded-xl text-data font-semibold uppercase tracking-wider transition-all cursor-pointer"
         :class="[
           activeFilter === filter
             ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-            : 'chip-muted'
+            : 'chip-muted',
         ]"
       >
         {{ filter }}
@@ -42,13 +42,13 @@ function onView(v){ emit('update:viewMode', v) }
           placeholder="Search details..."
           :value="searchQuery"
           @input="onSearch"
-          class="w-full pl-9 pr-4 py-2 text-sm rounded-xl control-input font-sans"
+          class="w-full pl-9 pr-4 py-2 text-body rounded-xl control-input font-sans"
         />
       </div>
 
       <div class="flex items-center gap-1.5">
         <SlidersHorizontal class="h-4 w-4 text-slate-400 dark:text-slate-500" />
-        <select :value="sortBy" @change="e => onSort(e.target.value)" class="text-xs control-input rounded-xl px-3 py-2 font-medium">
+        <select :value="sortBy" @change="e => onSort(e.target.value)" class="text-data control-input rounded-xl px-3 py-2 font-medium">
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
           <option value="priority">Priority</option>

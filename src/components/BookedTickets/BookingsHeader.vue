@@ -13,13 +13,13 @@ defineEmits(['openAddModal'])
 <template>
   <div class="surface-card rounded-2xl p-6 md:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
     <div>
-      <h1 class="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-2">
+      <h1 class="heading-xl text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-2">
         Bookings Workspace
         <span class="text-sm bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400 px-2.5 py-1 rounded-full font-mono font-medium ml-2">
           {{ bookingsCount }} active
         </span>
       </h1>
-      <p class="text-slate-500 dark:text-slate-400 mt-1 font-display">
+      <p class="text-body mt-1">
         Store luggage manifests. Direct bag modifications, check-ins, and cancellations from this terminal.
       </p>
     </div>

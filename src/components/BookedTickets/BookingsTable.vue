@@ -33,7 +33,7 @@ const getStatusColor = (status) => {
   <div v-if="bookings.length === 0" class="flex-1 py-16 text-center bg-white dark:bg-slate-900/60 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 p-8 transition-colors">
     <AlertCircle class="h-10 w-10 text-slate-300 dark:text-slate-600 mx-auto mb-2" />
     <p class="text-sm font-bold text-slate-700 dark:text-slate-200">No storage manifests found</p>
-    <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-xs mx-auto">
+    <p class="text-subtle mt-1 max-w-xs mx-auto">
       No bookings correspond to your query. Clear search or add a new record.
     </p>
   </div>
@@ -43,7 +43,7 @@ const getStatusColor = (status) => {
     <div class="overflow-x-auto h-full">
       <table class="w-full text-left border-collapse font-sans text-xs" id="bookings-table">
         <thead>
-          <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 font-mono tracking-widest text-[9px] uppercase font-bold">
+          <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 font-mono tracking-widest text-label font-bold">
             <th class="p-4 pl-6">Store / Code</th>
             <th class="p-4">Customer Name</th>
             <th class="p-4">Check in & Check out</th>
@@ -77,10 +77,10 @@ const getStatusColor = (status) => {
                 >
                   S
                 </div>
-                <div>
-                  <p class="font-bold text-slate-800 dark:text-slate-200">{{ booking.storeCode }}</p>
-                  <p class="text-[10px] text-slate-400 dark:text-slate-500 font-mono">ID: {{ booking.id }}</p>
-                </div>
+                 <div>
+                   <p class="font-bold text-slate-800 dark:text-slate-200">{{ booking.storeCode }}</p>
+                   <p class="text-data-sm text-slate-400 dark:text-slate-500 font-mono">ID: {{ booking.id }}</p>
+                 </div>
               </div>
             </td>
 
@@ -90,10 +90,10 @@ const getStatusColor = (status) => {
             </td>
 
             <!-- Check in/out Times -->
-            <td class="p-4">
-              <p class="text-slate-800 dark:text-slate-200 font-medium">{{ booking.checkInDate }}</p>
-              <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 font-mono">{{ booking.timeString }}</p>
-            </td>
+             <td class="p-4">
+               <p class="text-slate-800 dark:text-slate-200 font-medium">{{ booking.checkInDate }}</p>
+               <p class="text-data-sm text-slate-400 dark:text-slate-500 mt-0.5 font-mono">{{ booking.timeString }}</p>
+             </td>
 
             <!-- Bags Count -->
             <td class="p-4 font-semibold text-slate-700 dark:text-slate-300">
@@ -101,16 +101,16 @@ const getStatusColor = (status) => {
             </td>
 
             <!-- Earnings -->
-            <td class="p-4 font-bold text-slate-900 dark:text-slate-100 text-[13px] font-mono">
-              ${{ booking.earnings.toFixed(2) }}
-            </td>
+             <td class="p-4 font-bold text-slate-900 dark:text-slate-100 text-data font-mono">
+               ${{ booking.earnings.toFixed(2) }}
+             </td>
 
             <!-- Status Badge -->
             <td class="p-4 pr-6 text-center select-none">
               <div class="flex items-center justify-center gap-2.5">
-                <span class="px-2.5 py-1 rounded-full font-semibold text-[10px] inline-block shrink-0" :class="getStatusColor(booking.status)">
-                  {{ booking.status }}
-                </span>
+                 <span class="px-2.5 py-1 rounded-full font-semibold text-data inline-block shrink-0" :class="getStatusColor(booking.status)">
+                   {{ booking.status }}
+                 </span>
                 <ChevronRight
                   class="h-3.5 w-3.5 transition-all"
                   :class="[

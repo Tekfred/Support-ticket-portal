@@ -12,10 +12,10 @@ defineProps({
 <template>
   <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between" id="analytics-header">
     <div>
-      <h1 class="text-3xl font-bold tracking-tight font-display text-slate-900 dark:text-white">
+      <h1 class="heading-xl text-slate-900 dark:text-white">
         {{ title }}
       </h1>
-      <p class="mt-1 font-display text-slate-500 dark:text-slate-400">{{ subtitle }}</p>
+      <p class="mt-1 text-body">{{ subtitle }}</p>
     </div>
 
     <div class="flex items-center gap-2 px-4 py-2.5 text-xs font-mono bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
