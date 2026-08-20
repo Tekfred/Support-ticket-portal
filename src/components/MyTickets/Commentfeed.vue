@@ -24,10 +24,10 @@ function handleSubmit() {
 <template>
   <div class="surface-card rounded-2xl overflow-hidden p-6 text-left">
     <!-- Header -->
-    <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4 font-display">
+    <h3 class="heading-md text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4 font-display">
       <MessageSquare class="h-5 w-5 text-indigo-500" />
       Interactive Case Comments
-      <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full font-mono">
+      <span class="text-data-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full font-mono">
         {{ comments.length }} updates
       </span>
     </h3>
@@ -38,7 +38,7 @@ function handleSubmit() {
         v-if="comments.length === 0"
         class="text-center py-8 text-slate-400 dark:text-slate-500 leading-relaxed"
       >
-        <p class="text-sm italic">No communications entered yet. Post a comment below to update the customer record.</p>
+        <p class="text-body italic">No communications entered yet. Post a comment below to update the customer record.</p>
       </div>
 
       <div
@@ -63,15 +63,15 @@ function handleSubmit() {
         <!-- Body -->
         <div class="space-y-1.5 flex-1">
           <div class="flex items-center justify-between gap-2 flex-wrap">
-            <span
-              class="text-xs font-bold"
-              :class="[comment.author === 'M Mike' ? 'text-indigo-800 dark:text-indigo-400' : 'text-slate-800 dark:text-slate-300']"
-            >
-              {{ comment.author }}
-            </span>
-            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono">{{ comment.date }}</span>
+             <span
+               class="text-data font-bold"
+               :class="[comment.author === 'M Mike' ? 'text-indigo-800 dark:text-indigo-400' : 'text-slate-800 dark:text-slate-300']"
+             >
+               {{ comment.author }}
+             </span>
+             <span class="text-data-sm text-slate-400 dark:text-slate-500 font-mono">{{ comment.date }}</span>
           </div>
-          <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">{{ comment.text }}</p>
+          <p class="text-subtle leading-relaxed text-slate-700 dark:text-slate-300">{{ comment.text }}</p>
         </div>
       </div>
     </div>

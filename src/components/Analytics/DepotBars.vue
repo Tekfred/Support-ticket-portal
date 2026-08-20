@@ -8,8 +8,8 @@ defineProps({
 <template>
   <div class="flex flex-col justify-between p-6 text-left bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200 dark:border-slate-700">
     <div class="mb-4">
-      <h3 class="text-base font-bold text-slate-900 dark:text-white font-display">Bags Handled by Store Depot</h3>
-      <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 font-sans">Luggage volume allocation per box / depot code.</p>
+      <h3 class="heading-md text-slate-900 dark:text-white font-display">Bags Handled by Store Depot</h3>
+      <p class="text-subtle mt-0.5 font-sans">Luggage volume allocation per box / depot code.</p>
     </div>
 
     <div v-if="depotChartData.length === 0" class="flex items-center justify-center font-sans text-xs italic h-44 text-slate-400 dark:text-slate-500">

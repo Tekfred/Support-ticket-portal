@@ -30,7 +30,7 @@ const handleTabClick = (tab) => {
         v-for="tab in tabs"
         :key="tab"
         @click="() => handleTabClick(tab)"
-        class="px-4 py-2 text-xs font-semibold rounded-xl uppercase tracking-wider transition-all cursor-pointer"
+        class="px-4 py-2 text-data font-semibold rounded-xl uppercase tracking-wider transition-all cursor-pointer"
         :class="[
           activeTab === tab
             ? 'bg-slate-900 dark:bg-indigo-600 text-white shadow-md'
@@ -56,7 +56,7 @@ const handleTabClick = (tab) => {
             $emit('resetPage')
           }
         "
-        class="pl-9 pr-4 py-2 font-sans text-xs w-full control-input rounded-xl"
+        class="pl-9 pr-4 py-2 text-body font-sans w-full control-input rounded-xl"
       />
     </div>
   </div>

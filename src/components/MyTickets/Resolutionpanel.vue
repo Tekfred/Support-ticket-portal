@@ -20,14 +20,14 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
       <!-- Glow accent -->
       <div class="absolute top-0 right-0 h-40 w-40 bg-linear-to-tr from-violet-600 to-indigo-500 opacity-10 rounded-full blur-2xl" />
 
-      <h3 class="text-md font-display font-semibold border-b border-slate-800 pb-3 flex items-center gap-1.5 relative z-10 text-white">
+      <h3 class="heading-sm font-display font-semibold border-b border-slate-800 pb-3 flex items-center gap-1.5 relative z-10 text-white">
         <Check class="h-4 w-4 text-emerald-400" />
         Resolution Workstation
       </h3>
 
       <!-- Status Buttons -->
       <div class="space-y-2 relative z-10 text-xs">
-        <label class="block text-slate-400 font-bold uppercase tracking-wider mb-2 font-mono">Set Ticket Status</label>
+        <label class="block text-label font-bold mb-2 font-mono">Set Ticket Status</label>
         <div class="grid grid-cols-2 gap-2">
           <button
             v-for="st in ['Pending', 'On-Hold', 'Candidate', 'Resolved']"
@@ -48,7 +48,7 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
 
       <!-- Priority Buttons -->
       <div class="space-y-1.5 relative z-10 text-xs text-left">
-        <label class="block text-slate-400 font-bold uppercase tracking-wider mb-2 font-mono">Urgency Level</label>
+        <label class="block text-label font-bold mb-2 font-mono">Urgency Level</label>
         <div class="grid grid-cols-2 gap-2">
           <button
             v-for="pr in ['low', 'medium', 'high', 'critical']"
@@ -68,7 +68,7 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
 
       <!-- Department Dropdown -->
       <div class="space-y-2 relative z-10 text-left text-xs">
-        <label class="block text-slate-400 font-bold uppercase tracking-wider mb-2 font-mono">Routing Department</label>
+        <label class="block text-label font-bold mb-2 font-mono">Routing Department</label>
         <select
           :value="ticket.department"
           @change="emit('updateDept', $event.target.value)"
@@ -83,7 +83,7 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
 
       <!-- Release Button -->
       <div class="pt-4 border-t border-slate-800 space-y-3 relative z-10">
-        <p class="text-[11px] text-slate-400 leading-relaxed font-sans">
+        <p class="text-subtle leading-relaxed font-sans">
           Need to dispatch this ticket back to the shared queue? Releasing it makes it available to other support crew.
         </p>
         <button
@@ -97,7 +97,7 @@ const emit = defineEmits(['updateStatus', 'updatePriority', 'updateDept', 'relea
 
     <!-- Customer Contact Card -->
     <div class="surface-card rounded-2xl p-6 text-left space-y-4">
-      <h3 class="text-sm font-bold uppercase tracking-wider font-mono text-slate-400 dark:text-slate-500">Customer Contact Card</h3>
+      <h3 class="text-label font-bold uppercase tracking-wider font-mono">Customer Contact Card</h3>
       <div class="space-y-3 text-xs leading-relaxed">
         <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
           <Mail class="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" />

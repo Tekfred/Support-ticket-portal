@@ -16,8 +16,8 @@ defineProps({
     <div class="flex flex-col justify-between p-6 transition-shadow bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200/80 dark:border-slate-700 hover:shadow-md">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-xs font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">Total Earnings</p>
-          <h3 class="mt-2 font-mono text-3xl font-extrabold font-display text-slate-800 dark:text-white">${{ totalEarnings.toFixed(2) }}</h3>
+          <p class="text-label">Total Earnings</p>
+          <h3 class="mt-2 font-mono text-2xl font-extrabold font-display text-slate-800 dark:text-white">${{ totalEarnings.toFixed(2) }}</h3>
         </div>
         <div class="flex items-center justify-center w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl shrink-0">
           <DollarSign class="w-5 h-5" />
@@ -35,8 +35,8 @@ defineProps({
     <div class="flex flex-col justify-between p-6 transition-shadow bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200/80 dark:border-slate-700 hover:shadow-md">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-xs font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">Luggage Items</p>
-          <h3 class="mt-2 font-mono text-3xl font-extrabold font-display text-slate-800 dark:text-white">{{ totalBags }} Bags</h3>
+          <p class="text-label">Luggage Items</p>
+          <h3 class="mt-2 font-mono text-2xl font-extrabold font-display text-slate-800 dark:text-white">{{ totalBags }} Bags</h3>
         </div>
         <div class="flex items-center justify-center w-12 h-12 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-2xl shrink-0">
           <ShoppingBag class="w-5 h-5" />
@@ -54,8 +54,8 @@ defineProps({
     <div class="flex flex-col justify-between p-6 transition-shadow bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200/80 dark:border-slate-700 hover:shadow-md">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-xs font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">Open Backlog</p>
-          <h3 class="mt-2 font-mono text-3xl font-extrabold font-display text-slate-800 dark:text-white">{{ openTicketsCount }} Unassigned</h3>
+          <p class="text-label">Open Backlog</p>
+          <h3 class="mt-2 font-mono text-2xl font-extrabold font-display text-slate-800 dark:text-white">{{ openTicketsCount }} Unassigned</h3>
         </div>
         <div class="flex items-center justify-center w-12 h-12 text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 dark:text-indigo-400 rounded-2xl shrink-0">
           <Activity class="w-5 h-5" />
@@ -73,8 +73,8 @@ defineProps({
     <div class="flex flex-col justify-between p-6 transition-shadow bg-white border shadow-sm dark:bg-slate-800 rounded-2xl border-slate-200/80 dark:border-slate-700 hover:shadow-md">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-xs font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">Agent Resolved</p>
-          <h3 class="mt-2 font-mono text-3xl font-extrabold font-display text-slate-800 dark:text-white">{{ resolvedTicketsCount }} Tickets</h3>
+          <p class="text-label">Agent Resolved</p>
+          <h3 class="mt-2 font-mono text-2xl font-extrabold font-display text-slate-800 dark:text-white">{{ resolvedTicketsCount }} Tickets</h3>
         </div>
         <div class="flex items-center justify-center w-12 h-12 bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded-2xl shrink-0">
           <CheckCircle class="w-5 h-5" />

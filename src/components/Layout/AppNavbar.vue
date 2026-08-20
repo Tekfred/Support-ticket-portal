@@ -75,7 +75,7 @@ const handleResetDemoState = () => {
         </span>
       </div>
 
-      <div class="flex items-center gap-1.5 text-xs text-slate-400 font-mono dark:text-slate-500 truncate hidden lg:flex">
+      <div class="flex items-center gap-1.5 text-data-sm text-slate-400 font-mono dark:text-slate-500 truncate hidden lg:flex">
         <span class="uppercase">TBase Console</span>
         <ChevronRight class="w-3 h-3 text-slate-350 dark:text-slate-600" />
         <span class="font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400 truncate">

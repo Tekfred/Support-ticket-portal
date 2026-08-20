@@ -16,7 +16,7 @@ const statuses = ['Active', 'Checked in', 'Upcoming', 'Cancelled']
   <div class="space-y-3 p-4 surface-soft rounded-xl transition-colors">
     <!-- Status Selector -->
     <div class="space-y-2">
-      <label class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Update Status</label>
+      <label class="text-label">Update Status</label>
       <select
         :value="booking.status"
         @change="(e) => $emit('updateStatus', e.target.value)"
@@ -30,7 +30,7 @@ const statuses = ['Active', 'Checked in', 'Upcoming', 'Cancelled']
 
     <!-- Bag Management -->
     <div class="space-y-2">
-      <label class="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">Luggage Management</label>
+      <label class="text-label">Luggage Management</label>
       <div class="flex gap-2">
         <button
           @click="$emit('addBag')"
@@ -47,7 +47,7 @@ const statuses = ['Active', 'Checked in', 'Upcoming', 'Cancelled']
           <Trash2 class="h-4 w-4" />
         </button>
       </div>
-      <p class="text-[11px] text-slate-500 dark:text-slate-400">Current: {{ booking.bagsCount }} bag{{ booking.bagsCount > 1 ? 's' : '' }}</p>
+      <p class="text-data-sm text-slate-500 dark:text-slate-400">Current: {{ booking.bagsCount }} bag{{ booking.bagsCount > 1 ? 's' : '' }}</p>
     </div>
 
     <!-- Cancel Booking -->
