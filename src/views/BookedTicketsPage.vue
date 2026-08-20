@@ -98,7 +98,7 @@ const handleCreateBooking = (newBooking) => {
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen overflow-y-auto p-6 md:p-8 font-sans">
+  <div class="flex-1 min-h-screen overflow-y-auto font-sans">
     <!-- Page Header -->
     <BookingsHeader
       :bookingsCount="props.bookings.length"
@@ -116,7 +116,7 @@ const handleCreateBooking = (newBooking) => {
       />
 
       <!-- Main Content Area -->
-      <div class="flex gap-6 h-[calc(100vh-300px)]">
+      <div class="flex gap-6 h-[calc(100vh-300px)] min-h-[350px]">
         <!-- Left: Bookings Table -->
         <div class="flex-1 flex flex-col">
           <BookingsTable

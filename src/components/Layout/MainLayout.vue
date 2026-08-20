@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AppNavbar from '@/components/Layout/AppNavbar.vue'
 import Sidebar from '@/components/Layout/Sidebar.vue'
+import BottomNav from '@/components/Layout/BottomNav.vue'
 import { useUiStore } from '@/stores/uiStore'
 import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
@@ -61,6 +62,7 @@ const handleLogout = () => {
     class="flex h-screen overflow-hidden bg-(--app-bg) text-slate-900 transition-colors dark:text-slate-100"
   >
     <Sidebar
+      class="hidden lg:flex"
       :activeTab="activeTab"
       @selectTab="selectTab"
       :isCollapsed="isCollapsed"
@@ -83,10 +85,14 @@ const handleLogout = () => {
       </AppNavbar>
 
       <main
-        class="min-w-0 flex-1 overflow-y-auto bg-(--app-bg) p-6 transition-colors"
+        class="min-w-0 flex-1 overflow-y-auto bg-(--app-bg) p-4 md:p-6 lg:p-8 pb-20 lg:pb-8 transition-colors"
       >
         <slot />
       </main>
     </div>
+    <BottomNav
+      :activeTab="activeTab"
+      @selectTab="selectTab"
+    />
   </div>
 </template>
