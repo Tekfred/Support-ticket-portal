@@ -1,20 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useUiStore } from '@/stores/uiStore'
-import { useThemeStore } from '@/stores/themeStore'
 import image from '@/assets/profile_img_1.png'
-// import { INITIAL_TICKETS, INITIAL_BOOKINGS } from '@/stores/Data'
 
-import { Sun, Moon, Bell, Info, LifeBuoy, ChevronRight, Check } from 'lucide-vue-next'
-// import { Sparkles } from 'lucide-vue-next'
+import { Bell, Info, LifeBuoy, ChevronRight, LogOut } from 'lucide-vue-next'
 
 defineOptions({ name: 'AppNavbar' })
 
-// UI & Theme stores
+// UI store
 const uiStore = useUiStore()
-const themeStore = useThemeStore()
-const { isDark } = storeToRefs(themeStore)
 
 // Local reactive state
 const emit = defineEmits(['logout'])
@@ -75,11 +69,16 @@ const handleResetDemoState = () => {
         </span>
       </div>
 
-      <div class="flex items-center gap-1.5 text-data-sm text-slate-400 font-mono dark:text-slate-500 truncate hidden lg:flex">
-        <span class="uppercase">TBase Console</span>
-        <ChevronRight class="w-3 h-3 text-slate-350 dark:text-slate-600" />
-        <span class="font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400 truncate">
-          <slot name="active-label">Backlog queue</slot>
+      <div class="flex-col gap-0.5 text-base text-slate-500 font-mono dark:text-slate-400 truncate hidden lg:flex">
+        <div class="flex items-center gap-1.5">
+          <span class="uppercase text-slate-500 dark:text-slate-400">TBase Console</span>
+          <ChevronRight class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+          <span class="font-bold tracking-wider text-slate-700 dark:text-slate-200 uppercase truncate">
+            <slot name="active-label">Backlog queue</slot>
+          </span>
+        </div>
+        <span class="text-[11px] text-slate-400 dark:text-slate-500 truncate">
+          <slot name="active-subtitle">Open queue</slot>
         </span>
       </div>
     </div>
@@ -93,17 +92,6 @@ const handleResetDemoState = () => {
         title="Reset state values to starter defaults"
       >
         Reset Demo values
-      </button>
-
-      <!-- Dark & Light Toggle block -->
-      <button
-        @click="themeStore.toggleTheme()"
-        class="p-2 transition duration-200 cursor-pointer rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
-        title="Toggle theme mode"
-        id="theme-toggler"
-      >
-        <Moon v-if="!isDark" class="w-5 h-5" />
-        <Sun v-else class="w-5 h-5 text-amber-400" />
       </button>
 
       <!-- Notification system bell -->
@@ -122,17 +110,17 @@ const handleResetDemoState = () => {
 
       <!-- User identification avatar card -->
       <div class="flex items-center gap-3 select-none">
-        <div class="hidden font-sans text-right sm:block">
-          <p class="text-xs font-bold leading-none text-slate-800 dark:text-slate-200">M Mike</p>
-          <p class="text-[10px] text-slate-400 mt-1 font-mono leading-none dark:text-slate-500">
-            Desk Agent
-          </p>
-        </div>
         <div
           @click="toggleProfileDropdown"
           class="flex items-center justify-center text-xs font-bold text-white border shadow cursor-pointer select-none h-9 w-9 rounded-xl shadow-indigo-600/30 border-indigo-500/10 shrink-0"
         >
           <img :src="image" alt="profile" class="object-cover h-9 w-9 rounded-xl" />
+        </div>
+        <div class="hidden font-sans text-left sm:block">
+          <p class="text-xs font-bold leading-none text-slate-800 dark:text-slate-200">M Mike</p>
+          <p class="text-[10px] text-slate-500 mt-1 font-mono leading-none dark:text-slate-400">
+            Desk Agent
+          </p>
         </div>
       </div>
 
@@ -160,7 +148,7 @@ const handleResetDemoState = () => {
             @click="handleLogout"
             class="flex items-center w-full gap-2 px-4 py-2 font-semibold text-left text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
           >
-            <span class="text-lg"><Check class="w-4 h-4" /></span>
+            <span class="text-lg"><LogOut class="w-4 h-4" /></span>
             <span>Logout</span>
           </button>
         </div>

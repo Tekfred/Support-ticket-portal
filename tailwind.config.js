@@ -116,8 +116,8 @@ export default {
         },
       },
       fontFamily: {
-        'sans': ['"Inter"', 'system-ui', 'sans-serif'],
-        'display': ['"Space Grotesk"', 'sans-serif'],
+        'sans': ['"SF Pro Text"', '"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+        'display': ['"SF Pro Display"', '"SF Pro Text"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         'mono': ['"JetBrains Mono"', 'monospace'],
       },
     },

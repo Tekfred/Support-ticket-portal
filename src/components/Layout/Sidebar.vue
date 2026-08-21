@@ -95,7 +95,7 @@ const menuItems = [
           <LifeBuoy class="h-5 w-5 animate-pulse" />
         </div>
         <div v-if="!isCollapsed" class="flex flex-col">
-          <span class="text-white font-display font-semibold tracking-tight text-lg">
+          <span class="text-slate-200 font-display font-semibold tracking-tight text-lg">
             TicketBase
           </span>
           <span
