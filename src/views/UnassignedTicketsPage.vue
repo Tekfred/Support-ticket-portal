@@ -84,7 +84,7 @@ const totalPages = computed(() => Math.ceil(sortedTickets.value.length / itemsPe
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen overflow-y-auto font-sans">
+  <div class="animated-bg flex-1 min-h-screen overflow-y-auto font-sans">
     <!-- Top Header Section -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8" id="unassigned-header-section">
       <div>

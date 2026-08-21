@@ -11,7 +11,7 @@ const { tickets } = defineProps({
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="animated-bg space-y-4">
     <!-- Page Title -->
     <div>
       <h1 class="heading-xl text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-2">
