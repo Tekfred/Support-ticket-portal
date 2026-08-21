@@ -111,7 +111,7 @@ const handleLogout = () => {
     <!-- Floating Theme Toggle (bottom-right, visible on all pages) -->
     <button
       @click="themeStore.toggleTheme()"
-      class="fixed bottom-20 lg:bottom-8 right-4 z-50 p-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg dark:shadow-black/40 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors cursor-pointer"
+      class="fixed bottom-20 lg:bottom-8 right-4 z-50 p-3 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800 shadow-lg dark:shadow-black/40 transition-colors cursor-pointer"
       title="Toggle theme mode"
     >
       <Moon v-if="isDark" class="w-5 h-5" />
