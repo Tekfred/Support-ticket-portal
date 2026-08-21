@@ -43,10 +43,10 @@ const handleResetDemoState = () => {
 
 <template>
   <!-- Top universal Header bar -->
-  <header
-    class="h-20 border-b border-slate-200/80 bg-white/90 shrink-0 px-6 md:px-8 flex items-center justify-between z-10 shadow-sm backdrop-blur transition-colors dark:bg-[#080b12]/95 dark:border-slate-800 dark:shadow-black/30"
-    id="universal-header"
-  >
+    <header
+      class="h-20 border-b border-slate-200/80 bg-white/90 shrink-0 px-4 md:px-8 flex items-center justify-between z-10 shadow-sm backdrop-blur transition-colors dark:bg-[#080b12]/95 dark:border-slate-800 dark:shadow-black/30"
+      id="universal-header"
+    >
     <!-- Left path info -->
     <div class="flex items-center gap-3 select-none">
       <button
@@ -85,17 +85,40 @@ const handleResetDemoState = () => {
 
     <!-- Right widgets -->
     <div class="flex items-center gap-2 sm:gap-3">
-      <!-- Demo Reset helper -->
+      <!-- Mobile-only compact bell -->
+      <div class="relative sm:hidden">
+        <button
+          class="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 transition-colors cursor-pointer"
+        >
+          <Bell class="w-4 h-4" />
+        </button>
+        <span
+          class="absolute top-1 right-1 h-2 w-2 bg-indigo-600 rounded-full ring-1 ring-white dark:ring-slate-900"
+        />
+      </div>
+
+      <!-- Mobile-only compact round reset button -->
+      <div class="sm:hidden relative">
+        <button
+          @click="handleResetDemoState"
+          class="flex items-center justify-center text-[9px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 w-7 h-7 rounded-full border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800"
+          title="Reset state values to starter defaults"
+        >
+          R
+        </button>
+      </div>
+
+      <!-- Desktop reset button -->
       <button
         @click="handleResetDemoState"
-        class="flex text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2 py-1 rounded-lg border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800 md:text-[10px] md:px-2.5 md:py-1.5"
+        class="hidden sm:flex text-[10px] font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 px-2 py-1 rounded-lg border border-amber-200 transition-colors cursor-pointer dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800 md:text-[10px] md:px-2.5 md:py-1.5"
         title="Reset state values to starter defaults"
       >
         Reset Demo values
       </button>
 
-      <!-- Notification system bell -->
-      <div class="relative">
+      <!-- Desktop bell -->
+      <div class="hidden sm:block relative">
         <button
           class="p-2 transition duration-200 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-indigo-300 dark:hover:bg-slate-900 dark:hover:ring-1 dark:hover:ring-slate-800"
         >

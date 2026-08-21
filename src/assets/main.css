@@ -300,3 +300,53 @@ body {
   font-size: 0.65rem;
   line-height: 1.4;
 }
+
+/* ─── ANIMATED MESH BACKGROUND (Framer Motion-style) ─── */
+.animated-bg {
+  position: relative;
+  overflow: hidden;
+}
+.animated-bg::before,
+.animated-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+.animated-bg::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
+  top: -200px;
+  left: -100px;
+  animation: floatOrb1 20s ease-in-out infinite;
+}
+.animated-bg::after {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+  bottom: -150px;
+  right: -100px;
+  animation: floatOrb2 24s ease-in-out infinite;
+}
+.dark .animated-bg::before {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+}
+.dark .animated-bg::after {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+}
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(120px, 80px) scale(1.1); }
+  50% { transform: translate(60px, 160px) scale(0.95); }
+  75% { transform: translate(-40px, 60px) scale(1.05); }
+}
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-100px, -60px) scale(1.08); }
+  50% { transform: translate(-160px, 40px) scale(0.92); }
+  75% { transform: translate(40px, -80px) scale(1.04); }
+}

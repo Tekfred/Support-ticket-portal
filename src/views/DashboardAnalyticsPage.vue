@@ -120,7 +120,7 @@ const recentActivities = [
 </script>
 
 <template>
-  <div class="flex-1 min-h-screen space-y-6 md:space-y-8 overflow-y-auto font-sans bg-(--app-bg)" id="analytics-portal">
+  <div class="animated-bg flex-1 min-h-screen space-y-6 md:space-y-8 overflow-y-auto font-sans bg-(--app-bg)" id="analytics-portal">
     <HeaderBanner :syncTime="new Date().toLocaleString()" />
 
     <KPIGrid
