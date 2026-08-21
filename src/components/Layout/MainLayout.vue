@@ -7,6 +7,8 @@ import BottomNav from '@/components/Layout/BottomNav.vue'
 import { useUiStore } from '@/stores/uiStore'
 import { storeToRefs } from 'pinia'
 import { useTicketStore } from '@/stores/ticketStore'
+import { useThemeStore } from '@/stores/themeStore'
+import { Moon, Sun } from 'lucide-vue-next'
 
 defineOptions({
   name: 'MainLayout',
@@ -25,6 +27,8 @@ const router = useRouter()
 const route = useRoute()
 
 const uiStore = useUiStore()
+const themeStore = useThemeStore()
+const { isDark } = storeToRefs(themeStore)
 const isCollapsed = computed(() => !uiStore.isSidebarOpen)
 const setIsCollapsed = (val) => {
   uiStore.isSidebarOpen = !val
@@ -84,6 +88,12 @@ const handleLogout = () => {
           <template v-else-if="activeTab === 'booked-tickets'">Luggage manifests</template>
           <template v-else-if="activeTab === 'analytics'">Operational dashboard</template>
         </template>
+        <template #active-subtitle>
+          <template v-if="activeTab === 'unassigned'">Open queue</template>
+          <template v-else-if="activeTab === 'my-tickets'">Accepted & active</template>
+          <template v-else-if="activeTab === 'booked-tickets'">Active & upcoming</template>
+          <template v-else-if="activeTab === 'analytics'">Metrics & insights</template>
+        </template>
       </AppNavbar>
 
       <main
@@ -97,5 +107,15 @@ const handleLogout = () => {
       @selectTab="selectTab"
       @logout="handleLogout"
     />
+
+    <!-- Floating Theme Toggle (bottom-right, visible on all pages) -->
+    <button
+      @click="themeStore.toggleTheme()"
+      class="fixed bottom-20 lg:bottom-8 right-4 z-50 p-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg dark:shadow-black/40 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors cursor-pointer"
+      title="Toggle theme mode"
+    >
+      <Moon v-if="isDark" class="w-5 h-5" />
+      <Sun v-else class="w-5 h-5" />
+    </button>
   </div>
 </template>

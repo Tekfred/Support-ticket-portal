@@ -116,7 +116,7 @@ const handleCreateBooking = (newBooking) => {
       />
 
       <!-- Main Content Area -->
-      <div class="flex gap-6 h-[calc(100vh-300px)] min-h-[350px]">
+      <div class="flex gap-6 h-[calc(100vh-300px)] min-h-87.5">
         <!-- Left: Bookings Table -->
         <div class="flex-1 flex flex-col">
           <BookingsTable

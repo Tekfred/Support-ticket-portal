@@ -1,5 +1,5 @@
 <script setup>
-import { Inbox, Briefcase, CalendarDays, BarChart3, LogOut } from 'lucide-vue-next'
+import { Inbox, Briefcase, CalendarDays, BarChart3 } from 'lucide-vue-next'
 
 defineOptions({ name: 'BottomNav' })
 
@@ -10,15 +10,11 @@ defineProps({
 const emit = defineEmits(['selectTab', 'logout'])
 
 const menuItems = [
-  { id: 'unassigned',    label: 'Backlog',     icon: Inbox },
-  { id: 'my-tickets',    label: 'My Tickets',  icon: Briefcase },
-  { id: 'booked-tickets', label: 'Bookings',   icon: CalendarDays },
-  { id: 'analytics',     label: 'Dashboard',   icon: BarChart3 },
+  { id: 'unassigned',     label: 'Backlog',      icon: Inbox },
+  { id: 'my-tickets',     label: 'My Tickets',  icon: Briefcase },
+  { id: 'booked-tickets', label: 'Bookings',  icon: CalendarDays },
+  { id: 'analytics',      label: 'Dashboard',  icon: BarChart3 },
 ]
-
-const emitLogout = () => {
-  emit('logout')
-}
 
 const selectTab = (tabId) => {
   emit('selectTab', tabId)
@@ -37,7 +33,7 @@ const selectTab = (tabId) => {
           :key="item.id"
           @click="selectTab(item.id)"
           class="flex flex-col items-center justify-center gap-0.5 h-full w-full py-1.5 transition-colors relative"
-          :class="activeTab === item.id ? 'text-brand-600' : 'text-slate-400 dark:text-slate-500'"
+          :class="activeTab === item.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-400 dark:text-slate-500'"
         >
           <component
             :is="item.icon"
@@ -46,21 +42,20 @@ const selectTab = (tabId) => {
           />
           <span
             class="text-data-sm font-medium leading-none"
-            :class="activeTab === item.id ? 'font-semibold text-brand-600' : ''"
+            :class="activeTab === item.id ? 'font-semibold text-slate-900 dark:text-slate-100' : ''"
           >
             {{ item.label }}
           </span>
           <span
+            class="text-[10px] font-mono leading-none"
+            :class="activeTab === item.id ? 'text-slate-600 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'"
+          >
+            {{ item.subtitle }}
+          </span>
+          <span
             v-if="activeTab === item.id"
-            class="absolute top-1 h-0.5 w-4 bg-brand-600 rounded-full"
+            class="absolute top-1 h-0.5 w-4 bg-slate-900 dark:bg-slate-100 rounded-full"
           />
-        </button>
-        <button
-          @click="emitLogout"
-          class="flex flex-col items-center justify-center gap-0.5 h-full w-full py-1.5 transition-colors relative text-slate-400 dark:text-slate-500"
-        >
-          <LogOut class="h-5 w-5" />
-          <span class="text-data-sm font-medium leading-none">Logout</span>
         </button>
       </div>
     </div>
